@@ -48,40 +48,41 @@
     <div class="row" id="frame">
         <div class="col-sm-12" style="color: aliceblue  ">
             <div class="tab-pane active" id="forecast-list">
-                <h2 style="color: white    ">5 DAY WEATHER FORECAST : <p th:text="${cityName}"/></h2>
+
                 <div id="forecast_list_ul">
                     <div class="card">
-                            <div class="card-body">
-                        <table class="table" style="color: black ">
-                            <tbody>
-                            <tr th:each="detail : ${List} ">
-                                <td>
-                                    <b><p th:text="${#dates.format(detail.day,'EE dd MMM')}"/></b>
+                        <div class="card-body">
+                            <h2 style="color: darkorange      "> <p th:text="'5 DAY WEATHER FORECAST :'+ ${cityName}"/></h2>
+                            <table class="table" style="color: black ">
+                                <tbody>
+                                <tr th:each="detail : ${List} ">
+                                    <td>
+                                        <b><p th:text="${#dates.format(detail.day,'EE dd MMM')}"/></b>
 
-                                    <div th:if="${#dates.format(detail.day,'MMM dd, yyyy') == #dates.format(timeToday,'MMM dd, yyyy')}">
-                                        Today
-                                    </div>
-                                </td>
-                                <td><img
-                                        th:src="${detail.image}"
-                                        width="65" height="65"></td>
-                                <td><span style="background: orange" class="badge badge-info"
-                                          th:text="${detail.tempMax}+'°С'"> </span>
-                                    <span class="badge badge-info"
-                                          th:text="${detail.tempMin}+'°С'"> </span>
-                                    <b></b>
-                                    <b><i th:text="${detail.description}"></i></b>
+                                        <div th:if="${#dates.format(detail.day,'MMM dd, yyyy') == #dates.format(timeToday,'MMM dd, yyyy')}">
+                                            Today
+                                        </div>
+                                    </td>
+                                    <td><img
+                                            th:src="${detail.image}"
+                                            width="65" height="65"></td>
+                                    <td><span style="background: orange" class="badge badge-info"
+                                              th:text="${detail.tempMax}+'°С'"> </span>
+                                        <span class="badge badge-info"
+                                              th:text="${detail.tempMin}+'°С'"> </span>
+                                        <b></b>
+                                        <b><i th:text="${detail.description}"></i></b>
 
-                                    <p style="margin-top: 10px"
-                                       th:text="${detail.wind}+'m/s. '+ ${detail.humidity}+'%.  '+${detail.pressure}+'hpa. '">
-                                        </b>
-                                </td>
+                                        <p style="margin-top: 10px"
+                                           th:text="${detail.wind}+'m/s. '+ ${detail.humidity}+'%.  '+${detail.pressure}+'hpa. '">
+                                            </b>
+                                    </td>
 
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                        <p><a href="/"  style="color: black;">  Go Back Home here!!!</a></p>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p><a href="/" style="color: black;"> Go Back Home here!!!</a></p>
                     </div>
                 </div>
             </div>

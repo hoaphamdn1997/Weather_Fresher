@@ -1,5 +1,7 @@
 package com.program.weather.service;
 
+import ch.qos.logback.core.joran.spi.ConsoleTarget;
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.program.weather.common.utils.Constants;
 import com.program.weather.common.utils.EncrytedPasswordUtils;
 
@@ -82,11 +84,15 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public void editActiveUser(Long id) {
+
 		UserEntity userEntity = userRepository.findByUserId(id);
 		if(userEntity.isEnabled()) {
+
 			userEntity.setEnabled(Constants.UN_ACTIVE);
+
 		}else {
 			userEntity.setEnabled(Constants.ACTIVE);
+
 		}
 		userRepository.save(userEntity);
 	}
@@ -100,7 +106,9 @@ public class UserServiceImpl implements UserService {
 	public void editRoleUser(Long id , String role) {
 		UserEntity userEntity = userRepository.findByUserId(id);
 		RoleEntity roleEntity = roleRepository.findByRole(role);
+
 		userEntity.setRoles(new HashSet<RoleEntity>(Arrays.asList(roleEntity)));
+
 		userRepository.save(userEntity);
 	}
 

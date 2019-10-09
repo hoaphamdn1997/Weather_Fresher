@@ -37,7 +37,8 @@ public class UserEntity {
 
     @Column(name = "encryted_password")
     @NotEmpty(message = "Please provide your password")
-    @Min(value = 8, message = "Min 8 Character")
+    @Length(min = 8, message = "Min 8 Character")
+
     private String encrytedPassword;
 
     @Column(name = "firstname")

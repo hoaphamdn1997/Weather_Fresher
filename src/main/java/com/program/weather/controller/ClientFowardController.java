@@ -31,10 +31,11 @@ public class ClientFowardController {
         List<GrantedAuthority> authorities = getListAuthority(authentication);
 
         if(checkRoleUser(authorities, Constants.USER))
-            url = "redirect:/home-weather";
+            url = "redirect:/";
         if(checkRoleUser(authorities, Constants.ADMIN))
             url = "redirect:/home-admin/admin";
-
+        if(checkRoleUser(authorities, Constants.GUEST))
+            url = "redirect:/block";
         return url;
     }
 

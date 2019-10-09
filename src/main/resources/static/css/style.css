@@ -405,6 +405,5 @@ body {
 .example-1 {
 
     position: relative;
-    overflow-y: scroll;
-    height: 400px;
+    height: 415px;
 }

@@ -62,13 +62,13 @@ public class AdminController {
 
 	/**
 	 * Change Role By Admin
-	 * @param id
-	 * @param role
+	 *
+	 * @param userDTO
 	 */
-	@GetMapping("/change-role")
+	@PutMapping("/change-role")
 	@ResponseBody
-	public void changeRole(@RequestParam Long id,@RequestParam String role) {
-		adminApi.editRoleUser(id, role);
+	public void changeRole(@RequestBody UserDTO userDTO) {
+		adminApi.editRoleUser(userDTO.getId(), userDTO.getRole());
 	}
 }
 //class like DTO
@@ -81,5 +81,26 @@ class AdminAPI{
 
 	public Long getId() {
 		return id;
+	}
+}
+
+class UserDTO {
+	private long id;
+	private String role;
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public String getRole() {
+		return role;
 	}
 }

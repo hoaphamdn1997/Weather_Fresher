@@ -40,6 +40,7 @@ public class LoginController {
      * @param principal
      * @return
      */
+
     @RequestMapping(value = {"/process-size"}, method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<List<WeatherSizeApiDTO>> processSizeByCity(Principal principal) {
@@ -161,7 +162,11 @@ public class LoginController {
 
 
     }
-
+    @RequestMapping(value = "/block")
+    public String block(Model model)
+    {
+        return "pageBlock";
+    }
 }
 
 class WeatherSizeApiDTO {

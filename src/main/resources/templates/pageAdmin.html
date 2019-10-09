@@ -31,14 +31,14 @@
             </li>
         </ul>
 
-        <ul class="navbar-nav mr-3">
-            <li class="navbar-nav">
-                <a class="nav-link" href="#">Xin chào: <span th:if="${#request.userPrincipal.name}"
-                                                             th:utext="${#request.userPrincipal.name}"></span></a>
-                <a class="nav-link" th:if="${#request.userPrincipal != null}" th:href="@{/logout}">Logout</a>
+            <ul class="navbar-nav mr-3">
+                <li class="navbar-nav">
+                    <a class="nav-link" href="#">Xin chào: <span th:if="${#request.userPrincipal.name}"
+                                                                 th:utext="${#request.userPrincipal.name}"></span></a>
+                    <a class="nav-link" th:if="${#request.userPrincipal != null}" th:href="@{/logout}">Logout</a>
 
-            </li>
-        </ul>
+                </li>
+            </ul>
     </div>
 </nav>
 <br>
@@ -51,7 +51,7 @@
                 <div class="card" style="min-height: 500px ;">
                     <div class="card-body">
                         <h5 class="card-title">List user</h5>
-                        <table class="table table-responsive"  >
+                        <table class="table table-responsive">
                             <thead class="">
                             <th>User</th>
                             <th>Email</th>
@@ -70,7 +70,7 @@
                                 <td><select id="idselect" class="form-control">
                                     <option th:each="item : ${dsUser.roles}" th:utext="${item.role}"></option>
                                     <option th:each="role : ${dsRole}"
-                                            th:value="${role.roleId}" th:utext="${role.role}"></option>
+                                            th:value="${role.role}" th:utext="${role.role}"></option>
 
                                 </select></td>
                                 <td>
@@ -147,8 +147,6 @@
                     $('#myModal').modal('toggle');
                 }
             })
-
-
         })
 
 
@@ -162,8 +160,6 @@
                         id: id,
                     },
                 })
-
-
             }
             else {
                 var id = $(this).closest("tr").attr("data-id");
@@ -177,10 +173,30 @@
             }
         })
 
-
     });
 
+    $('.form-control').change(function () {
+        var id = $(this).closest("tr").attr("data-id");
+        var role = $(this).val();
 
+        $.ajax({
+            type: "PUT",
+            url: "/home-admin/change-role",
+            data: JSON.stringify({
+                id: parseInt(id),
+                role: role
+            }),
+            contentType: 'application/json',
+            dataType: 'json',
+            responseType: 'application/json',
+            crossDomain: true,
+            success: function (data) {
+                location.reload();
+            },
+            error: function (error) {
+            }
+        });
+    });
 </script>
 </body>
 </html>
