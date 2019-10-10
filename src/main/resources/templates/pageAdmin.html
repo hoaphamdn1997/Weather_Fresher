@@ -60,7 +60,7 @@
                             <th></th>
 
                             </thead>
-                            <tr th:each="dsUser : ${dsUser}" th:data-id="${dsUser.userId}"
+                            <tr th:each="dsUser : ${dsUser}" th:data-id="${dsUser.userId}" th:object="${dsUser}"
                                 th:classappend="${dsUser.userId} ? (table- + ${dsUser.userId}) : ''">
                                 <td th:text="${dsUser.userName}"></td>
                                 <td th:text="${dsUser.email}"></td>
@@ -68,9 +68,9 @@
                                     <input class="activeUser" type="checkbox" th:checked="${dsUser.enabled}"/>
                                 </td>
                                 <td><select id="idselect" class="form-control">
-                                    <option th:each="item : ${dsUser.roles}" th:utext="${item.role}"></option>
                                     <option th:each="role : ${dsRole}"
-                                            th:value="${role.role}" th:utext="${role.role}"></option>
+                                            th:value="${role.role}" th:text="${#strings.substring(role.role,5)}"
+                                    th:selected="${#lists.contains(dsUser.roles,role.roleId)}"></option>
 
                                 </select></td>
                                 <td>
@@ -116,8 +116,9 @@
     <!-- Copyright -->
     <div class="footer-copyright text-center py-3" style="color: white;">
         © 2019 Copyright: <a href="" style="color: white;"> HoaPham</a>
-    </div>
-    <!-- Copyright -->
+        <br>Mentor : HANH NGOC NGUYEN
+        <br>Fresher Trainning Program-K2
+    </div><!-- Copyright -->
 
 </footer>
 <!-- Footer -->
@@ -184,7 +185,7 @@
             url: "/home-admin/change-role",
             data: JSON.stringify({
                 id: parseInt(id),
-                role: role
+                role:role
             }),
             contentType: 'application/json',
             dataType: 'json',

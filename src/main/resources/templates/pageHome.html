@@ -258,19 +258,19 @@
     <!-- Copyright -->
     <div class="footer-copyright text-center py-3" style="color: white;">
         © 2019 Copyright: <a href="" style="color: white;"> HoaPham</a>
-        <br> mentor:HanhNgocNguyen
+        <br>Mentor : HANH NGOC NGUYEN
+        <br>Fresher Trainning Program-K2
     </div>
     <!-- Copyright -->
 
 </footer>
 <script type="text/javascript">
-
+    // ẩn đi showmore
     $(".card-body-click").click(function () {
         var cityName = $(this).closest(".card").attr('data-id');
         window.location = "/home-weather/detailts/" + cityName;
     });
 
-    //ẩn đi showmore
     var request = $.ajax({
         url: "/process-size",
         type: "GET",
@@ -296,7 +296,7 @@
     request.fail(function (jqXHR, textStatus) {
         console.log("Request failed: " + textStatus);
     });
-
+    //Showmore and showLess
     $('.collapse-toggle').click(function () {
         var str = "#collapse";
         var value = $(this).attr('data-target').substring(str.length, parseInt($(this).attr('data-target').length));

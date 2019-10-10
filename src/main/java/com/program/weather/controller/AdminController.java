@@ -1,10 +1,14 @@
 package com.program.weather.controller;
 
 import java.security.Principal;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.program.weather.common.api.AdminApi;
 
+import com.program.weather.dto.UserDTO;
 import com.program.weather.entity.RoleEntity;
 import com.program.weather.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +35,29 @@ public class AdminController {
 	@GetMapping("/admin")
 	public String homeAdmin(Model model , Principal principal) {
 		//List User
-		List<UserEntity> dsUser = adminApi.findAll();
+		List<UserDTO> dsUser = adminApi.findAll().stream().map(AdminController::castUserDTO).collect(Collectors.toList());
 		//list Role
 		List<RoleEntity> dsRole = adminApi.findAllRole();
 		//ATTRIBUTE
 		model.addAttribute("dsUser",dsUser);
 		model.addAttribute("dsRole", dsRole);
 		return "pageAdmin";
+	}
+
+	public static UserDTO castUserDTO(UserEntity userEntity){
+
+		UserDTO user =  new UserDTO(userEntity.getUserId(), userEntity.getUserName(), userEntity.getEmail()
+				, userEntity.getFirstName(), userEntity.getLastName(), userEntity.isEnabled());
+
+		Set<Long> roles = new HashSet<>();
+
+		userEntity.getRoles().stream().forEach(i->{
+			roles.add(i.getRoleId());
+		});
+
+		user.setRoles(roles);
+
+		return user;
 	}
 
 	/**
@@ -62,13 +82,13 @@ public class AdminController {
 
 	/**
 	 * Change Role By Admin
-	 *
-	 * @param userDTO
+	 * @param id
+	 * @param role
 	 */
 	@PutMapping("/change-role")
 	@ResponseBody
-	public void changeRole(@RequestBody UserDTO userDTO) {
-		adminApi.editRoleUser(userDTO.getId(), userDTO.getRole());
+	public void changeRole(@RequestBody UserRestDTO userRestDTO) {
+		adminApi.editRoleUser(userRestDTO.getId(),userRestDTO.getRole()) ;
 	}
 }
 //class like DTO
@@ -83,8 +103,7 @@ class AdminAPI{
 		return id;
 	}
 }
-
-class UserDTO {
+class UserRestDTO{
 	private long id;
 	private String role;
 
@@ -104,3 +123,4 @@ class UserDTO {
 		return role;
 	}
 }
+
