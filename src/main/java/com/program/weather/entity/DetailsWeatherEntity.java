@@ -2,7 +2,7 @@ package com.program.weather.entity;
 
 import java.sql.Timestamp;
 import java.time.Instant;
-
+//The class is used show detailweather
 public class DetailsWeatherEntity {
 
     private Instant day;

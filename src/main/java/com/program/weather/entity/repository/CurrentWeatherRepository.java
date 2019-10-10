@@ -12,13 +12,12 @@ import java.util.List;
 
 @Repository
 public interface CurrentWeatherRepository extends JpaRepository<WeatherEntity, Long>{
+	//Find Weather follow weather id
 	WeatherEntity findByWeatherId(Long id);
-	WeatherEntity findByNameCity(String nameCity);
-	Boolean existsByNameCity(String nameCity);
+	//List weather order by date Decrease
 	List<WeatherEntity> findAllByUserEntitiesOrderByDateDesc(UserEntity userEntity);
-	List<WeatherEntity> findAllByDate(Timestamp ts);
-	Long countAllByNameCity(String nameCity);
 
+	//List weather group by City and oder by date decrease
 	@Query(value = "SELECT * FROM weather.user_weather a join weather.weatherinfo b on a.weather_id = b.weather_id where a.user_id=?1 and b.date in ( select max(date) FROM weather.user_weather a join weather.weatherinfo b on a.weather_id = b.weather_id where a.user_id=?1 group by b.name_city order by date desc ) group by b.name_city order by date desc", nativeQuery = true)
 	List<WeatherEntity>findDateTimeByUserGroupbyDateTimeDest(long id);
 	

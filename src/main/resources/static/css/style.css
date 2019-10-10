@@ -1,63 +1,71 @@
 
 body {
-    background-image: url(https://bing.com/th?id=OHR.GreaterFlamingo_ROW2637725184_1920x1080.jpg&amp;rf=LaDigue_1920x1080.jpg&amp;pid=hp);
+
+    background-image: url(https://bing.com/th?id=OHR.BubbleNebula_ROW2913743388_1920x1080.jpg&amp;rf=LaDigue_1920x1080.jpg&amp;pid=hp);
 }
 
-.login-form {
-    width: 340px;
-    margin: 50px auto;
+.form-control {
+    min-height: 41px;
+    background: #f2f2f2;
+    box-shadow: none !important;
+    border: transparent;
 }
 
-.login-form form {
-    margin-bottom: 15px;
-    background: #f7f7f7;
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-    padding: 30px;
-}
-
-.login-form h2 {
-    margin: 0 0 15px;
+.form-control:focus {
+    background: #e2e2e2;
 }
 
 .form-control, .btn {
-    min-height: 38px;
     border-radius: 2px;
 }
 
-.btn {
-    font-size: 15px;
-    font-weight: bold;
-}
-
-.login-form form .textpass {
-    margin: 0px 65px 10px;
-}
-
-/* form dang ky */
-
-.login-form form .C_signup {
-    color: white;
-    font-size: 21px;
+.login-form {
+    width: 350px;
+    margin: 30px auto;
     text-align: center;
-    padding-top: 12px;
-    background-color: #337ab7;
-    height: 55px;
-    width: 302px;
 }
 
-/* form reset */
-
-.login-form-reset {
-    width: 340px;
-    margin: 50px auto;
-    position: relative;
+.login-form h2 {
+    margin: 10px 0 25px;
 }
 
-.login-form-reset form {
+.login-form form {
+    color: #7a7a7a;
+    border-radius: 3px;
     margin-bottom: 15px;
-    background: #f7f7f7;
+    background: #fff;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
     padding: 30px;
+}
+
+.login-form .btn {
+    font-size: 16px;
+    font-weight: bold;
+    background: #3598dc;
+    border: none;
+    outline: none !important;
+}
+
+.login-form .btn:hover, .login-form .btn:focus {
+    background: #2389cd;
+}
+
+.login-form a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.login-form a:hover {
+    text-decoration: none;
+}
+
+.login-form form a {
+    color: #7a7a7a;
+    text-decoration: none;
+}
+
+.login-form form a:hover {
+    text-decoration: underline;
 }
 
 .title-reset {
@@ -361,7 +369,6 @@ body {
 }
 
 .form-control {
-    max-width: 250px;
     vertical-align: middle;
 }
 

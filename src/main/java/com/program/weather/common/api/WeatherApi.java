@@ -1,14 +1,15 @@
 package com.program.weather.common.api;
 
 
-import com.program.weather.common.utils.CommonUtil;
+
 import com.program.weather.common.utils.Constants;
 import com.program.weather.dto.CurrentWeatherDTO;
 import com.program.weather.dto.DetailsWeatherDTO;
 import com.program.weather.entity.WeatherEntity;
 import com.program.weather.entity.UserEntity;
+import com.program.weather.service.CurrentWeatherService;
 import com.program.weather.service.converter.WeatherConverter;
-import com.program.weather.service.CurrentWeatherServiceImpl;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,7 +21,7 @@ import java.util.List;
 public class WeatherApi {
 
     @Autowired
-    CurrentWeatherServiceImpl weatherService;
+    CurrentWeatherService weatherService;
 
     @Autowired
     WeatherConverter weatherConverter;
@@ -73,18 +74,4 @@ public class WeatherApi {
         return restTemplate.getForObject(URL, DetailsWeatherDTO.class);
     }
 
-    /**
-     * Seach Weather with City Name
-     * @param name
-     * @return
-     */
-    public CurrentWeatherDTO searchWeather(String name) {
-
-        String URL = Constants.WEATHER_URL + CommonUtil.removeAccent(name) + Constants.APPID;
-        RestTemplate restTemplate = new RestTemplate();
-        CurrentWeatherDTO currentWeather = restTemplate.getForObject(URL, CurrentWeatherDTO.class);
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>> " + currentWeather.toString());
-
-        return currentWeather;
-    }
 }

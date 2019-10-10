@@ -61,12 +61,11 @@ public class CurrentWeatherServiceImpl implements CurrentWeatherService {
         return weatherRepository.findAllByUserEntitiesOrderByDateDesc(userEntity);
     }
 
-    @Override
-    public String getNameCity(String name) {
-
-        return null;
-    }
-
+    /**
+     * List weather follow user follow date dest
+     * @param id
+     * @return
+     */
     @Override
     public List<WeatherEntity> findWeatherByUserAndDate(Long id) {
         return weatherRepository.findDateTimeByUserGroupbyDateTimeDest(id);

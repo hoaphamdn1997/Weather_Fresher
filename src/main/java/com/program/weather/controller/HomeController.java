@@ -169,7 +169,7 @@ public class HomeController {
     }
 
     /**
-     * Function insert commom for insert and update
+     * Function insert commom for insert and update follow user
      *
      * @param name
      * @param userEntity
@@ -182,9 +182,9 @@ public class HomeController {
     }
 
     /**
-     * Function insert commom for insert and update
+     * Function insert commom for insert and update with id weather
      *
-     * @param name
+     * @param name id
      * @param userEntity
      */
     public void insertWeather(String name, UserEntity userEntity, Long id) {

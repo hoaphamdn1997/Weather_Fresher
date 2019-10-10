@@ -66,6 +66,12 @@ public class LoginController {
         return ResponseEntity.ok(sizeWeatherGroup);
     }
 
+    /**
+     *
+     * @param model
+     * @param principal
+     * @return
+     */
     @RequestMapping(value = {"/home", "/"})
     public String hello(Model model, Principal principal) {
 
@@ -74,7 +80,7 @@ public class LoginController {
         Long userid = userEntity.getUserId();
 
         List<WeatherEntity> listWeather = weatherApi.findWeatherUserandDate(userid);
-        //chua oder by  kia cha =)))
+        //
         List<WeatherEntity> weatherEntities = weatherApi.findAllByUserEntities(userEntity);
 
         model.addAttribute("ListW", listWeather);
@@ -138,9 +144,7 @@ public class LoginController {
      */
     @PostMapping("/registration")
     public String regisAction(@Valid @ModelAttribute("userDTO") UserEntity userEntity, BindingResult bindingResult, Model model) {
-
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + userEntity.getUserName());
-
         UserEntity userName = userService.findByUserName(userEntity.getUserName());
         UserEntity email = userService.findByUserEmail(userEntity.getEmail());
 
@@ -162,13 +166,18 @@ public class LoginController {
 
 
     }
+
+    /**
+     *If user have ROLE_GUEST -->pageBlock
+     * @return pageBlock
+     */
     @RequestMapping(value = "/block")
-    public String block(Model model)
+    public String block()
     {
         return "pageBlock";
     }
 }
-
+//Class is used   confirm the size city
 class WeatherSizeApiDTO {
     private String city;
     private Integer size;
