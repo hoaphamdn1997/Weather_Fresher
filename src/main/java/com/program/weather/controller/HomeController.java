@@ -87,7 +87,9 @@ public class HomeController {
     }
 
     /**
-     * Detailts 5 day with City name
+     * Detailts 5 day with city name
+     * because api returns 40 values =>SIZE_FORECAST_WEATHER=40
+     * 1 DAY =24H,API 3H RETURN 1TIME =>SIZE_FORECAST_WEATHER_REPEAT= 24H/3H =8
      *
      * @param name  Name City
      * @param model
@@ -97,7 +99,9 @@ public class HomeController {
     public String getWeatherDetailts(@PathVariable String name, Model model) {
         List<DetailsWeatherEntity> lstForCast = new ArrayList<DetailsWeatherEntity>();
         DetailsWeatherDTO detailsWeatherDTO = weatherApi.foreCast(name);
-        for (int i = 0; i < 40; i = i + 8) {
+
+        for (int i = 0; i < Constants.SIZE_FORECAST_WEATHER; i += Constants.SIZE_FORECAST_WEATHER_REPEAT) {
+
             lstForCast.add(new DetailsWeatherEntity(
                             Constants.IMG_URL + detailsWeatherDTO.getList().get(i).getWeather().get(0).getIcon() + Constants.PNG,
                             detailsWeatherDTO.getCity().getName(),
@@ -116,6 +120,7 @@ public class HomeController {
         model.addAttribute("timeToday", Instant.now());
         return "pageDetalts";
     }
+
     /**
      * Delete weather by idweather
      *
@@ -127,16 +132,16 @@ public class HomeController {
         return "redirect:/";
 
     }
+
     /**
      * Update And Insert Weather City
      *
-     * @param action
-     * @param name
+     * @param name      //nameCity
      * @param principal
      * @return view home
      */
     @GetMapping("/save-weather")
-    public String saveWeather(@RequestParam String action, @RequestParam String name, Principal principal) {
+    public String saveWeather(@RequestParam String name, Principal principal) {
         UserEntity userEntity = userService.findByUserName(principal.getName());
         // lst weather by user
         List<WeatherEntity> lstByUser = currentWeatherRepository.findAllByUserEntitiesOrderByDateDesc(userEntity);
@@ -145,31 +150,39 @@ public class HomeController {
         lstByUserByCity = lstByUser.stream()
                 .filter(weather -> name.trim().toLowerCase().equals(weather.getNameCity().trim().toLowerCase()))
                 .collect(Collectors.toList());
-        // kiem tra action
-        if (action.equals("Add")) {
-            // kiem tra truong hop record luu toi da 1 city la 3
-            if (lstByUserByCity.size() < 3) {
+        if (lstByUserByCity.size() < 3) {
 
-                insertWeather(name, userEntity);
-                return "redirect:/";
-            } else {
-                lstByUserByCity
-                        .sort((WeatherEntity w1, WeatherEntity w2) -> w1.getDate().compareTo(w2.getDate()));
-                Optional<WeatherEntity> entitya = lstByUserByCity.stream().findFirst();
-                currentWeatherRepository.delete(entitya.get());
-                insertWeather(name, userEntity);
-                return "redirect:/";
-            }
+            insertWeather(name, userEntity);
+            return "redirect:/";
+        } else {
+            lstByUserByCity
+                    .sort((WeatherEntity w1, WeatherEntity w2) -> w1.getDate().compareTo(w2.getDate()));
+            Optional<WeatherEntity> entitya = lstByUserByCity.stream().findFirst();
+            currentWeatherRepository.delete(entitya.get());
+            insertWeather(name, userEntity);
+            return "redirect:/";
         }
+    }
+
+    @GetMapping("/update-weather")
+    public String updateWeather(@RequestParam String name, Principal principal) {
+        UserEntity userEntity = userService.findByUserName(principal.getName());
+        // LIST WEATHER by user
+        List<WeatherEntity> lstByUser = currentWeatherRepository.findAllByUserEntitiesOrderByDateDesc(userEntity);
+        List<WeatherEntity> lstByUserByCity;
+        //LIST CITY follow Id user and City name
+        lstByUserByCity = lstByUser.stream()
+                .filter(weather -> name.trim().toLowerCase().equals(weather.getNameCity().trim().toLowerCase()))
+                .collect(Collectors.toList());
         lstByUserByCity
                 .sort((WeatherEntity w1, WeatherEntity w2) -> w2.getDate().compareTo(w1.getDate()));
         Optional<WeatherEntity> entitya = lstByUserByCity.stream().findFirst();
-        insertWeather(name, userEntity, entitya.get().getWeatherId());
+        updateWeather(name, userEntity, entitya.get().getWeatherId());
         return "redirect:/";
     }
 
     /**
-     * Function insert commom for insert and update follow user
+     * Function insert commom for insert weather follow user
      *
      * @param name
      * @param userEntity
@@ -182,12 +195,12 @@ public class HomeController {
     }
 
     /**
-     * Function insert commom for insert and update with id weather
+     * Function  update when sort weather with id weather
      *
-     * @param name id
+     * @param name,id//name->city//id->weather
      * @param userEntity
      */
-    public void insertWeather(String name, UserEntity userEntity, Long id) {
+    public void updateWeather(String name, UserEntity userEntity, Long id) {
         WeatherEntity result = weatherApi.restJsonData(name);
         result.setUserEntities(new HashSet<UserEntity>(Arrays.asList(userEntity)));
         result.setCreateBy(userEntity.getLastName() + " " + userEntity.getFirstName());

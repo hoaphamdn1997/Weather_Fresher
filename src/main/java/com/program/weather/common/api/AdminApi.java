@@ -22,6 +22,7 @@ public class AdminApi {
 
     /**
      * Delete User by id
+     *
      * @param id
      */
     public void deleteUser(long id) {
@@ -30,6 +31,7 @@ public class AdminApi {
 
     /**
      * findAll Usser
+     *
      * @return
      */
 
@@ -38,17 +40,8 @@ public class AdminApi {
     }
 
     /**
-     *get User
-     * @param name
-     * @return
-     */
-
-    public UserEntity getUser(String name) {
-        return userService.findByUserName(name);
-    }
-
-    /**
      * Edit Status User
+     *
      * @param id
      */
 
@@ -57,16 +50,8 @@ public class AdminApi {
     }
 
     /**
-     * Find User By ID
-     * @param id
-     * @return
-     */
-    public UserEntity findUserById(Long id) {
-        return userService.findByUserId(id);
-    }
-
-    /**
      * edit Role User
+     *
      * @param id
      * @param role
      */
@@ -76,6 +61,7 @@ public class AdminApi {
 
     /**
      * Find All Role
+     *
      * @return findAllRole
      */
     public List<RoleEntity> findAllRole() {

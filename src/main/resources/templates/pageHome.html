@@ -11,36 +11,7 @@
     <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 <body>
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style="opacity: .8">
-    <a class="navbar-brand" style="color: white">Weather :))))</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/">HOME <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/home-admin/admin">ADMIN</a>
-            </li>
-        </ul>
-
-        <ul class="navbar-nav mr-3">
-            <li class="navbar-nav">
-                <a class="nav-link" href="#">Xin chào: <span th:if="${#request.userPrincipal.name}"
-                                                             th:utext="${#request.userPrincipal.name}"></span></a>
-                <a class="nav-link" th:if="${#request.userPrincipal != null}" th:href="@{/logout}">Logout</a>
-
-            </li>
-        </ul>
-    </div>
-</nav>
+<th:block th:replace="common/header :: header"></th:block>
 <br>
 <br>
 <br>
@@ -94,63 +65,64 @@
                                     </div>
                                 </th:block>
 
-                                <div id="accordion">
-                                    <th:block th:if="${#lists.isEmpty(ListW)}">
-                                        <div class="mt-4 mb-4">
-                                            <div class="row m-3">
-                                                <div class="card mt-2">
-                                                    <div
-                                                            class="card-body weather-container weather-item weather-main-item">
+
+                                <th:block th:if="${weatherSearch != null}">
+
+                                    <div class="card mt-2" th:object="${weatherSearch}"
+                                         th:attr="data-id=*{nameCity}">
+                                        <div class="card-body card-body-click weather-container weather-item weather-main-item">
+                                            <div class="weather-icon">
+                                                <img th:src="'http://openweathermap.org/img/wn/'+*{icon}+'.png'"
+                                                     width="50" height="50">
+                                            </div>
+                                            <div class="weather-place">
+                                                <div class="weather-country" th:text="*{nameCity}"></div>
+                                                <div class="weather-time"
+                                                     th:text="*{#calendars.format(date,'MMMM dd, yyyy')}"></div>
+                                            </div>
+                                            <div class="weather-main">
+                                                <div class="weather-main-top">
+                                                    <div class="weather-main-temp badge badge-secondary"
+                                                         th:text="*{#numbers.formatInteger((temp - 32) * 5 / 9, 0) + '.0 &#176;C'}">
+                                                    </div>
+                                                    <div class="weather-main-description" th:text="*{description}">
+                                                    </div>
+                                                </div>
+                                                <div class="weather-main-detail"><p
+                                                        th:text="*{wind}+'m/s. '+*{humidity}+'%. '+*{pressure}+'hpa.'"></p>
+                                                </div>
+                                            </div>
+                                            <th:block th:each="weather : ${ListW}">
+                                                <td th:if="${weatherSearch.nameCity == weather.nameCity && #calendars.format(weatherSearch.date,'MMMM dd, yyyy') !=  #calendars.format(weather.date,'MMMM dd, yyyy')}">
+                                                    <a class="add-user btn btn-primary"
+                                                       th:href="@{/home-weather/save-weather?(name=*{nameCity})}">ADD</a>
+                                                </td>
+                                            </th:block>
+                                            <th:block th:each="weather : ${ListW}">
+                                                <td th:if="${weatherSearch.nameCity == weather.nameCity && #calendars.format(weatherSearch.date,'MMMM dd, yyyy') ==  #calendars.format(weather.date,'MMMM dd, yyyy')}">
+                                                    <a class="add-user btn btn-success"
+                                                       th:href="@{/home-weather/update-weather?(name=*{nameCity})}">UPDATE</a>
+                                                </td>
+                                            </th:block>
+                                        </div>
+                                    </div>
+                                </th:block>
+                                <div class=" example-1 scrollbar-card-body">
+                                    <div id="accordion">
+                                        <th:block th:if="${#lists.isEmpty(ListW)}">
+                                            <div class="mt-4 mb-4">
+                                                <div class="row m-3">
+                                                    <div class="card mt-2">
+                                                        <div
+                                                                class="card-body weather-container weather-item weather-main-item">
 												<span style="margin-top: 15px; width: 500px; height: 50px"
                                                       class="text-center">No city display you need to select a city to display.</span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </th:block>
+                                        </th:block>
 
-                                    <th:block th:if="${weatherSearch != null}">
-
-                                        <div class="card mt-2" th:object="${weatherSearch}"
-                                             th:attr="data-id=*{nameCity}">
-                                            <div class="card-body card-body-click weather-container weather-item weather-main-item">
-                                                <div class="weather-icon">
-                                                    <img th:src="'http://openweathermap.org/img/wn/'+*{icon}+'.png'"
-                                                         width="50" height="50">
-                                                </div>
-                                                <div class="weather-place">
-                                                    <div class="weather-country" th:text="*{nameCity}"></div>
-                                                    <div class="weather-time"
-                                                         th:text="*{#calendars.format(date,'MMMM dd, yyyy')}"></div>
-                                                </div>
-                                                <div class="weather-main">
-                                                    <div class="weather-main-top">
-                                                        <div class="weather-main-temp badge badge-secondary"
-                                                             th:text="*{#numbers.formatInteger((temp - 32) * 5 / 9, 0) + '.0 &#176;C'}">
-                                                        </div>
-                                                        <div class="weather-main-description" th:text="*{description}">
-                                                        </div>
-                                                    </div>
-                                                    <div class="weather-main-detail"><p
-                                                            th:text="*{wind}+'m/s. '+*{humidity}+'%. '+*{pressure}+'hpa.'"></p>
-                                                    </div>
-                                                </div>
-                                                <div th:switch="${flag}">
-                                                    <a class="add-user btn btn-primary"
-                                                       th:case="'add'"
-                                                       th:href="@{/home-weather/save-weather?action=Add&(name=*{nameCity})}">
-                                                        ADD
-                                                    </a>
-                                                    <a class="add-user btn btn-success"
-                                                       th:case="'update'"
-                                                       th:href="@{/home-weather/save-weather?action=Update&(name=*{nameCity})}">
-                                                        UPDATE
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </th:block>
-                                    <div class=" example-1 scrollbar-card-body">
                                         <th:block th:each="listW, i : ${ListW}" th:data-id="${listW.weatherId}">
 
                                             <div class="card mt-1   " th:attr="data-id=${listW.nameCity}">
@@ -253,17 +225,7 @@
     </div>
 </section>
 <br><br>
-<footer class="page-footer font-small blue">
-
-    <!-- Copyright -->
-    <div class="footer-copyright text-center py-3" style="color: white;">
-        © 2019 Copyright: <a href="" style="color: white;"> HoaPham</a>
-        <br>Mentor : HANH NGOC NGUYEN
-        <br>Fresher Trainning Program-K2
-    </div>
-    <!-- Copyright -->
-
-</footer>
+<th:block th:replace="common/footer :: footer"></th:block>
 <script type="text/javascript">
     // ẩn đi showmore
     $(".card-body-click").click(function () {

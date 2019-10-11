@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-
 public class CustomFillter extends GenericFilterBean {
     @Autowired
     private UserDetailsService userDetailsService;
@@ -26,8 +25,7 @@ public class CustomFillter extends GenericFilterBean {
     public void doFilter(
             ServletRequest request,
             ServletResponse response,
-            FilterChain chain) throws IOException, ServletException
-    {
+            FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
@@ -43,7 +41,6 @@ public class CustomFillter extends GenericFilterBean {
                         if (!username.isEmpty()) {
                             UserDetails userDetailsQuery = userDetailsService.loadUserByUsername(username);
                             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-
                             if (!userDetailsQuery.isEnabled()) {
                                 new SecurityContextLogoutHandler().logout(req, res, authentication);
                             }

@@ -1,7 +1,6 @@
 package com.program.weather.common.api;
 
 
-
 import com.program.weather.common.utils.Constants;
 import com.program.weather.dto.CurrentWeatherDTO;
 import com.program.weather.dto.DetailsWeatherDTO;
@@ -28,6 +27,7 @@ public class WeatherApi {
 
     /**
      * Delete Weather by id
+     *
      * @param id
      */
     public void deleteWeather(Long id) {
@@ -36,6 +36,7 @@ public class WeatherApi {
 
     /**
      * List Weather by user
+     *
      * @param userEntity
      * @return
      */
@@ -44,15 +45,16 @@ public class WeatherApi {
     }
 
     /**
-     *
      * @param id
      * @return
      */
-    public List<WeatherEntity> findWeatherUserandDate(long id){
+    public List<WeatherEntity> findWeatherUserandDate(long id) {
         return weatherService.findWeatherByUserAndDate(id);
-}
+    }
+
     /**
      * Rest Data Json Data With NameCity And Convert to EntiTy
+     *
      * @param name
      * @return
      */
@@ -65,6 +67,7 @@ public class WeatherApi {
 
     /**
      * Detail Weather With City
+     *
      * @param name
      * @return
      */

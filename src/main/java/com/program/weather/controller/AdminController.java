@@ -23,104 +23,109 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
 
 
-	@Autowired
-	private AdminApi adminApi;
+    @Autowired
+    private AdminApi adminApi;
 
-	/**
-	 * Go to the Page ADMIN
-	 * @param model
-	 * @param principal
-	 * @return Page Admin
-	 */
-	@GetMapping("/admin")
-	public String homeAdmin(Model model , Principal principal) {
-		//List User
-		List<UserDTO> dsUser = adminApi.findAll().stream().map(AdminController::castUserDTO).collect(Collectors.toList());
-		//list Role
-		List<RoleEntity> dsRole = adminApi.findAllRole();
-		//ATTRIBUTE
-		model.addAttribute("dsUser",dsUser);
-		model.addAttribute("dsRole", dsRole);
-		return "pageAdmin";
-	}
+    /**
+     * Go to the Page ADMIN
+     *
+     * @param model
+     * @param principal
+     * @return Page Admin
+     */
+    @GetMapping("/admin")
+    public String homeAdmin(Model model, Principal principal) {
+        //List User
+        List<UserDTO> dsUser = adminApi.findAll().stream().map(AdminController::castUserDTO).collect(Collectors.toList());
+        //list Role
+        List<RoleEntity> dsRole = adminApi.findAllRole();
+        //ATTRIBUTE
+        model.addAttribute("dsUser", dsUser);
+        model.addAttribute("dsRole", dsRole);
+        return "pageAdmin";
+    }
 
-	public static UserDTO castUserDTO(UserEntity userEntity){
+    public static UserDTO castUserDTO(UserEntity userEntity) {
 
-		UserDTO user =  new UserDTO(userEntity.getUserId(), userEntity.getUserName(), userEntity.getEmail()
-				, userEntity.getFirstName(), userEntity.getLastName(), userEntity.isEnabled());
+        UserDTO user = new UserDTO(userEntity.getUserId(), userEntity.getUserName(), userEntity.getEmail()
+                , userEntity.getFirstName(), userEntity.getLastName(), userEntity.isEnabled());
 
-		Set<Long> roles = new HashSet<>();
+        Set<Long> roles = new HashSet<>();
 
-		userEntity.getRoles().stream().forEach(i->{
-			roles.add(i.getRoleId());
-		});
+        userEntity.getRoles().stream().forEach(i -> {
+            roles.add(i.getRoleId());
+        });
 
-		user.setRoles(roles);
+        user.setRoles(roles);
 
-		return user;
-	}
+        return user;
+    }
 
-	/**
-	 * Delete User By ID
-	 * @param id
-	 */
-	@DeleteMapping("/delete")
-	@ResponseBody
-	public void deleteUser(@RequestBody AdminAPI adminAPI) {
-		adminApi.deleteUser(adminAPI.getId());
-	}
+    /**
+     * Delete User By ID
+     *
+     * @param id
+     */
+    @DeleteMapping("/delete")
+    @ResponseBody
+    public void deleteUser(@RequestBody AdminAPI adminAPI) {
+        adminApi.deleteUser(adminAPI.getId());
+    }
 
-	/**
-	 * Edit Status User -> active or Unactive
-	 * @param id
-	 */
-	@GetMapping("/editActiveUserA")
+    /**
+     * Edit Status User -> active or Unactive
+     *
+     * @param id
+     */
+    @GetMapping("/editActiveUserA")
     @ResponseBody
     public void edit(@RequestParam Long id) {
         adminApi.editActiveUser(id);
     }
 
-	/**
-	 * Change Role By Admin
-	 * @param id
-	 * @param role
-	 */
-	@PutMapping("/change-role")
-	@ResponseBody
-	public void changeRole(@RequestBody UserRestDTO userRestDTO) {
-		adminApi.editRoleUser(userRestDTO.getId(),userRestDTO.getRole()) ;
-	}
+    /**
+     * CHANGE ROLE USER
+     *
+     * @param userRestDTO
+     */
+    @PutMapping("/change-role")
+    @ResponseBody
+    public void changeRole(@RequestBody UserRestDTO userRestDTO) {
+        adminApi.editRoleUser(userRestDTO.getId(), userRestDTO.getRole());
+    }
 }
+
 //class like DTO
-class AdminAPI{
-	private Long id;
+class AdminAPI {
+    private Long id;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 }
-class UserRestDTO{
-	private long id;
-	private String role;
 
-	public void setId(long id) {
-		this.id = id;
-	}
+class UserRestDTO {
+    private long id;
+    private String role;
 
-	public void setRole(String role) {
-		this.role = role;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public long getId() {
-		return id;
-	}
+    public void setRole(String role) {
+        this.role = role;
+    }
 
-	public String getRole() {
-		return role;
-	}
+    public long getId() {
+        return id;
+    }
+
+    public String getRole() {
+        return role;
+    }
 }
 

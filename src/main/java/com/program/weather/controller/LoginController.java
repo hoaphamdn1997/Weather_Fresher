@@ -37,17 +37,18 @@ public class LoginController {
 
     /**
      * Check size List  --> show more
+     * This class is used to check the size of a city list because when grouped by city it will be added to the combined city number
+     *
      * @param principal
      * @return
      */
 
     @RequestMapping(value = {"/process-size"}, method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<List<WeatherSizeApiDTO>> processSizeByCity(Principal principal) {
+        public ResponseEntity<List<WeatherSizeApiDTO>> processSizeByCity(Principal principal) {
 
         List<WeatherSizeApiDTO> sizeWeatherGroup = new ArrayList<>();
-
-        // Sau khi user login thanh cong se co principal
+        // After user login, the bar will have principal
         UserEntity userEntity = userService.findByUserName(principal.getName());
         Long userid = userEntity.getUserId();
 
@@ -67,7 +68,6 @@ public class LoginController {
     }
 
     /**
-     *
      * @param model
      * @param principal
      * @return
@@ -168,16 +168,17 @@ public class LoginController {
     }
 
     /**
-     *If user have ROLE_GUEST -->pageBlock
+     * If user have ROLE_GUEST -->pageBlock
+     *
      * @return pageBlock
      */
     @RequestMapping(value = "/block")
-    public String block()
-    {
+    public String block() {
         return "pageBlock";
     }
 }
-//Class is used   confirm the size city
+
+//Class is used  confirm the size city
 class WeatherSizeApiDTO {
     private String city;
     private Integer size;
@@ -194,7 +195,4 @@ class WeatherSizeApiDTO {
         return size;
     }
 
-    public String getCity() {
-        return city;
-    }
 }

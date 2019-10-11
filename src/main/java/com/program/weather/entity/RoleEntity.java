@@ -10,30 +10,17 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name="role")
+@Table(name = "role")
 public class RoleEntity {
 
- 	@Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)//Automatic id
     @Column(name = "role_id")
     private Long roleId;
- 
+
+
     @Column(name = "role")
     private String role;
 
-    public Long getRoleId() {
-        return roleId;
-    }
 
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 }
