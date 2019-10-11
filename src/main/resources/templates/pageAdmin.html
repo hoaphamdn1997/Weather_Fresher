@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home Admin</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/sweetalert2@8.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+<th:block th:replace="common/header :: header"></th:block>
+<br>
+<br>
+<br>
+<section id="main">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="card" style="min-height: 500px ;">
+                    <div class="card-body">
+                        <h5 class="card-title">List user</h5>
+                        <table class="table table-responsive">
+                            <thead class="">
+                            <th>User</th>
+                            <th>Email</th>
+                            <th>Active</th>
+                            <th>Role</th>
+                            <th></th>
+
+                            </thead>
+                            <tr th:each="dsUser : ${dsUser}" th:data-id="${dsUser.userId}" th:object="${dsUser}"
+                                th:classappend="${dsUser.userId} ? (table- + ${dsUser.userId}) : ''">
+                                <td th:text="${dsUser.userName}"></td>
+                                <td th:text="${dsUser.email}"></td>
+                                <td>
+                                    <input class="activeUser" type="checkbox" th:checked="${dsUser.enabled}"/>
+                                </td>
+                                <td><select id="idselect" class="form-control">
+                                    <option th:each="role : ${dsRole}"
+                                            th:value="${role.role}" th:text="${#strings.substring(role.role,5)}"
+                                    th:selected="${#lists.contains(dsUser.roles,role.roleId)}"></option>
+
+                                </select></td>
+                                <td>
+                                    <button type="button" class="btn btn-danger call-del"
+                                            href="">Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header" style="background: red">
+                                <h4 class="modal-title">Are You Sure?</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure that you want to perform this action?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+
+                                <button class="xoa-user btn btn-danger" data-id="0" type="submit">Confim</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<!-- Footer -->
+<th:block th:replace="common/footer :: footer"></th:block>
+<!-- Footer -->
+<!--<script type="text/javascript" th:src="@{/js/jsadmin.js}"></script>-->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".call-del").click(function () {
+            var id = $(this).closest("tr").attr("data-id");
+
+            $('#myModal').modal('toggle');
+            $('#myModal').find('.btn-danger').attr("data-id", id);
+        })
+
+        $("#myModal .btn-danger").click(function () {
+            var self = $(this);
+            var id = $('#myModal').find('.btn-danger').attr("data-id");
+            $.ajax({
+                url: "/home-admin/delete",
+                type: "DELETE",
+                data: JSON.stringify({
+                    id: parseInt(id)
+                }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (value) {
+                    $('.table').find('.table-' + id).remove();
+
+                    $('#myModal').modal('toggle');
+                }
+            })
+        })
+
+
+        $('.activeUser').change(function () {
+            if (this.checked) {
+                var id = $(this).closest("tr").attr("data-id");
+                $.ajax({
+                    url: "/home-admin/editActiveUserA",
+                    type: "GET",
+                    data: {
+                        id: id,
+                    },
+                })
+            }
+            else {
+                var id = $(this).closest("tr").attr("data-id");
+                $.ajax({
+                    url: "/home-admin/editActiveUserA",
+                    type: "GET",
+                    data: {
+                        id: id,
+                    },
+                })
+            }
+        })
+
+    });
+
+    $('.form-control').change(function () {
+        var id = $(this).closest("tr").attr("data-id");
+        var role = $(this).val();
+
+        $.ajax({
+            type: "PUT",
+            url: "/home-admin/change-role",
+            data: JSON.stringify({
+                id: parseInt(id),
+                role:role
+            }),
+            contentType: 'application/json',
+            dataType: 'json',
+            responseType: 'application/json',
+            crossDomain: true,
+            success: function (data) {
+                location.reload();
+            },
+            error: function (error) {
+            }
+        });
+    });
+</script>
+</body>
+</html>
