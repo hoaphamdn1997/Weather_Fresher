@@ -5,7 +5,7 @@ body {
 }
 
 .form-control {
-    min-height: 41px;
+    min-height: 37px;
     background: #f2f2f2;
     box-shadow: none !important;
     border: transparent;
@@ -374,13 +374,14 @@ body {
 
 .search {
     vertical-align: middle;
-    min-width: 150px;
+
 }
 
 .navbar-right {
     /*margin-left: 830px;*/
 
 }
+
 /*SCOLL WED */
 .scrollbar-card-body {
     margin: auto;
@@ -388,7 +389,7 @@ body {
     scroll-behavior: smooth;
 }
 
-.scrollbar-card-body:hover {
+.scrollbar-card-body {
     transform: translateX(3px);
     overflow-y: scroll;
     box-sizing: content-box;
@@ -398,6 +399,7 @@ body {
     width: 6px;
     background-color: #F5F5F5;
 }
+
 /* con chay chay tren trang*/
 .scrollbar-card-body::-webkit-scrollbar-thumb {
     border-radius: 10px;
@@ -413,8 +415,14 @@ body {
 
     position: relative;
     height: 415px;
+    overflow: auto;
 }
-.Search{
-    max-height: 30px;!important;
-    border: #7ed0f2;
+
+.Search {
+    width: 480px;
+    height: 37px;!important;
+    background: #f2f2f2;
+    box-shadow: none !important;
+    border: transparent;
+    border-radius: 2px;
 }

@@ -36,6 +36,7 @@ public class CustomFillter extends GenericFilterBean {
         if (authentication != null) {
             if (authentication.getPrincipal() != null) {
                 if (authentication.getPrincipal() instanceof UserDetails) {
+                    //instand cua user detailts
                     // if login then authentication.getCredentials() null
                     if (authentication.getCredentials() == null) {
                         // get username of user logged saved by getPrincipal()

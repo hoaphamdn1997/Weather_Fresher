@@ -87,7 +87,7 @@ public class HomeActionController {
 
 
     /**
-     * Detailts 5 day with city name
+     * Detail 5 day with city name
      * because api returns 40 values =>SIZE_FORECAST_WEATHER=40
      * 1 DAY =24H,API 3H RETURN 1TIME =>SIZE_FORECAST_WEATHER_REPEAT= 24H/3H =8
      *
@@ -121,7 +121,7 @@ public class HomeActionController {
     }
 
     /**
-     * Delete weather by idweather
+     * Delete weather by id weather
      *
      * @param id //id weather
      * @return page Home
@@ -174,7 +174,7 @@ public class HomeActionController {
     }
 
     /**
-     * Function insert commom for insert and update
+     * Function insert common for insert and update
      * Follow name city
      *
      * @param name

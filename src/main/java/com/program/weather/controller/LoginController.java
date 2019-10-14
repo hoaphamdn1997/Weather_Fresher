@@ -96,7 +96,7 @@ public class LoginController {
 
     /**
      * Login Action
-     * When User loggin success -> pageHome
+     * When User login success -> pageHome
      *
      * @return Page Home
      */
