@@ -65,8 +65,9 @@
                                                     <div class="weather-main-temp badge badge-secondary"
                                                          th:text="*{#numbers.formatInteger((temp - 32) * 5 / 9, 0) + '.0 &#176;C'}">
                                                     </div>
-                                                    <div class="weather-main-description" th:text="*{description}">
-                                                    </div>
+                                                    <div class="weather-main-description"><b>
+                                                        <i th:text="*{description}">
+                                                        </i></b></div>
                                                 </div>
                                                 <div class="weather-main-detail"><p
                                                         th:text="*{wind}+'m/s. '+*{humidity}+'%. '+*{pressure}+'hpa.'"></p>
@@ -115,7 +116,7 @@
                                                     </div>
                                                     <div class="weather-place">
                                                         <div class="weather-country" th:text="${listW.nameCity}"></div>
-                                                        <div class="weather-time"
+                                                            <div class="weather-time"
                                                              th:text="${#dates.format(listW.date,'MMM dd, yyyy')}"></div>
                                                     </div>
                                                     <div class="weather-main">
@@ -192,7 +193,6 @@
                                                     more
                                                 </div>
                                             </div>
-
                                         </th:block>
                                     </div>
                                 </div>
