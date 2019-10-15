@@ -2,80 +2,52 @@ package com.program.weather.dto;
 
 import java.util.Set;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+
+@Getter
+@Setter
+@NoArgsConstructor
 public class UserDTO {
 
-    private Long 	  userId;
+    private Long  userId;
+
+    @Pattern(regexp="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$", message= "Only have character a-z, A-Z, 0-9 and Length 8 - 32 char")
+    @NotEmpty(message = "Please provide your user name")
     private String 	  userName;
+
+    @Email(regexp="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{1,}[.]{1}[a-zA-Z]{2,}")
+    @NotEmpty(message = "Please provide your email")
     private String    email;
+
+    @Size(min=8, max=32, message= "Password must have 8 - 32 characters")
+    @NotEmpty(message = "Please provide your password")
+    private String encrytedPassword;
+
+    @NotEmpty(message = "Please provide your first name")
     private String 	  firstName;
+
+    @NotEmpty(message = "Please provide your Last name")
     private String    lastName;
+
     private boolean   enabled;
+
     private Set<Long> roles;
 
     public UserDTO(Long userId, String userName, String email, String firstName, String lastName, boolean enabled) {
         super();
-        this.userId = userId;
-        this.userName = userName;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.enabled = enabled;
+        this.userId 	= userId;
+        this.userName   = userName;
+        this.email		= email;
+        this.firstName  = firstName;
+        this.lastName   = lastName;
+        this.enabled    = enabled;
     }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public Set<Long> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Long> roles) {
-        this.roles = roles;
-    }
-
 }

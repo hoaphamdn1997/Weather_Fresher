@@ -25,28 +25,20 @@ public class UserEntity {
     @Column(name = "user_id")
     private Long userId;
 
-    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$", message = "EX: Username123 Only have character a-z, A-Z, 0-9 and Length 8 - 32 char")
+
     @Column(name = "user_name")
-    @NotEmpty(message = "Please provide your user name")
     private String userName;
 
     @Column(name = "email")
-    @Pattern(regexp = "[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}", message = "Email invalid EX:user@mail.com")
-    @NotEmpty(message = "Please provide your email")
     private String email;
 
     @Column(name = "encryted_password")
-    @NotEmpty(message = "Please provide your password")
-    @Length(min = 8, message = "Min 8 Character")
-
     private String encrytedPassword;
 
     @Column(name = "firstname")
-    @NotEmpty(message = "Please provide your first name")
     private String firstName;
 
     @Column(name = "lastname")
-    @NotEmpty(message = "Please provide your Last name")
     private String lastName;
 
     @Column(name = "enabled")
@@ -59,6 +51,13 @@ public class UserEntity {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<RoleEntity> roles;
+    public UserEntity (String userName, String email, String encrytedPassword, String firstName, String lastName) {
+        this.userName 			= userName;
+        this.email	  			= email;
+        this.encrytedPassword	= encrytedPassword;
+        this.firstName			= firstName;
+        this.lastName			= lastName;
+    }
 
     public Long getUserId() {
         return userId;

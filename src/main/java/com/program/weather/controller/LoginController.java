@@ -3,10 +3,12 @@ package com.program.weather.controller;
 
 import com.program.weather.common.api.AdminApi;
 import com.program.weather.common.api.WeatherApi;
+import com.program.weather.dto.UserDTO;
 import com.program.weather.entity.UserEntity;
 import com.program.weather.entity.WeatherEntity;
 import com.program.weather.entity.repository.CurrentWeatherRepository;
 import com.program.weather.service.UserService;
+import com.program.weather.service.converter.UserConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -34,6 +36,8 @@ public class LoginController {
 
     @Autowired
     CurrentWeatherRepository currentWeatherRepository;
+    @Autowired
+    private UserConverter userConverter;
 
     /**
      * Check size List  --> show more
@@ -125,7 +129,7 @@ public class LoginController {
      */
     @GetMapping("/registration")
     public String registration(Model model) {
-        model.addAttribute("userDTO", new UserEntity());
+        model.addAttribute("userDTO", new UserDTO());
         return "pageRegistration";
 
     }
@@ -133,30 +137,30 @@ public class LoginController {
     /**
      * Page Registration Action
      *
-     * @param userEntity
+     * @param userDTO
      * @param bindingResult
      * @param model
      * @return pageLogin
      */
     @PostMapping("/registration")
-    public String regisAction(@Valid @ModelAttribute("userDTO") UserEntity userEntity, BindingResult bindingResult, Model model) {
+    public String regisAction(@Valid @ModelAttribute("userDTO") UserDTO userDTO, BindingResult bindingResult, Model model) {
         //Get the Email
-        UserEntity email = userService.findByUserEmail(userEntity.getEmail());
+        UserEntity email = userService.findByUserEmail(userDTO.getEmail());
         //Compare entered emails With email data
         if (null != email) {
             bindingResult.rejectValue("email", "error.email", "Email Be Use");//truong truyen vao+ ten + message
         }
         //Get the Username
-        UserEntity userName = userService.findByUserName(userEntity.getUserName());
+        UserEntity userName = userService.findByUserName(userDTO.getUserName());
         //Compare entered Username With Username data
-        if (null !=userName ) {
+        if (null != userName) {
             bindingResult.rejectValue("userName", "error.userName", "User name be use");
         }
         //if the error sends a message ->page
         if (bindingResult.hasErrors()) {
             return "pageRegistration";
         } else {
-            userService.saveUser(userEntity);
+            userService.saveUser(userConverter.convertUserEntity(userDTO));
             model.addAttribute("successMessage", "Successfully ^^ ");
             model.addAttribute("userDTO", new UserEntity());
             return "pageLogin";
