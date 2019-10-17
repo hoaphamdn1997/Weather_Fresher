@@ -1,14 +1,14 @@
 package com.program.weather.controller;
 
 
-import com.program.weather.common.api.AdminApi;
-import com.program.weather.common.api.WeatherApi;
-import com.program.weather.dto.UserDTO;
+import com.program.weather.service.WeatherService;
+import com.program.weather.service.dto.UserDTO;
 import com.program.weather.entity.UserEntity;
 import com.program.weather.entity.WeatherEntity;
 import com.program.weather.entity.repository.CurrentWeatherRepository;
 import com.program.weather.service.UserService;
 import com.program.weather.service.converter.UserConverter;
+import com.program.weather.service.dto.property.WeatherSizeApiDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -29,10 +29,7 @@ public class LoginController {
     private UserService userService;
 
     @Autowired
-    private WeatherApi weatherApi;
-
-    @Autowired
-    AdminApi adminApi;
+    private WeatherService weatherService;
 
     @Autowired
     CurrentWeatherRepository currentWeatherRepository;
@@ -56,9 +53,9 @@ public class LoginController {
         UserEntity userEntity = userService.findByUserName(principal.getName());
         Long userid = userEntity.getUserId();
         //List Weather user group by Name City and Order by Date
-        List<WeatherEntity> listWeather = weatherApi.findWeatherUserandDate(userid);
+        List<WeatherEntity> listWeather = weatherService.findWeatherByUserAndDate(userid);
         //List Weather user Oder by Date
-        List<WeatherEntity> weatherEntities = weatherApi.findAllByUserEntities(userEntity);
+        List<WeatherEntity> weatherEntities = weatherService.findAllByUserEntitiesOrderByDateDesc(userEntity);
         //Attach size to city
         listWeather.forEach(w -> {
             WeatherSizeApiDTO weatherSizeApiDTO = new WeatherSizeApiDTO();
@@ -77,9 +74,9 @@ public class LoginController {
         UserEntity userEntity = userService.findByUserName(principal.getName());
         Long userid = userEntity.getUserId();
         //List weather user groud by name City and Order by Date
-        List<WeatherEntity> listWeather = weatherApi.findWeatherUserandDate(userid);
+        List<WeatherEntity> listWeather = weatherService.findWeatherByUserAndDate(userid);
         //List Weather user Order by Date
-        List<WeatherEntity> weatherEntities = weatherApi.findAllByUserEntities(userEntity);
+        List<WeatherEntity> weatherEntities = weatherService.findAllByUserEntitiesOrderByDateDesc(userEntity);
 
         model.addAttribute("ListW", listWeather);
         model.addAttribute("listShowMore", weatherEntities);
@@ -148,13 +145,13 @@ public class LoginController {
         UserEntity email = userService.findByUserEmail(userDTO.getEmail());
         //Compare entered emails With email data
         if (null != email) {
-            bindingResult.rejectValue("email", "error.email", "Email Be Use");//truong truyen vao+ ten + message
+            bindingResult.rejectValue("email", "error.email", "Email is already used please enter another email");//truong truyen vao+ ten + message
         }
         //Get the Username
         UserEntity userName = userService.findByUserName(userDTO.getUserName());
         //Compare entered Username With Username data
         if (null != userName) {
-            bindingResult.rejectValue("userName", "error.userName", "User name be use");
+            bindingResult.rejectValue("userName", "error.userName", "Username is already used ,please enter another Username");
         }
         //if the error sends a message ->page
         if (bindingResult.hasErrors()) {
@@ -169,30 +166,13 @@ public class LoginController {
 
     }
 
+    /**
+     * Come to pageBlock
+     * @param model
+     * @return pageBlock
+     */
     @RequestMapping(value = "/block")
     public String block(Model model) {
         return "pageBlock";
-    }
-}
-
-//The Class Like DTO Used to save size
-class WeatherSizeApiDTO {
-    private String city;
-    private Integer size;
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public void setSize(Integer size) {
-        this.size = size;
-    }
-
-    public Integer getSize() {
-        return size;
-    }
-
-    public String getCity() {
-        return city;
     }
 }

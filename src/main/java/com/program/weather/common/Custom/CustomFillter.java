@@ -45,7 +45,7 @@ public class CustomFillter extends GenericFilterBean {
                             UserDetails userDetailsQuery = userDetailsService.loadUserByUsername(username);
                             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-                            if (!userDetailsQuery.isEnabled()) {
+                            if (!userDetailsQuery.getAuthorities().containsAll(userDetails.getAuthorities())) {
                                 new SecurityContextLogoutHandler().logout(req, res, authentication);
                             }
 

@@ -1,22 +1,7 @@
 package com.program.weather.common.utils;
 
 public class Constants {
-	//API
-	public static final String API = "http://api.openweathermap.org";
-	//VESION API
-	public static final String VESION = "/data/2.5/";
-	// APP ID
-	public static final String APPID = "&APPID=03d81f7b88e51dc1dfaf1b8b7b950ee8&units=imperial";
-	//WEATHE SEACH
-	public static final String WEATHER_URL = API + VESION + "/weather?q=";
-	//DETAIL WEATHER
-	public static final String FORECAST_URL = API + VESION + "/forecast?q=";
-	//HOST IMG
-	public static final String HOSTIMG = "http://openweathermap.org";
-	//ICON
-	public static final String IMG_URL = HOSTIMG + "/img/wn/";
-	//TAIL ICON
-	public static final String TAIL_ICON = ".png";
+
 	//ACCONT STATUS
 	public static final Boolean ACTIVE = true;
 	public static final Boolean UN_ACTIVE = false;

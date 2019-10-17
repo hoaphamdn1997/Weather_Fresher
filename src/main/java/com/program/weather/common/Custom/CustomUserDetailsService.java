@@ -39,12 +39,12 @@ public class CustomUserDetailsService implements UserDetailsService {
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getRole()));
         }
 
-        UserDetails userDetails = (UserDetails) new User(user.getUserName(),user.getEncrytedPassword(),user.isEnabled(),
-                true,true,true,grantedAuthorities);
-
-        return userDetails;
-       /* return new org.springframework.security.core.userdetails.User(
-                user.getUserName(), user.getEncrytedPassword(), grantedAuthorities);*/
+//        UserDetails userDetails = (UserDetails) new User(user.getUserName(),user.getEncrytedPassword(),user.isEnabled(),
+//                true,true,true,grantedAuthorities);
+//
+//        return userDetails;
+       return new org.springframework.security.core.userdetails.User(
+                user.getUserName(), user.getEncrytedPassword(), grantedAuthorities);
     }
 
 }

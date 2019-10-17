@@ -42,7 +42,7 @@
                                 <td><select id="idselect" class="form-control">
                                     <option th:each="role : ${dsRole}"
                                             th:value="${role.role}" th:text="${#strings.substring(role.role,5)}"
-                                    th:selected="${#lists.contains(dsUser.roles,role.roleId)}"></option>
+                                            th:selected="${#lists.contains(dsUser.roles,role.roleId)}"></option>
 
                                 </select></td>
                                 <td>
@@ -109,6 +109,9 @@
                     $('.table').find('.table-' + id).remove();
 
                     $('#myModal').modal('toggle');
+                },
+                error: function () {
+                    alert('error')
                 }
             })
         })
@@ -117,22 +120,38 @@
         $('.activeUser').change(function () {
             if (this.checked) {
                 var id = $(this).closest("tr").attr("data-id");
+                var thiss = $(this);
+
                 $.ajax({
                     url: "/home-admin/editActiveUserA",
                     type: "GET",
                     data: {
                         id: id,
                     },
+                    success: function (data) {
+                        thiss.closest("tr").find("select").val("ROLE_USER")
+                    },
+                    error: function () {
+                        alert('error')
+
+                    }
                 })
             }
             else {
                 var id = $(this).closest("tr").attr("data-id");
+                var thiss = $(this);
                 $.ajax({
                     url: "/home-admin/editActiveUserA",
                     type: "GET",
                     data: {
                         id: id,
                     },
+                    success: function (data) {
+                        thiss.closest("tr").find("select").val("ROLE_GUEST")
+                    },
+                    error: function () {
+                        alert('error')
+                    }
                 })
             }
         })
@@ -140,26 +159,52 @@
     });
 
     $('.form-control').change(function () {
-        var id = $(this).closest("tr").attr("data-id");
-        var role = $(this).val();
+        if (this.change) {
+            var id = $(this).closest("tr").attr("data-id");
+            var role = $(this).val();
+            var thiss = $(this);
+            $.ajax({
+                type: "PUT",
+                url: "/home-admin/change-role",
+                data: JSON.stringify({
+                    id: parseInt(id),
+                    role: role
+                }),
+                contentType: 'application/json',
+                dataType: 'json',
+                responseType: 'application/json',
+                crossDomain: true,
+                success: function (data) {
+                    thiss.closest("tr").find("input").prop('checked',data.enabled)
 
-        $.ajax({
-            type: "PUT",
-            url: "/home-admin/change-role",
-            data: JSON.stringify({
-                id: parseInt(id),
-                role:role
-            }),
-            contentType: 'application/json',
-            dataType: 'json',
-            responseType: 'application/json',
-            crossDomain: true,
-            success: function (data) {
-                location.reload();
-            },
-            error: function (error) {
-            }
-        });
+                },
+                error: function (e) {
+                }
+            });
+        }else {
+            var id = $(this).closest("tr").attr("data-id");
+            var role = $(this).val();
+            var thiss = $(this);
+            $.ajax({
+                type: "PUT",
+                url: "/home-admin/change-role",
+                data: JSON.stringify({
+                    id: parseInt(id),
+                    role: role
+                }),
+                contentType: 'application/json',
+                dataType: 'json',
+                responseType: 'application/json',
+                crossDomain: true,
+                success: function (data) {
+
+                    thiss.closest("tr").find("input").prop('checked',data.enabled)
+
+                },
+                error: function (e) {
+                }
+            });
+        }
     });
 </script>
 </body>

@@ -1,7 +1,6 @@
-package com.program.weather.dto.property;
+package com.program.weather.service.dto.property;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 public class CityDTO {
     private Double id;

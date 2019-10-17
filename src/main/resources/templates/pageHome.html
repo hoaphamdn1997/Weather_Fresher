@@ -58,7 +58,7 @@
                                             <div class="weather-place">
                                                 <div class="weather-country" th:text="*{nameCity}"></div>
                                                 <div class="weather-time"
-                                                     th:text="*{#calendars.format(date,'MMMM dd, yyyy')}"></div>
+                                                     th:text="*{#calendars.format(date,'MMM dd, yyyy')}"></div>
                                             </div>
                                             <div class="weather-main">
                                                 <div class="weather-main-top">
@@ -116,7 +116,7 @@
                                                     </div>
                                                     <div class="weather-place">
                                                         <div class="weather-country" th:text="${listW.nameCity}"></div>
-                                                            <div class="weather-time"
+                                                        <div class="weather-time"
                                                              th:text="${#dates.format(listW.date,'MMM dd, yyyy')}"></div>
                                                     </div>
                                                     <div class="weather-main">
@@ -174,7 +174,8 @@
                                                                   method="get">
                                                                 <input type="hidden" th:attr="value=${item.weatherId}"
                                                                        name="id"/>
-                                                                <button class="btn  btn-danger" type="submit">Delete</button>
+                                                                <button class="btn  btn-danger" type="submit">Delete
+                                                                </button>
                                                             </form>
                                                         </div>
 

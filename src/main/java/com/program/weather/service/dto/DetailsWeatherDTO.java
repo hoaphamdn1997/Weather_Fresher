@@ -1,7 +1,7 @@
-package com.program.weather.dto;
+package com.program.weather.service.dto;
 
-import com.program.weather.dto.property.CityDTO;
-import com.program.weather.dto.property.ListDetailDTO;
+import com.program.weather.service.dto.property.CityDTO;
+import com.program.weather.service.dto.property.ListDetailDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -13,6 +13,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.program.weather.common.Custom.CustomUserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+
+import java.util.Locale;
 
 @Configuration
 @EnableWebSecurity
@@ -21,6 +25,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
+
+    @Bean
+    public LocaleResolver localeResolver() {
+        SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
+        sessionLocaleResolver.setDefaultLocale(Locale.US);
+        return sessionLocaleResolver;
+    }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -44,14 +55,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterAt(new CustomFillter(customUserDetailsService), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 //Optional login
-                .antMatchers("/login", "/logout", "/registration", "/home")
-                .permitAll().antMatchers( "/home-weather/search-city","/").hasAnyRole("USER" ,"ADMIN")
+                .antMatchers("/login", "/logout", "/registration")
+                .permitAll().antMatchers( "/home-weather/search-city","/","/home").hasAnyRole("USER" ,"ADMIN")
                 //Obligatory login
 //                .authenticated()
-                //only Admin
+
+                //only Admin'
                 .antMatchers("/home-admin/admin")
                 .hasRole("ADMIN")
                 .antMatchers("/**").authenticated()
+                .anyRequest().authenticated()
                 .and()
                 //goto login page
                 .formLogin()

@@ -26,7 +26,7 @@ public class ClientFowardController {
         return URL;
     }
 
-    public String urlMappingUser(Authentication authentication) {
+    private String urlMappingUser(Authentication authentication) {
         String url = "";
         List<GrantedAuthority> authorities = getListAuthority(authentication);
 
@@ -39,11 +39,11 @@ public class ClientFowardController {
         return url;
     }
 
-    public boolean checkRoleUser(List<GrantedAuthority> userAuthority, String role) {
+    private boolean checkRoleUser(List<GrantedAuthority> userAuthority, String role) {
         return userAuthority.stream().anyMatch(author -> author.getAuthority().equalsIgnoreCase(role));
     }
 
-    public List<GrantedAuthority> getListAuthority(Authentication authentication){
+    private List<GrantedAuthority> getListAuthority(Authentication authentication){
         List<GrantedAuthority> userAuthority = new ArrayList<GrantedAuthority>();
         @SuppressWarnings("unchecked")
         Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>) authentication.getAuthorities();

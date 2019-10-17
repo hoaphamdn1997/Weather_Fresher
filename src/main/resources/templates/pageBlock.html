@@ -14,18 +14,28 @@
 <br>
 <br>
 <br>
-<div class="card-body">
-    <div class="container">
-        <div id="accordion">
+<div class="container" style=" margin-bottom: -50px;">
 
-            <div class="mt-4 mb-4">
-                <div class="row m-3">
-                    <div class="card mt-2">
-                        <div class="card">
-                            <div
-                                    class="card-body weather-container weather-item weather-main-item">
-                                <b style="margin-top: 15px; width: 500px; height: 50px"><span
-                                        class="text-center">Sorry!!!... You have been blocked by the admin... </span></b>
+    <div class="row" id="frame">
+        <div class="col-sm-8 col-md-7 col-lg-7 mx-auto" style="margin-left: 230px">
+            <div class="row">
+                <div class="col list">
+                    <div class="card-body">
+                        <div class="container">
+
+                            <div id="accordion">
+
+                                <div class="mt-4 mb-4">
+                                    <div class="row m-3">
+                                        <div class="card mt-2">
+                                            <div
+                                                    class="card-body weather-container weather-item weather-main-item">
+												<span style="margin-top: 15px; width: 500px; height: 50px"
+                                                      class="text-center">Sorry you have been blocked by the admin ...</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -34,6 +44,8 @@
         </div>
     </div>
 </div>
-
+<br>
+<br>
+<th:block th:replace="common/footer :: footer"></th:block>
 </body>
 </html>

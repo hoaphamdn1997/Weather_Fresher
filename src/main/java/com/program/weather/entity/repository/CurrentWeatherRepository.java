@@ -19,6 +19,12 @@ public interface CurrentWeatherRepository extends JpaRepository<WeatherEntity, L
 
 	@Query(value = "SELECT * FROM weather.user_weather a join weather.weatherinfo b on a.weather_id = b.weather_id where a.user_id=?1 and b.date in ( select max(date) FROM weather.user_weather a join weather.weatherinfo b on a.weather_id = b.weather_id where a.user_id=?1 group by b.name_city order by date desc ) group by b.name_city order by date desc", nativeQuery = true)
 	List<WeatherEntity>findDateTimeByUserGroupbyDateTimeDest(long id);
-	
-	
+
+	/*@Query(value = "SELECT * FROM weatherinfo a JOIN user_weather b ON a.weather_id=b.weather_id WHERE b.user_id = ?1",nativeQuery = true)
+	List<WeatherEntity> getListWeatherByUser()*/
+
+	List<WeatherEntity> findAllByUserEntities(UserEntity userEntity);
+
+
+
 }

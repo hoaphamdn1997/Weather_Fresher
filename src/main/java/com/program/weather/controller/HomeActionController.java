@@ -6,26 +6,19 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
-import ch.qos.logback.core.net.SyslogOutputStream;
-import com.program.weather.common.api.AdminApi;
-import com.program.weather.common.api.WeatherApi;
 import com.program.weather.common.utils.CommonUtil;
 import com.program.weather.common.utils.Constants;
-import com.program.weather.dto.CurrentWeatherDTO;
-import com.program.weather.dto.DetailsWeatherDTO;
+import com.program.weather.service.WeatherService;
+import com.program.weather.service.dto.DetailsWeatherDTO;
 import com.program.weather.entity.WeatherEntity;
 import com.program.weather.entity.DetailsWeatherEntity;
 
 import com.program.weather.entity.UserEntity;
-import com.program.weather.entity.WeatherComparator;
 import com.program.weather.entity.repository.CurrentWeatherRepository;
 import com.program.weather.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -33,11 +26,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/home-weather")
 public class HomeActionController {
 
-    @Autowired//This annotation allows Spring to resolve and inject collaborating beans into your bean.
-    private WeatherApi weatherApi;
 
     @Autowired
-    AdminApi adminApi;
+    private WeatherService weatherService;
+
 
     @Autowired
     CurrentWeatherRepository currentWeatherRepository;
@@ -54,35 +46,37 @@ public class HomeActionController {
      */
     @GetMapping("/search-city")
     public String home(@RequestParam String name, Model modelMap, Principal principal) {
-        // After the user has logged in, the principal will have the principal
-        UserEntity userEntity = userService.findByUserName(principal.getName());
-        List<WeatherEntity> lstWeatherByName;
-        List<WeatherEntity> lstWeather = weatherApi.findAllByUserEntities(userEntity);
-        lstWeatherByName = lstWeather.stream()
-                .filter(curweather -> name.equalsIgnoreCase(curweather.getNameCity()))
-                .collect(Collectors.toList());
-        WeatherEntity weatherEntity = null;
+
         //If not found City
         try {
-            weatherEntity = weatherApi.restJsonData(name);
+            // After the user has logged in, the principal will have the principal
+            UserEntity userEntity = userService.findByUserName(principal.getName());
+            List<WeatherEntity> lstWeatherByName;
+            List<WeatherEntity> lstWeather = weatherService.findAllByUserEntitiesOrderByDateDesc(userEntity);
+            lstWeatherByName = lstWeather.stream()
+                    .filter(curweather -> name.equalsIgnoreCase(curweather.getNameCity()))
+                    .collect(Collectors.toList());
+            WeatherEntity weatherEntity = null;
+            weatherEntity = weatherService.getWeatherByApi(name);
+            // lay thoi tiet hien tai cung ten Search trong db , Xy ly nut add va update
+            WeatherEntity curWeather = lstWeatherByName.stream()
+                    .filter(weather -> CommonUtil.curTimeToString().equals(CommonUtil.formatToString(weather.getDate())))
+                    .findAny().orElse(null);
+            if (curWeather != null) {
+                modelMap.addAttribute("flag", "update");
+            } else {
+                modelMap.addAttribute("flag", "add");
+            }
+
+            modelMap.addAttribute("lstWeatherByUser", lstWeatherByName);
+            modelMap.addAttribute("weatherSearch", weatherEntity);
+            modelMap.addAttribute("name", name);
+
         } catch (Exception e) {
             modelMap.addAttribute("isFound", true);
         }
-
-        // lay thoi tiet hien tai cung ten Search trong db , Xy ly nut add va update
-        WeatherEntity curWeather = lstWeatherByName.stream()
-                .filter(weather -> CommonUtil.curTimeToString().equals(CommonUtil.formatToString(weather.getDate())))
-                .findAny().orElse(null);
-        if (curWeather != null) {
-            modelMap.addAttribute("flag", "update");
-        } else {
-            modelMap.addAttribute("flag", "add");
-        }
-
-        modelMap.addAttribute("lstWeatherByUser", lstWeatherByName);
-        modelMap.addAttribute("weatherSearch", weatherEntity);
-        modelMap.addAttribute("name", name);
         return "forward:/";
+
     }
 
 
@@ -98,11 +92,11 @@ public class HomeActionController {
     @GetMapping("/detailts/{name}")
     public String getWeatherDetailts(@PathVariable String name, Model model) {
         List<DetailsWeatherEntity> lstForCast = new ArrayList<DetailsWeatherEntity>();
-        DetailsWeatherDTO detailsWeatherDTO = weatherApi.foreCast(name);
+        DetailsWeatherDTO detailsWeatherDTO = weatherService.foreCast(name);
 
         for (int i = 0; i < Constants.SIZE_FORECAST_WEATHER; i += Constants.SIZE_FORECAST_WEATHER_REPEAT) {
             lstForCast.add(new DetailsWeatherEntity(
-                            Constants.IMG_URL + detailsWeatherDTO.getList().get(i).getWeather().get(0).getIcon() + Constants.TAIL_ICON,
+                            detailsWeatherDTO.getList().get(i).getWeather().get(0).getIcon(),
                             detailsWeatherDTO.getCity().getName(),
                             CommonUtil.toCelsius(Double.parseDouble(detailsWeatherDTO.getList().get(i).getMain().getTemp_min())),
                             CommonUtil.toCelsius(Double.parseDouble(detailsWeatherDTO.getList().get(i).getMain().getTemp_max())),
@@ -128,7 +122,7 @@ public class HomeActionController {
      */
     @GetMapping("/deleteWeather")
     public String deleteUser(@RequestParam Long id) {
-        weatherApi.deleteWeather(id);
+        weatherService.deleteWeather(id);
         return "redirect:/";
 
     }
@@ -149,7 +143,7 @@ public class HomeActionController {
         List<WeatherEntity> lstByUserByCity;
         // lay ra ds city theo iduser va nameCity
         lstByUserByCity = lstByUser.stream()
-                .filter(weather -> name.trim().toLowerCase().equals(weather.getNameCity().trim().toLowerCase()))
+                .filter(weather -> name.equalsIgnoreCase(weather.getNameCity()))
                 .collect(Collectors.toList());
         // kiem tra action
         if (action.equals("Add")) {
@@ -181,7 +175,7 @@ public class HomeActionController {
      * @param userEntity
      */
     public void insertWeather(String name, UserEntity userEntity) {
-        WeatherEntity result = weatherApi.restJsonData(name);
+        WeatherEntity result = weatherService.getWeatherByApi(name);
         result.setUserEntities(new HashSet<UserEntity>(Arrays.asList(userEntity)));
         result.setCreateBy(userEntity.getLastName() + " " + userEntity.getFirstName());
         currentWeatherRepository.save(result);
@@ -195,7 +189,7 @@ public class HomeActionController {
      * @param userEntity
      */
     public void updateWeather(String name, UserEntity userEntity, Long id) {
-        WeatherEntity result = weatherApi.restJsonData(name);
+        WeatherEntity result = weatherService.getWeatherByApi(name);
         result.setUserEntities(new HashSet<UserEntity>(Arrays.asList(userEntity)));
         result.setCreateBy(userEntity.getLastName() + " " + userEntity.getFirstName());
         result.setWeatherId(id);

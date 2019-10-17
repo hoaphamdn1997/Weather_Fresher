@@ -1,6 +1,6 @@
 package com.program.weather.service.converter;
 
-import com.program.weather.dto.UserDTO;
+import com.program.weather.service.dto.UserDTO;
 import com.program.weather.entity.UserEntity;
 import org.springframework.stereotype.Component;
 
