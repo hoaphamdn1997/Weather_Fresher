@@ -11,20 +11,41 @@ import java.time.Instant;
 import java.util.List;
 
 @Repository
-public interface CurrentWeatherRepository extends JpaRepository<WeatherEntity, Long>{
-	WeatherEntity findByWeatherId(Long id);
+public interface CurrentWeatherRepository extends JpaRepository<WeatherEntity, Long> {
+    /**
+     * JPA find weaather with weather ID
+     *
+     * @param id
+     * @return weather id
+     */
+    WeatherEntity findByWeatherId(Long id);
 
-	List<WeatherEntity> findAllByUserEntitiesOrderByDateDesc(UserEntity userEntity);
+    /**
+     * JPA find weather folow user oder by date desc
+     *
+     * @param userEntity
+     * @return List WeatherEntity
+     */
+
+    List<WeatherEntity> findAllByUserEntitiesOrderByDateDesc(UserEntity userEntity);
+
+    /**
+     * JPA find weather folow user group by city name and oder by date desc
+     *
+     * @param id
+     * @return List WeatherEntity
+     */
+    @Query(value = "SELECT * FROM user_weather a join weatherinfo b on a.weather_id = b.weather_id where a.user_id=?1 and b.date in ( select max(date) FROM user_weather a join weatherinfo b on a.weather_id = b.weather_id where a.user_id=?1 group by b.name_city order by date desc ) group by b.name_city order by date desc", nativeQuery = true)
+    List<WeatherEntity> findDateTimeByUserGroupbyDateTimeDest(long id);
 
 
-	@Query(value = "SELECT * FROM weather.user_weather a join weather.weatherinfo b on a.weather_id = b.weather_id where a.user_id=?1 and b.date in ( select max(date) FROM weather.user_weather a join weather.weatherinfo b on a.weather_id = b.weather_id where a.user_id=?1 group by b.name_city order by date desc ) group by b.name_city order by date desc", nativeQuery = true)
-	List<WeatherEntity>findDateTimeByUserGroupbyDateTimeDest(long id);
-
-	/*@Query(value = "SELECT * FROM weatherinfo a JOIN user_weather b ON a.weather_id=b.weather_id WHERE b.user_id = ?1",nativeQuery = true)
-	List<WeatherEntity> getListWeatherByUser()*/
-
-	List<WeatherEntity> findAllByUserEntities(UserEntity userEntity);
-
+    /**
+     * JPA find All weather folow user
+     *
+     * @param userEntity
+     * @return List WeatherEntity
+     */
+    List<WeatherEntity> findAllByUserEntities(UserEntity userEntity);
 
 
 }

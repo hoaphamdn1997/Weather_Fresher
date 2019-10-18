@@ -23,7 +23,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
-
+    /**
+     * Load user Database with username
+     * @param userName
+     * @return return one userdetails have Username ,password ,authorities
+     * @throws UsernameNotFoundException
+     */
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         //Use JPA find  User name
@@ -38,12 +43,8 @@ public class CustomUserDetailsService implements UserDetailsService {
         for (RoleEntity role : roles) {
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getRole()));
         }
-
-//        UserDetails userDetails = (UserDetails) new User(user.getUserName(),user.getEncrytedPassword(),user.isEnabled(),
-//                true,true,true,grantedAuthorities);
-//
-//        return userDetails;
-       return new org.springframework.security.core.userdetails.User(
+        //return one userdetails have Username ,password ,authorities
+        return new org.springframework.security.core.userdetails.User(
                 user.getUserName(), user.getEncrytedPassword(), grantedAuthorities);
     }
 

@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/home-admin")
-public class AdminController {
+public class AdminActionController {
 
 
     @Autowired

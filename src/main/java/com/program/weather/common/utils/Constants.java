@@ -2,10 +2,10 @@ package com.program.weather.common.utils;
 
 public class Constants {
 
-	//ACCONT STATUS
+	//ACCOUNT STATUS
 	public static final Boolean ACTIVE = true;
 	public static final Boolean UN_ACTIVE = false;
-	//ROLE
+	//ROLE USER
 	public static final String ADMIN = "ROLE_ADMIN";
 	public static final String USER = "ROLE_USER";
 	public static final String GUEST = "ROLE_GUEST";

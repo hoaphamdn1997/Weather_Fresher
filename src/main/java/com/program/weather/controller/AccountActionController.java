@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-public class LoginController {
+public class AccountActionController {
 
     @Autowired
     private UserService userService;
@@ -33,6 +33,7 @@ public class LoginController {
 
     @Autowired
     CurrentWeatherRepository currentWeatherRepository;
+
     @Autowired
     private UserConverter userConverter;
 
@@ -45,7 +46,7 @@ public class LoginController {
 
     @RequestMapping(value = {"/process-size"}, method = RequestMethod.GET)
     @ResponseBody
-//ResponseBody will help you convert the returned object into json string because you use any library to convert it.--> ResponseBody sẽ giúp bạn convert đối tượng trả về thành chuỗi json thì vì bạn dùng 1 thư viện nào nó để convert.
+    //ResponseBody will help you convert the returned object into json string because you use any library to convert it.--> ResponseBody sẽ giúp bạn convert đối tượng trả về thành chuỗi json thì vì bạn dùng 1 thư viện nào nó để convert.
     public ResponseEntity<List<WeatherSizeApiDTO>> processSizeByCity(Principal principal) {
         //list Size weather group was declared
         List<WeatherSizeApiDTO> sizeWeatherGroup = new ArrayList<>();
@@ -168,6 +169,7 @@ public class LoginController {
 
     /**
      * Come to pageBlock
+     *
      * @param model
      * @return pageBlock
      */

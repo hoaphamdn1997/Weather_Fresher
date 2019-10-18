@@ -11,7 +11,7 @@ import com.program.weather.common.utils.Constants;
 import com.program.weather.service.WeatherService;
 import com.program.weather.service.dto.DetailsWeatherDTO;
 import com.program.weather.entity.WeatherEntity;
-import com.program.weather.entity.DetailsWeatherEntity;
+import com.program.weather.entity.CreateEntityWeather.DetailsWeatherEntity;
 
 import com.program.weather.entity.UserEntity;
 import com.program.weather.entity.repository.CurrentWeatherRepository;

@@ -17,10 +17,9 @@ import java.util.List;
 @Controller
 public class ClientFowardController {
 
-
     @GetMapping("/processURL")
     public String processURL() {
-        Authentication authentication =SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String URL = urlMappingUser(authentication);
 
         return URL;
@@ -30,11 +29,11 @@ public class ClientFowardController {
         String url = "";
         List<GrantedAuthority> authorities = getListAuthority(authentication);
 
-        if(checkRoleUser(authorities, Constants.USER))
+        if (checkRoleUser(authorities, Constants.USER))
             url = "redirect:/";
-        if(checkRoleUser(authorities, Constants.ADMIN))
+        if (checkRoleUser(authorities, Constants.ADMIN))
             url = "redirect:/home-admin/admin";
-        if(checkRoleUser(authorities, Constants.GUEST))
+        if (checkRoleUser(authorities, Constants.GUEST))
             url = "redirect:/block";
         return url;
     }
@@ -43,7 +42,7 @@ public class ClientFowardController {
         return userAuthority.stream().anyMatch(author -> author.getAuthority().equalsIgnoreCase(role));
     }
 
-    private List<GrantedAuthority> getListAuthority(Authentication authentication){
+    private List<GrantedAuthority> getListAuthority(Authentication authentication) {
         List<GrantedAuthority> userAuthority = new ArrayList<GrantedAuthority>();
         @SuppressWarnings("unchecked")
         Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>) authentication.getAuthorities();

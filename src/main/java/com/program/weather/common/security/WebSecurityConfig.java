@@ -42,8 +42,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
-        // Sét đặt dịch vụ để tìm kiếm User trong Database.
-        // Và sét đặt PasswordEncoder.
+        // Set sevice find user in Database
+        // Set password follow PasswordEncoder.
         auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
 
     }
@@ -56,11 +56,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //Optional login
                 .antMatchers("/login", "/logout", "/registration")
-                .permitAll().antMatchers( "/home-weather/search-city","/","/home").hasAnyRole("USER" ,"ADMIN")
-                //Obligatory login
-//                .authenticated()
-
-                //only Admin'
+                .permitAll().antMatchers( "/home-weather/**","/","/home")
+                .hasAnyRole("USER" ,"ADMIN")
                 .antMatchers("/home-admin/admin")
                 .hasRole("ADMIN")
                 .antMatchers("/**").authenticated()

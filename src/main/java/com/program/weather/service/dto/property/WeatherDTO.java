@@ -1,18 +1,16 @@
 package com.program.weather.service.dto.property;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class WeatherDTO {
-	
-	private String id;
-	private String main;
-	private String description;
-	private String icon;
-	
-	
+
+    private String id;
+    private String main;
+    private String description;
+    private String icon;
+
+
 }

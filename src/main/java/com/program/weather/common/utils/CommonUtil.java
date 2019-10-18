@@ -25,22 +25,10 @@ public class CommonUtil {
     }
 
     /**
-     * Format Key Search ex: đà nẵng=danang
-     *
-     * @param seach
-     * @return name
-     */
-    public static String removeAccent(String seach) {
-        String name = Normalizer.normalize(seach, Normalizer.Form.NFD);
-        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
-        return pattern.matcher(name).replaceAll("").replace('đ', 'd').replace('Đ', 'D').replaceAll("\\s+", "");
-    }
-
-    /**
      * Format TimeStamp to String yyyymmdd
      *
-     * @param ts
-     * @return
+     * @param ts//TIMESTAMP
+     * @return formattedDate //yyyyMMdd
      */
     public static String formatToString(Timestamp ts) {
         String formattedDate = new SimpleDateFormat("yyyyMMdd").format(ts);
@@ -50,15 +38,13 @@ public class CommonUtil {
     /**
      * Parse curTime to String
      *
-     * @return
+     * @return formattedDate//yyyyMMdd
      */
     public static String curTimeToString() {
         Timestamp ts = new Timestamp(System.currentTimeMillis());
         String formattedDate = new SimpleDateFormat("yyyyMMdd").format(ts);
         return formattedDate;
     }
-
-
 
 
 }

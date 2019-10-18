@@ -15,7 +15,7 @@
 <body>
 
 <div class="login-form">
-    <form th:action="@{/loginA}" method="POST" class="form-signin">
+    <form th:action="@{/loginA}" method="POST" class="form-signin" id="formSignup">
         <h2 class="text-center">Login</h2>
         <div align="center" th:if="${param.error}">
             <p style="font-size: 20; color: #FF1C19;">Email or Password invalid, please verify</p>
@@ -67,5 +67,6 @@
         </div>
     </div>
 </div>
+<script th:src="@{/js/validate.js}"></script>
 </body>
 </html>

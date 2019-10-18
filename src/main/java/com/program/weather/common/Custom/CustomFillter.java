@@ -16,41 +16,40 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
-
+/**
+ * @author Hoapham
+ */
 public class CustomFillter extends GenericFilterBean {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    /**
+     * Create Filter
+     *
+     * @param request
+     * @param response
+     * @param chain
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     public void doFilter(
             ServletRequest request,
             ServletResponse response,
-            FilterChain chain) throws IOException, ServletException
-    {
+            FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (authentication != null) {
-            if (authentication.getPrincipal() != null) {
-                if (authentication.getPrincipal() instanceof UserDetails) {
-                    //instand cua user detailts
-                    // if login then authentication.getCredentials() null
-                    if (authentication.getCredentials() == null) {
-                        // get username of user logged saved by getPrincipal()
-                        String username = ((UserDetails) authentication.getPrincipal()).getUsername();
-                        if (!username.isEmpty()) {
-                            UserDetails userDetailsQuery = userDetailsService.loadUserByUsername(username);
-                            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        if (authentication != null && authentication.getPrincipal() != null && authentication.getPrincipal() instanceof UserDetails && authentication.getCredentials() == null) {
+            String username = ((UserDetails) authentication.getPrincipal()).getUsername();
+            if (!username.isEmpty()) {
+                UserDetails userDetailsQuery = userDetailsService.loadUserByUsername(username);
+                UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-                            if (!userDetailsQuery.getAuthorities().containsAll(userDetails.getAuthorities())) {
-                                new SecurityContextLogoutHandler().logout(req, res, authentication);
-                            }
-
-                        }
-                    }
+                if (!userDetailsQuery.getAuthorities().containsAll(userDetails.getAuthorities())) {
+                    new SecurityContextLogoutHandler().logout(req, res, authentication);
                 }
             }
         }
@@ -60,8 +59,5 @@ public class CustomFillter extends GenericFilterBean {
 
     public CustomFillter(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
-    }
-
-    public CustomFillter() {
     }
 }
