@@ -35,36 +35,11 @@
             <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit"
                     th:text="Login"></button>
         </div>
-        <p><a href="#" data-toggle="modal" data-target="#myModal">Forget Password?</a></p>
+        <p><a th:href="@{/forgot-password}" >Forget Password?</a></p>
     </form>
     <p class="text-center small" style="color: white;">Don't have an account? <a th:href="@{/registration}">Sign up
         here!</a></p>
 </div>
-<!-- The Modal -->
-<div class="modal" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Fogot Password:</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                <label>Enter the email...</label>
-                <input type="text" id="email" name="email" property="email"
-                       th:placeholder="Email" class="form-control" required="required"/>
-            </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" >Send Password</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-
-        </div>
     </div>
 </div>
 <script th:src="@{/js/validate.js}"></script>

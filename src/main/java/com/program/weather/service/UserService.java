@@ -65,5 +65,10 @@ public interface UserService {
 
     List<UserEntity> findAll();
 
-
+    /**
+     * update password
+     * @param password
+     * @param userId
+     */
+    void updatePassword(String password, Long userId);
 }

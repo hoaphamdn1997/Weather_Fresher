@@ -55,7 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterAt(new CustomFillter(customUserDetailsService), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 //Optional login
-                .antMatchers("/login", "/logout", "/registration")
+                .antMatchers("/login", "/logout", "/registration","/forgot-password**","/reset-password**")
                 .permitAll().antMatchers( "/home-weather/**","/","/home")
                 .hasAnyRole("USER" ,"ADMIN")
                 .antMatchers("/home-admin/admin")

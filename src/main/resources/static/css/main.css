@@ -1,0 +1,27 @@
+h1 {
+    color: #78ab46;
+}
+
+body {
+    background-image: url(https://www.bing.com/th?id=OHR.AlbertaThanksgiving_ROW3027926486_1920x1080.jpg&amp;rf=LaDigue_1920x1080.jpg&amp;pid=hp);
+}
+
+footer {
+    position: fixed;
+    height: 50px;
+    bottom: 0;
+    width: 100%;
+    background-color: #ccc
+}
+
+footer p {
+    padding: 15px;
+}
+
+.error-message {
+    color: #a94442;
+}
+
+.error-message:first-letter {
+    text-transform: capitalize;
+}

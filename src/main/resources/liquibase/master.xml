@@ -19,5 +19,6 @@
     <include file="liquibase/changelog/added_entity_weatherinfo.xml" relativeToChangelogFile="false"/>
     <include file="liquibase/changelog/added_entity_constraint_user_weather.xml" relativeToChangelogFile="false"/>
     <include file="liquibase/changelog/added_entity_constraint_user_role.xml" relativeToChangelogFile="false"/>
+    <include file="liquibase/changelog/added_entity_password_reset_token.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>

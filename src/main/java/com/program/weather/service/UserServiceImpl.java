@@ -11,6 +11,7 @@ import com.program.weather.entity.repository.CurrentWeatherRepository;
 import com.program.weather.entity.repository.RoleRepository;
 import com.program.weather.entity.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -33,6 +34,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     CurrentWeatherRepository weatherRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /**
      * Find user by User Name
@@ -90,6 +94,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserEntity> findAll() {
         return userRepository.findAll();
+    }
+
+    /**
+     * update pass world
+     * @param password
+     * @param userId
+     */
+    @Override
+    public void updatePassword(String password, Long userId) {
+        UserEntity userEntity = userRepository.findByUserId(userId);
+        userEntity.setEncrytedPassword(password);
+        userRepository.save(userEntity);
     }
 
 

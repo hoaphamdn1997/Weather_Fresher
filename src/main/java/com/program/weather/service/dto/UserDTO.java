@@ -30,6 +30,9 @@ public class UserDTO {
     @NotEmpty(message = "Please provide your password")
     private String encrytedPassword;
 
+    @Size(min = 8, max = 32, message = "{user.password.msg}")
+    private String confirmPassword;
+
     @NotEmpty(message = "Please provide your first name")
     private String firstName;
 
@@ -49,4 +52,6 @@ public class UserDTO {
         this.lastName = lastName;
         this.enabled = enabled;
     }
+
+
 }
