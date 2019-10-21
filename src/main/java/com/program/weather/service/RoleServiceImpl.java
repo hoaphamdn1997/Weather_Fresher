@@ -10,18 +10,19 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class RoleServiceImpl implements RoleService{
+public class RoleServiceImpl implements RoleService {
 
-	@Autowired
-	RoleRepository roleRepository;
+    @Autowired
+    RoleRepository roleRepository;
 
-	/**
-	 * Find All Role
-	 * @return
-	 */
-	@Override
-	public List<RoleEntity> findAll() {
-		return roleRepository.findAll();
-	}
+    /**
+     * Find All Role
+     *
+     * @return List Role
+     */
+    @Override
+    public List<RoleEntity> findAll() {
+        return roleRepository.findAll();
+    }
 
 }

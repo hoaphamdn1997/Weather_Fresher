@@ -26,7 +26,6 @@ public class UserEntity {
     @Column(name = "user_id")
     private Long userId;
 
-
     @Column(name = "user_name")
     private String userName;
 
@@ -59,7 +58,6 @@ public class UserEntity {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<RoleEntity> roles;
-
 
 
 }

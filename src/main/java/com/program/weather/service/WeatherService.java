@@ -8,28 +8,48 @@ import java.util.List;
 
 public interface WeatherService {
     /**
-     * Delete Weather
+     * Delete Weather by id
      *
      * @param id
      */
     void deleteWeather(Long id);
 
     /**
-     * find all User
+     * List Weather Folow User  order by date descending order
      *
      * @param userEntity
-     * @return
+     * @return List WeatherEntity desc
      */
     List<WeatherEntity> findAllByUserEntitiesOrderByDateDesc(UserEntity userEntity);
 
     /**
+     * List Weather Folow User group by nameCity  order by date descending order
      *
+     * @param id//id user
+     * @return List WeatherEntity date desc and group by name city
      */
     List<WeatherEntity> findWeatherByUserAndDate(Long id);
 
+    /**
+     * Get Weather Api Follow name city
+     *
+     * @param nameCity
+     * @return WeatherEntity
+     */
     WeatherEntity getWeatherByApi(String nameCity);
 
+    /**
+     * Details Weather ForeCast 5 day
+     *
+     * @param nameCity
+     * @return DetailsWeatherDTO
+     */
     DetailsWeatherDTO foreCast(String nameCity);
 
+    /**
+     * Delete All Weather Folow user
+     *
+     * @param listWeather
+     */
     void deleteListWeatherByUser(List<WeatherEntity> listWeather);
 }

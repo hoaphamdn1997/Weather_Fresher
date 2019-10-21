@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <property name="autoIncrement" value="true"/>
+    <changeSet id="201920090005" author="hoa">
+        <createTable tableName="user_weather">
+            <column name="user_id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+        </column>
+            <column name="weather_id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="user_weather"
+                                 baseColumnNames="user_id" constraintName="user_fk_user_weather"
+                                 referencedTableName="user" referencedColumnNames="user_id"/>
+
+        <addForeignKeyConstraint baseTableName="user_weather"
+                                 baseColumnNames="weather_id" constraintName="weather_fk_user_weather"
+                                 referencedTableName="weatherinfo" referencedColumnNames="weather_id"/>
+    </changeSet>
+</databaseChangeLog>

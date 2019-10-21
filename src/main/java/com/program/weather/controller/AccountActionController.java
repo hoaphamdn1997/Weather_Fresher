@@ -78,7 +78,7 @@ public class AccountActionController {
         List<WeatherEntity> listWeather = weatherService.findWeatherByUserAndDate(userid);
         //List Weather user Order by Date
         List<WeatherEntity> weatherEntities = weatherService.findAllByUserEntitiesOrderByDateDesc(userEntity);
-
+        //Add values -> Attribute
         model.addAttribute("ListW", listWeather);
         model.addAttribute("listShowMore", weatherEntities);
 
@@ -154,13 +154,15 @@ public class AccountActionController {
         if (null != userName) {
             bindingResult.rejectValue("userName", "error.userName", "Username is already used ,please enter another Username");
         }
-        //if the error sends a message ->page
+        //if the error sends a message validates ->pageRegistration
         if (bindingResult.hasErrors()) {
             return "pageRegistration";
         } else {
+            //save User
             userService.saveUser(userConverter.convertUserEntity(userDTO));
+            //Add message Succsess --> Attribute
             model.addAttribute("successMessage", "Successfully ^^ ");
-            model.addAttribute("userDTO", new UserEntity());
+            //come to pagaLogin
             return "pageLogin";
         }
 

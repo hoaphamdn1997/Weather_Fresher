@@ -46,6 +46,4 @@ public interface CurrentWeatherRepository extends JpaRepository<WeatherEntity, L
      * @return List WeatherEntity
      */
     List<WeatherEntity> findAllByUserEntities(UserEntity userEntity);
-
-
 }

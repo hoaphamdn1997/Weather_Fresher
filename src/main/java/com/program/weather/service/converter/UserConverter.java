@@ -9,6 +9,12 @@ import java.util.Set;
 
 @Component
 public class UserConverter {
+    /**
+     * Conver UserDto --> UserEntiTy
+     *
+     * @param userEntity
+     * @return UserEntity
+     */
     public UserDTO convertUserToDTO(UserEntity userEntity) {
 
         UserDTO user = new UserDTO(userEntity.getUserId(), userEntity.getUserName(),
@@ -26,7 +32,7 @@ public class UserConverter {
     }
 
     /**
-     * Convert DTO -> Entity
+     * conver UserEntity --> UserDTO
      *
      * @param userDTO
      * @return

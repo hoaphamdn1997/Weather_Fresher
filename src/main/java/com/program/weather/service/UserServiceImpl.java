@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
         user.setEnabled(true);
         //set date = today
         user.setCreateDate(new Timestamp(System.currentTimeMillis()));
-        //set role user for acc
+        //set role user for account
         RoleEntity userrole = roleRepository.findByRole("ROLE_USER");
         user.setRoles(new HashSet<RoleEntity>(Arrays.asList(userrole)));
         return userRepository.save(user);
@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
         userEntity.getRoles().removeAll(userEntity.getRoles());
 
         List<WeatherEntity> listWeatherByUser = weatherRepository.findAllByUserEntities(userEntity);
-        weatherService.deleteListWeatherByUser(listWeatherByUser    );
+        weatherService.deleteListWeatherByUser(listWeatherByUser);
 
         userRepository.delete(userEntity);
     }
@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService {
      * @param id
      */
     @Override
-    public void editActiveUser(Long id ) {
+    public void editActiveUser(Long id) {
         UserEntity userEntity = userRepository.findByUserId(id);
 
         if (userEntity.isEnabled()) {
@@ -125,10 +125,10 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = userRepository.findByUserId(id);
         RoleEntity roleEntity = roleRepository.findByRole(role);
         userEntity.isEnabled();
-        if(role.equalsIgnoreCase(Constants.GUEST)){
+        if (role.equalsIgnoreCase(Constants.GUEST)) {
             userEntity.setEnabled(Constants.UN_ACTIVE);
             userEntity.setRoles(new HashSet<RoleEntity>(Arrays.asList(roleRepository.findByRole("ROLE_GUEST"))));
-        }else {
+        } else {
             userEntity.setEnabled(Constants.ACTIVE);
             userEntity.setRoles(new HashSet<RoleEntity>(Arrays.asList(roleEntity)));
         }

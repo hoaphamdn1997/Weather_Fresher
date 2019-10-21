@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <property name="autoIncrement" value="true"/>
+    <changeSet id="201920090002" author="hoa">
+        <createTable tableName="user">
+
+            <column name="user_id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="create_date" type="Datetime"/>
+
+            <column name="email" type="varchar(50)"/>
+
+            <column name="enabled" type="BIT(1)"/>
+
+            <column name="encryted_password" type="varchar(220)"/>
+
+            <column name="firstname" type="varchar(30)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="lastname" type="varchar(30)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="user_name" type="varchar(30)">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+        <insert tableName="user">
+            <column name="user_id" value="1"/>
+            <column name="create_date" value="2019-10-16 17:14:19"></column>
+            <column name="email" value="joinman12335@gmail.com"></column>
+            <column name="enabled" valueBoolean="true"/>
+            <column name="encryted_password" value="$2a$10$5L7S/TeU3n8Zh7tfMPQz2.idEXF49pvPXdCPeDtrtoxk86Bsw53dy"/>
+            <!--12345678-->
+            <column name="firstname" value="admin"/>
+            <column name="lastname" value="wedweather"/>
+            <column name="user_name" value="admin"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

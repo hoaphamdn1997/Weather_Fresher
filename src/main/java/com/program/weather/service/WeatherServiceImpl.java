@@ -64,7 +64,7 @@ public class WeatherServiceImpl implements WeatherService {
     /**
      * List Weather User Group by Name City and Date order by Desc
      *
-     * @param id //id weather
+     * @param id //id User
      * @return List WeatherEntity
      */
 
@@ -72,24 +72,29 @@ public class WeatherServiceImpl implements WeatherService {
     public List<WeatherEntity> findWeatherByUserAndDate(Long id) {
         return weatherRepository.findDateTimeByUserGroupbyDateTimeDest(id);
     }
+
     /**
      * URL get forecast weather by name city
+     *
      * @param nameCity
      * @return
      */
     private String urlGetForecast(String nameCity) {
 
-        return weatherURL+weatherVersion+weatherForecast+"q="+nameCity+"&APPID="+appID+"&units=imperial";
+        return weatherURL + weatherVersion + weatherForecast + "q=" + nameCity + "&APPID=" + appID + "&units=imperial";
     }
+
     /**
      * URL get current weather by API
+     *
      * @param nameCity
      * @return
      */
     private String urlGetWeather(String nameCity) {
 
-        return weatherURL+weatherVersion+weatherCurrent+"q="+nameCity+"&APPID="+appID+"&units=imperial";
+        return weatherURL + weatherVersion + weatherCurrent + "q=" + nameCity + "&APPID=" + appID + "&units=imperial";
     }
+
     public WeatherEntity getWeatherByApi(String nameCity) {
 
         String URL = urlGetWeather(nameCity);
@@ -98,6 +103,7 @@ public class WeatherServiceImpl implements WeatherService {
 
         return weatherConverter.convertToEntity(weatherDTO);
     }
+
     /**
      * Call API Forecast Weather By Name City
      *
@@ -112,6 +118,11 @@ public class WeatherServiceImpl implements WeatherService {
         return restTemplate.getForObject(URL, DetailsWeatherDTO.class);
     }
 
+    /**
+     * Delete All Weather Folow user
+     *
+     * @param listWeather
+     */
     @Override
     public void deleteListWeatherByUser(List<WeatherEntity> listWeather) {
         weatherRepository.deleteAll(listWeather);
