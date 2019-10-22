@@ -1,4 +1,5 @@
 package com.program.weather.entity;
+
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
@@ -53,7 +54,7 @@ public class PasswordResetToken {
         this.expiryDate = expiryDate;
     }
 
-    public void setExpiryDate(int minutes){
+    public void setExpiryDate(int minutes) {
         Calendar now = Calendar.getInstance();
         now.add(Calendar.MINUTE, minutes);
         this.expiryDate = now.getTime();

@@ -25,6 +25,8 @@ public class CustomFillter extends GenericFilterBean {
 
     /**
      * Create Filter
+     * create a filter class when running the web will
+     * check how the user name is logged in if the blocked users will logout and logout again.
      *
      * @param request
      * @param response
@@ -41,13 +43,15 @@ public class CustomFillter extends GenericFilterBean {
         HttpServletResponse res = (HttpServletResponse) response;
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
+        //
+        //verify if the user is currently logged in and get a username
         if (authentication != null && authentication.getPrincipal() != null && authentication.getPrincipal() instanceof UserDetails && authentication.getCredentials() == null) {
             String username = ((UserDetails) authentication.getPrincipal()).getUsername();
+            //if username is empty
             if (!username.isEmpty()) {
                 UserDetails userDetailsQuery = userDetailsService.loadUserByUsername(username);
                 UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-
+                //Obligatory user logout
                 if (!userDetailsQuery.getAuthorities().containsAll(userDetails.getAuthorities())) {
                     new SecurityContextLogoutHandler().logout(req, res, authentication);
                 }

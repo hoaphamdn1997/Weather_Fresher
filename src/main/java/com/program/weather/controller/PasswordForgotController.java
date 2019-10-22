@@ -26,61 +26,61 @@ import java.util.UUID;
 @RequestMapping("/forgot-password")
 public class PasswordForgotController {
 
-	@Autowired 
-	private UserService userService;
+    @Autowired
+    private UserService userService;
 
-	@Autowired 
-	private PasswordResetTokenRepository tokenRepository;
+    @Autowired
+    private PasswordResetTokenRepository tokenRepository;
 
-	@Autowired 
-	private EmailService emailService;
+    @Autowired
+    private EmailService emailService;
 
-	@ModelAttribute("forgotPasswordForm")
-	public PasswordForgotDTO forgotPasswordDto() {
-		return new PasswordForgotDTO();
-	}
+    @ModelAttribute("forgotPasswordForm")
+    public PasswordForgotDTO forgotPasswordDto() {
+        return new PasswordForgotDTO();
+    }
 
-	@GetMapping
-	public String displayForgotPasswordPage() {
-		return "forgot-password";
-	}
+    @GetMapping
+    public String displayForgotPasswordPage() {
+        return "forgot-password";
+    }
 
-	@PostMapping
-	public String processForgotPasswordForm(@ModelAttribute("forgotPasswordForm") @Valid PasswordForgotDTO form,
-											BindingResult result,
-											HttpServletRequest request) {
+    @PostMapping
+    public String processForgotPasswordForm(@ModelAttribute("forgotPasswordForm") @Valid PasswordForgotDTO form,
+                                            BindingResult result,
+                                            HttpServletRequest request) {
 
-		if (result.hasErrors()){
-			return "forgot-password";
-		}
+        if (result.hasErrors()) {
+            return "forgot-password";
+        }
 
-		UserEntity user = userService.findByUserEmail(form.getEmail());
-		if (user == null){
-			result.rejectValue("email", null, "We could not find an account for that e-mail address.");
-			return "forgot-password";
-		}
+        UserEntity user = userService.findByUserEmail(form.getEmail());
+        if (user == null) {
+            result.rejectValue("email", null, "We could not find an account for that e-mail address.");
+            return "forgot-password";
+        }
 
-		PasswordResetToken token = new PasswordResetToken();
-		token.setToken(UUID.randomUUID().toString());
-		token.setUser(user);
-			token.setExpiryDate(30);
-		tokenRepository.save(token);
+        PasswordResetToken token = new PasswordResetToken();
+        token.setToken(UUID.randomUUID().toString());
+        token.setUser(user);
+        token.setExpiryDate(30);
+        tokenRepository.save(token);
 
-		MailDTO mail = new MailDTO();
-		mail.setFrom("no-reply@memorynotfound.com");
-		mail.setTo(user.getEmail());
-		mail.setSubject("Password reset request");
+        MailDTO mail = new MailDTO();
+        mail.setFrom("no-reply@memorynotfound.com");
+        mail.setTo(user.getEmail());
+        mail.setSubject("Password reset request");
 
-		Map<String, Object> model = new HashMap<>();
-		model.put("token", token);
-		model.put("user", user);
-		model.put("signature", "https://memorynotfound.com");
-		String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
-		model.put("resetUrl", url + "/reset-password?token=" + token.getToken());
-		mail.setModel(model);
-		emailService.sendEmail(mail);
+        Map<String, Object> model = new HashMap<>();
+        model.put("token", token);
+        model.put("user", user);
+        model.put("signature", "https://memorynotfound.com");
+        String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+        model.put("resetUrl", url + "/reset-password?token=" + token.getToken());
+        mail.setModel(model);
+        emailService.sendEmail(mail);
 
-		return "redirect:/forgot-password?success";
+        return "redirect:/forgot-password?success";
 
-	}
+    }
 }

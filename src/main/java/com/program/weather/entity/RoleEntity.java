@@ -10,14 +10,14 @@ import javax.persistence.*;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name="role")
+@Table(name = "role")
 public class RoleEntity {
 
- 	@Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "role_id")
     private Long roleId;
- 
+
     @Column(name = "role")
     private String role;
 

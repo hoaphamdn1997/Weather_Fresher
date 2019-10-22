@@ -45,11 +45,11 @@ public class AdminActionController {
      */
     @GetMapping("/admin")
     public String homeAdmin(Model model, Principal principal) {
-        //List User
+        //List all User
         List<UserDTO> dsUser = userService.findAll().stream()
                 .map(x -> userConverter.convertUserToDTO(x))
                 .collect(Collectors.toList());
-        //list Role
+        //list all Role
         List<RoleEntity> dsRole = roleService.findAll();
         //ATTRIBUTE
         model.addAttribute("dsUser", dsUser);
@@ -59,7 +59,7 @@ public class AdminActionController {
 
 
     /**
-     * Delete User By ID
+     * Delete User By ID User
      *
      * @param adminDTO
      */
@@ -76,12 +76,13 @@ public class AdminActionController {
      */
     @GetMapping("/editActiveUserA")
     @ResponseBody
-    public void edit(@RequestParam Long id,Model model) {
+    public void edit(@RequestParam Long id) {
         userService.editActiveUser(id);
     }
 
     /**
      * Change Role By Admin
+     * Change role for user ->ROLE_ADMIN;ROLE_USER...
      *
      * @param userRestDTO
      */

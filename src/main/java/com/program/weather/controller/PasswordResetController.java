@@ -20,54 +20,54 @@ import javax.validation.Valid;
 @RequestMapping("/reset-password")
 public class PasswordResetController {
 
-	@Autowired
-	private UserService userService;
+    @Autowired
+    private UserService userService;
 
-	@Autowired
-	private PasswordResetTokenRepository tokenRepository;
+    @Autowired
+    private PasswordResetTokenRepository tokenRepository;
 
-	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
-	@ModelAttribute("passwordResetForm")
-	public PasswordResetDTO passwordReset() {
-		return new PasswordResetDTO();
-	}
+    @ModelAttribute("passwordResetForm")
+    public PasswordResetDTO passwordReset() {
+        return new PasswordResetDTO();
+    }
 
-	@GetMapping
-	public String displayResetPasswordPage(@RequestParam(required = false) String token,
-											Model model) {
+    @GetMapping
+    public String displayResetPasswordPage(@RequestParam(required = false) String token,
+                                           Model model) {
 
-		PasswordResetToken resetToken = tokenRepository.findByToken(token);
-		if (resetToken == null){
-			model.addAttribute("error", "Could not find password reset token.");
-		} else if (resetToken.isExpired()){
-			model.addAttribute("error", "Token has expired, please request a new password reset.");
-		} else {
-			model.addAttribute("token", resetToken.getToken());
-		}
+        PasswordResetToken resetToken = tokenRepository.findByToken(token);
+        if (resetToken == null) {
+            model.addAttribute("error", "Could not find password reset token.");
+        } else if (resetToken.isExpired()) {
+            model.addAttribute("error", "Token has expired, please request a new password reset.");
+        } else {
+            model.addAttribute("token", resetToken.getToken());
+        }
 
-		return "reset-password";
-	}
+        return "reset-password";
+    }
 
-	@PostMapping
-	@Transactional
-	public String handlePasswordReset(@ModelAttribute("passwordResetForm") @Valid PasswordResetDTO form,
-										BindingResult result,
-										RedirectAttributes redirectAttributes) {
+    @PostMapping
+    @Transactional
+    public String handlePasswordReset(@ModelAttribute("passwordResetForm") @Valid PasswordResetDTO form,
+                                      BindingResult result,
+                                      RedirectAttributes redirectAttributes) {
 
-		if (result.hasErrors()){
-			redirectAttributes.addFlashAttribute(BindingResult.class.getName() + ".passwordResetForm", result);
-			redirectAttributes.addFlashAttribute("passwordResetForm", form);
-			return "redirect:/reset-password?token=" + form.getToken();
-		}
+        if (result.hasErrors()) {
+            redirectAttributes.addFlashAttribute(BindingResult.class.getName() + ".passwordResetForm", result);
+            redirectAttributes.addFlashAttribute("passwordResetForm", form);
+            return "redirect:/reset-password?token=" + form.getToken();
+        }
 
-		PasswordResetToken token = tokenRepository.findByToken(form.getToken());
-		UserEntity user = token.getUser();
-		String updatedPassword = passwordEncoder.encode(form.getPassword());
-		userService.updatePassword(updatedPassword, user.getUserId());
-		tokenRepository.delete(token);
+        PasswordResetToken token = tokenRepository.findByToken(form.getToken());
+        UserEntity user = token.getUser();
+        String updatedPassword = passwordEncoder.encode(form.getPassword());
+        userService.updatePassword(updatedPassword, user.getUserId());
+        tokenRepository.delete(token);
 
-		return "redirect:/login?resetSuccess";
-	}
+        return "redirect:/login?resetSuccess";
+    }
 }

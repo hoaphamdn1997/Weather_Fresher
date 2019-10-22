@@ -25,6 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     /**
      * Load user Database with username
+     *
      * @param userName
      * @return return one userdetails have Username ,password ,authorities
      * @throws UsernameNotFoundException
