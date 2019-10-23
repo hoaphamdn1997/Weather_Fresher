@@ -24,7 +24,7 @@
 			<h2 class="text-center">Register</h2>
 			<div class="form-group">
 				<input type="text" th:field="*{userName}" placeholder="User Name"
-					class="form-control" /> <label
+					class="form-control" pattern="^[a-zA-Z0-9]{8,32}" /> <label
 					th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"
 					class="validation-message"></label>
 			</div>

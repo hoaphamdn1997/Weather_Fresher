@@ -61,6 +61,7 @@ public class PasswordResetToken {
     }
 
     public boolean isExpired() {
-        return new Date().after(this.expiryDate);
+        return Calendar.getInstance().getTime().getTime() - this.getExpiryDate().getTime() <= 0;
+//                - this.expiryDate <= 0;
     }
 }

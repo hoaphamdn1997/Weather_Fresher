@@ -6,7 +6,7 @@ import com.program.weather.entity.UserEntity;
 import com.program.weather.entity.repository.PasswordResetTokenRepository;
 import com.program.weather.service.EmailService;
 import com.program.weather.service.UserService;
-import com.program.weather.service.dto.MailDTO;
+import com.program.weather.service.dto.request.MailDTO;
 import com.program.weather.service.dto.PasswordForgotDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,6 +45,18 @@ public class PasswordForgotController {
         return "forgot-password";
     }
 
+    /**
+     * You can submit a form post to the PasswordForgotController which’ll handle the incoming password forgot request.
+     * We use standard hibernate validator annotations on the PasswordForgotDto to validate the incoming request.
+     * We create a new unique PasswordResetToken and store it in the database.
+     * We forward this token information to the user by email.
+     * This email contains a special link to reset his password.
+     *
+     * @param form
+     * @param result
+     * @param request
+     * @return
+     */
     @PostMapping
     public String processForgotPasswordForm(@ModelAttribute("forgotPasswordForm") @Valid PasswordForgotDTO form,
                                             BindingResult result,

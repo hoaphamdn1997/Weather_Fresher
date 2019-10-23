@@ -18,6 +18,13 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/reset-password")
+/**
+ * When the user has received his password reset email.
+ * He is forwarded to the PasswordResetController mapped to the /reset-password URL.
+ * This produces a HTTP GET with the token as request parameter.
+ * We read the token and if the token is present and valid we put it in the Model map.
+ * When the user posts his PasswordResetDto, the form is validated and executed if no errors occur.
+ */
 public class PasswordResetController {
 
     @Autowired

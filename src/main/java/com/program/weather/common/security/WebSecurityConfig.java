@@ -75,7 +75,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //login Done -> controller
                 .defaultSuccessUrl("/processURL")
                 //login faile -> massage error -> login page
-                .failureUrl("/login?error")
+                .failureUrl("/login?error=error")
                 .and()
                 .logout()
                 //logout -> login page

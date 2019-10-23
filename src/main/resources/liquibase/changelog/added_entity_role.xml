@@ -15,7 +15,7 @@
         </createTable>
 
         <insert tableName="role">
-            <column name="role" value="ROLE_ADMIN" />
+            <column name="role" value="ROLE_ADMIN"/>
         </insert>
         <insert tableName="role">
             <column name="role" value="ROLE_USER"></column>

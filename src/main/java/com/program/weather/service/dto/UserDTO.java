@@ -17,8 +17,8 @@ public class UserDTO {
 
     private Long userId;
 
-    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$",
-            message = "Only have character a-z, A-Z, 0-9 and Length 8 - 32 char")
+    @Pattern(regexp = "^[a-zA-Z0-9]{8,32}",
+            message = "Length 8 - 32 char")
     @NotEmpty(message = "Please provide your user name")
     private String userName;
 

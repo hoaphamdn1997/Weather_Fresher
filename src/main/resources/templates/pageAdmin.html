@@ -22,9 +22,10 @@
             <div class="col">
                 <div class="card" style="min-height: 500px ;">
                     <div class="card-body">
-                        <h5 class="card-title">List user</h5>
-                        <table class="table table-responsive">
+                        <h5 class="card-title" style="padding-left:150px;">LIST USER MANAGEMENT</h5>
+                        <table class="table table-hover">
                             <thead class="">
+                            <th scope="col" class="respon-index">#</th>
                             <th>User</th>
                             <th>Email</th>
                             <th>Active</th>
@@ -32,14 +33,16 @@
                             <th></th>
 
                             </thead>
+
                             <tr th:each="dsUser : ${dsUser}" th:data-id="${dsUser.userId}" th:object="${dsUser}"
                                 th:classappend="${dsUser.userId} ? (table- + ${dsUser.userId}) : ''">
+                                <td th:text="${dsUser.userId}"></td>
                                 <td th:text="${dsUser.userName}"></td>
                                 <td th:text="${dsUser.email}"></td>
                                 <td>
                                     <input class="activeUser" type="checkbox" th:checked="${dsUser.enabled}"/>
                                 </td>
-                                <td><select id="idselect" class="form-control">
+                                <td><select id="idselect"  class="form-control">
                                     <option th:each="role : ${dsRole}"
                                             th:value="${role.role}" th:text="${#strings.substring(role.role,5)}"
                                             th:selected="${#lists.contains(dsUser.roles,role.roleId)}"></option>

@@ -40,7 +40,7 @@
             <column name="enabled" valueBoolean="true"/>
             <column name="encryted_password" value="$2a$10$5L7S/TeU3n8Zh7tfMPQz2.idEXF49pvPXdCPeDtrtoxk86Bsw53dy"/>
             <!--12345678-->
-            <column name="firstname" value="admin"/>
+            <column name="firstname" value="admin_hoapham"/>
             <column name="lastname" value="wedweather"/>
             <column name="user_name" value="admin"/>
         </insert>

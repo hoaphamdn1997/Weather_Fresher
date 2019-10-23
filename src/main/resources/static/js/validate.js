@@ -1,56 +1,40 @@
-(function() {
-	$.validator.addMethod('regexp', function(value, element, param) {
-        return this.optional(element) || value.match(param[0]);
-    },
-	'Username chỉ chứa chữ cái và số');
-	
-	$("#formSignup")
-			.validate(
-					{
-						rules : {
-							username : {
-								required : true,
-								minlength : 8,
-								maxlength : 32,
-								regexp: [/^[a-zA-Z0-9]{8,32}$/, 'username']
-							},
-							email : {
-								required : true,
-								email : true
-							},
-							password : {
-								required : true,
-								minlength : 8,
-								maxlength : 32
-							},
-							firstName : {
-								required : true
-							},
-							lastName : {
-								required : true
-							}
-						},
-						messages : {
-							username : {
-								required : "Không được để trống Username",
-								minlength : "Username phải lớn hơn 8 ký tự",
-								maxlength : "Username phải nhỏ hơn 32 ký tự",
-							},
-							email : {
-								required : "Không được để trống Email",
-								email : "Vui lòng nhập đúng định dạng email"
-							},
-							password : {
-								required : "Không được để trống Password",
-								minlength : "Password phải lớn hơn 8 ký tự",
-								maxlength : "Password phải nhỏ hơn 32 ký tự",
-							},
-							firstName : {
-								required : "Không được để trống First Name",
-							},
-							lastName : {
-								required : "Không được để trống Last Name",
-							}
-						}
-					});
-})();
+$(function () {
+    $("#username").blur(function () {
+        $('#info-username').html('');
+    });
+
+    $("#password").blur(function () {
+        $('#info-password').html('');
+    });
+
+    $("#btnLogin").click(function () {
+        var username = $("#username").val();
+        var password = $("#password").val();
+
+        $.ajax({
+            type: 'POST',
+            url: '/accounts/validate',
+            data: JSON.stringify({
+                username: username,
+                password: password,
+            }),
+            contentType: 'application/json; charset=utf-8',
+            cache: false,
+            success: function (data) {
+                $("#fromLogin").submit();
+            },
+            error: function (error) {
+                $('#info-password').html('');
+                $('#info-username').html('');
+
+                if (error.responseJSON.usernameError) {
+                    $('#info-username').html(error.responseJSON.usernameError);
+                }
+
+                if (error.responseJSON.passwordError) {
+                    $('#info-password').html(error.responseJSON.passwordError);
+                }
+            }
+        });
+    });
+});

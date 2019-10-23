@@ -2,6 +2,7 @@ package com.program.weather.controller;
 
 
 import com.program.weather.service.WeatherService;
+import com.program.weather.service.dto.LoginValidateDTO;
 import com.program.weather.service.dto.UserDTO;
 import com.program.weather.entity.UserEntity;
 import com.program.weather.entity.WeatherEntity;
@@ -11,15 +12,22 @@ import com.program.weather.service.converter.UserConverter;
 import com.program.weather.service.dto.property.WeatherSizeApiDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Controller
@@ -84,7 +92,6 @@ public class AccountActionController {
         model.addAttribute("listShowMore", weatherEntities);
 
         return "pageHome";
-
     }
 
     /**
@@ -105,6 +112,7 @@ public class AccountActionController {
      */
     @PostMapping(value = {"/loginA"})
     public String loginA() {
+
         return "redirect:/";
     }
 
@@ -130,7 +138,6 @@ public class AccountActionController {
     public String registration(Model model) {
         model.addAttribute("userDTO", new UserDTO());
         return "pageRegistration";
-
     }
 
     /**
@@ -143,13 +150,13 @@ public class AccountActionController {
      */
     @PostMapping("/registration")
     public String regisAction(@Valid @ModelAttribute("userDTO") UserDTO userDTO, BindingResult bindingResult, Model model) {
-        //Get the Email
+        //use jpa find email on database
         UserEntity email = userService.findByUserEmail(userDTO.getEmail());
         //Compare entered emails With email data
         if (null != email) {
             bindingResult.rejectValue("email", "error.email", "Email is already used please enter another email");//truong truyen vao+ ten + message
         }
-        //Get the Username
+        //use jpa find username on database
         UserEntity userName = userService.findByUserName(userDTO.getUserName());
         //Compare entered Username With Username data
         if (null != userName) {
@@ -166,8 +173,6 @@ public class AccountActionController {
             //come to pagaLogin
             return "pageLogin";
         }
-
-
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.program.weather.common.validator;
 
 
+import com.program.weather.service.dto.PasswordResetDTO;
 import com.program.weather.service.dto.UserDTO;
 
 import javax.validation.ConstraintValidator;
@@ -14,7 +15,7 @@ public class PasswordMatchesValidator implements ConstraintValidator<PasswordMat
 
     @Override
     public boolean isValid(Object obj, ConstraintValidatorContext context) {
-        UserDTO user = (UserDTO) obj;
-        return user.getEncrytedPassword().equalsIgnoreCase(user.getConfirmPassword());
+        PasswordResetDTO user = (PasswordResetDTO) obj;
+        return user.getPassword().equals(user.getConfirmPassword());
     }
 }
