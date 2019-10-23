@@ -18,25 +18,25 @@ public class UserDTO {
     private Long userId;
 
     @Pattern(regexp = "^[a-zA-Z0-9]{8,32}",
-            message = "Length 8 - 32 char")
+            message = "user.username.msg")
     @NotEmpty(message = "Please provide your user name")
     private String userName;
 
-    @Email(regexp = "[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{1,}[.]{1}[a-zA-Z]{2,}",message = "EXABLE@ABC.com")
+    @Email(regexp = "[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{1,}[.]{1}[a-zA-Z]{2,}",message = "user.email.msg")
     @NotEmpty(message = "Please provide your email")
     private String email;
 
-    @Size(min = 8, max = 32, message = "Password must have 8 - 32 characters")
+    @Size(min = 8, max = 32, message = "user.password.msg")
     @NotEmpty(message = "Please provide your password")
     private String encrytedPassword;
 
     @Size(min = 8, max = 32, message = "{user.password.msg}")
     private String confirmPassword;
 
-    @NotEmpty(message = "Please provide your first name")
+    @NotEmpty(message = "user.firstname.msg")
     private String firstName;
 
-    @NotEmpty(message = "Please provide your Last name")
+    @NotEmpty(message = "user.lastname.msg")
     private String lastName;
 
     private boolean enabled;
