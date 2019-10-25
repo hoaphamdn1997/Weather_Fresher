@@ -2,34 +2,30 @@ package com.program.weather.controller;
 
 
 import com.program.weather.service.WeatherService;
-import com.program.weather.service.dto.LoginValidateDTO;
 import com.program.weather.service.dto.UserDTO;
 import com.program.weather.entity.UserEntity;
 import com.program.weather.entity.WeatherEntity;
-import com.program.weather.entity.repository.CurrentWeatherRepository;
+import com.program.weather.service.repository.CurrentWeatherRepository;
 import com.program.weather.service.UserService;
-import com.program.weather.service.converter.UserConverter;
+import com.program.weather.service.mapper.UserConverter;
 import com.program.weather.service.dto.property.WeatherSizeApiDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.support.RequestContextUtils;
 
-import javax.mail.MessagingException;
-import javax.servlet.http.HttpServletRequest;
+
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
+/**
+ * The type Account action controller.
+ */
 @Controller
 public class AccountActionController {
 
@@ -39,6 +35,9 @@ public class AccountActionController {
     @Autowired
     private WeatherService weatherService;
 
+    /**
+     * The Current weather repository.
+     */
     @Autowired
     CurrentWeatherRepository currentWeatherRepository;
 
@@ -48,11 +47,12 @@ public class AccountActionController {
     /**
      * Check size List  --> show more
      * if size > 1 show button show more in page
+     * <p>
+     * Annotation @RequestMapping is used to map requests to the class or method that handles the request.
      *
-     * @param principal
+     * @param principal login have principal
      * @return size list weather
      */
-
     @RequestMapping(value = {"/process-size"}, method = RequestMethod.GET)
     @ResponseBody
     //ResponseBody will help you convert the returned object into json string because you use any library to convert it.--> ResponseBody sẽ giúp bạn convert đối tượng trả về thành chuỗi json thì vì bạn dùng 1 thư viện nào nó để convert.
@@ -77,6 +77,13 @@ public class AccountActionController {
         return ResponseEntity.ok(sizeWeatherGroup);//responseEntity is the object that returns it-->responseEntity là đối tượng trả ra cho nó
     }
 
+    /**
+     * "/home", "/" that is URL go to page Home
+     *
+     * @param model     the Model to progress add attribute for web
+     * @param principal when user login have princical
+     * @return pageHome string
+     */
     @RequestMapping(value = {"/home", "/"})
     public String hello(Model model, Principal principal) {
 
@@ -95,7 +102,7 @@ public class AccountActionController {
     }
 
     /**
-     * page Login
+     * /login-->URL page Login
      *
      * @return page login
      */
@@ -105,7 +112,7 @@ public class AccountActionController {
     }
 
     /**
-     * Login Action
+     * /loginA -->URL Login Action
      * When User login success -> pageHome
      *
      * @return Page Home
@@ -131,8 +138,8 @@ public class AccountActionController {
      * Page Registration
      * Go to the Page Registration
      *
-     * @param model
-     * @return PageRegistration
+     * @param model the model
+     * @return PageRegistration string
      */
     @GetMapping("/registration")
     public String registration(Model model) {
@@ -141,12 +148,13 @@ public class AccountActionController {
     }
 
     /**
-     * Page Registration Action
+     * /registration Url--> Page Registration Action
      *
-     * @param userDTO
-     * @param bindingResult
-     * @param model
-     * @return pageLogin
+     * @param userDTO       the user dto
+     * @param bindingResult //"BindingResult". This is Spring's object holding the result of validation and binding and containing the possible errors//“BindingResult”. Đây là đối tượng của Spring giữ kết quả của việc xác nhận và ràng buộc và chứa các lỗi có thể đã xảy ra
+     * @param model         the model
+     * @return pageLogin //when success --> pageLogin
+     * @Valid: this is an Annotation in spring mvc used to bind the object or Parameters are bound to perform form validation.
      */
     @PostMapping("/registration")
     public String regisAction(@Valid @ModelAttribute("userDTO") UserDTO userDTO, BindingResult bindingResult, Model model) {
@@ -178,8 +186,8 @@ public class AccountActionController {
     /**
      * Come to pageBlock
      *
-     * @param model
-     * @return pageBlock
+     * @param model the model
+     * @return pageBlock string
      */
     @RequestMapping(value = "/block")
     public String block(Model model) {

@@ -12,6 +12,9 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import javax.mail.internet.MimeMessage;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * The type Email service.
+ */
 @Service
 public class EmailService {
 
@@ -28,7 +31,7 @@ public class EmailService {
      * We can use the values provided in the Model to fill our e-mail template.
      * We include a password reset link with the unique token that the user can use to reset his password.
      *
-     * @param mail
+     * @param mail the mail
      */
     public void sendEmail(MailDTO mail) {
         try {
@@ -39,7 +42,7 @@ public class EmailService {
 
             Context context = new Context();
             context.setVariables(mail.getModel());
-            String html = templateEngine.process("email-template", context);
+            String html = templateEngine.process("emailtemplate", context);
             helper.setTo(mail.getTo());
             helper.setText(html, true);
             helper.setSubject(mail.getSubject());

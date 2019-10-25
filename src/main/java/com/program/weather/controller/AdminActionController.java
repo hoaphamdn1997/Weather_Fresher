@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import com.program.weather.entity.UserEntity;
 import com.program.weather.service.RoleService;
 import com.program.weather.service.UserService;
-import com.program.weather.service.converter.UserConverter;
+import com.program.weather.service.mapper.UserConverter;
 import com.program.weather.service.dto.UserDTO;
 import com.program.weather.entity.RoleEntity;
 import com.program.weather.service.dto.property.AdminDeleteDTO;
@@ -22,6 +22,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
+/**
+ * The type Admin action controller.
+ */
 @Controller
 @RequestMapping("/home-admin")
 public class AdminActionController {
@@ -39,8 +42,8 @@ public class AdminActionController {
     /**
      * Go to the Page ADMIN
      *
-     * @param model
-     * @param principal
+     * @param model     the model
+     * @param principal the principal
      * @return Page Admin
      */
     @GetMapping("/admin")
@@ -60,8 +63,11 @@ public class AdminActionController {
 
     /**
      * Delete User By ID User
+     * <p>
+     * An @ResponseBody annotation is added before the controller
+     * methods to indicate that this method will return text instead of view.
      *
-     * @param adminDTO
+     * @param adminDTO the admin dto
      */
     @DeleteMapping("/delete")
     @ResponseBody
@@ -72,7 +78,7 @@ public class AdminActionController {
     /**
      * Edit Status User -> active or Unactive
      *
-     * @param id
+     * @param id the id
      */
     @GetMapping("/editActiveUserA")
     @ResponseBody
@@ -84,7 +90,8 @@ public class AdminActionController {
      * Change Role By Admin
      * Change role for user ->ROLE_ADMIN;ROLE_USER...
      *
-     * @param userRestDTO
+     * @param userRestDTO the user rest dto
+     * @return the user entity
      */
     @PutMapping("/change-role")
     @ResponseBody

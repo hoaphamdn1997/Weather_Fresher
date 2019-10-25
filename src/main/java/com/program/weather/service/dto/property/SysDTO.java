@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * The type Sys dto.
+ */
 @Data
 @NoArgsConstructor
 public class SysDTO {

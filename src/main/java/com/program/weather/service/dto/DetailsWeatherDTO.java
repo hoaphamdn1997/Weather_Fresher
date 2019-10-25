@@ -10,10 +10,16 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Details weather dto.
+ */
 @Data
 @NoArgsConstructor
 public class DetailsWeatherDTO {
 
+    /**
+     * The List.
+     */
     List<ListDetailDTO> list = new ArrayList<ListDetailDTO>();
 
     private CityDTO city;

@@ -9,6 +9,9 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Current weather dto.
+ */
 @Data
 @NoArgsConstructor
 public class CurrentWeatherDTO {

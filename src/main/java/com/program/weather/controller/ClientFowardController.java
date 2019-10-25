@@ -14,9 +14,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * The type Client foward controller.
+ */
 @Controller
 public class ClientFowardController {
 
+    /**
+     * Process url string.
+     *
+     * @return the string
+     */
     @GetMapping("/processURL")
     public String processURL() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -25,6 +33,15 @@ public class ClientFowardController {
         return URL;
     }
 
+    /**
+     * URL -->Role
+     *
+     * ridirect: redirects to url mapping
+     * forward: Provide forward to url with them + request (including param value)
+     *
+     * @param authentication
+     * @return URL
+     */
     private String urlMappingUser(Authentication authentication) {
         String url = "";
         List<GrantedAuthority> authorities = getListAuthority(authentication);
@@ -38,10 +55,23 @@ public class ClientFowardController {
         return url;
     }
 
+    /**
+     * Check role User
+     *
+     * @param userAuthority
+     * @param role
+     * @return Role user
+     */
     private boolean checkRoleUser(List<GrantedAuthority> userAuthority, String role) {
         return userAuthority.stream().anyMatch(author -> author.getAuthority().equalsIgnoreCase(role));
     }
 
+    /**
+     * get list Author
+     *
+     * @param authentication
+     * @return
+     */
     private List<GrantedAuthority> getListAuthority(Authentication authentication) {
         List<GrantedAuthority> userAuthority = new ArrayList<GrantedAuthority>();
         @SuppressWarnings("unchecked")

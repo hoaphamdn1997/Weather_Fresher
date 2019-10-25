@@ -3,7 +3,7 @@ package com.program.weather.controller;
 
 import com.program.weather.entity.PasswordResetToken;
 import com.program.weather.entity.UserEntity;
-import com.program.weather.entity.repository.PasswordResetTokenRepository;
+import com.program.weather.service.repository.PasswordResetTokenRepository;
 import com.program.weather.service.EmailService;
 import com.program.weather.service.UserService;
 import com.program.weather.service.dto.request.MailDTO;
@@ -22,6 +22,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * The type Password forgot controller.
+ */
 @Controller
 @RequestMapping("/forgot-password")
 public class PasswordForgotController {
@@ -35,14 +38,24 @@ public class PasswordForgotController {
     @Autowired
     private EmailService emailService;
 
+    /**
+     * Forgot password dto password forgot dto.
+     *
+     * @return the password forgot dto
+     */
     @ModelAttribute("forgotPasswordForm")
     public PasswordForgotDTO forgotPasswordDto() {
         return new PasswordForgotDTO();
     }
 
+    /**
+     * Display forgot password page string.
+     *
+     * @return the string
+     */
     @GetMapping
     public String displayForgotPasswordPage() {
-        return "forgot-password";
+        return "forgotpassword";
     }
 
     /**
@@ -52,10 +65,10 @@ public class PasswordForgotController {
      * We forward this token information to the user by email.
      * This email contains a special link to reset his password.
      *
-     * @param form
-     * @param result
-     * @param request
-     * @return
+     * @param form    the form
+     * @param result  the result
+     * @param request the request
+     * @return string string
      */
     @PostMapping
     public String processForgotPasswordForm(@ModelAttribute("forgotPasswordForm") @Valid PasswordForgotDTO form,
@@ -63,13 +76,13 @@ public class PasswordForgotController {
                                             HttpServletRequest request) {
 
         if (result.hasErrors()) {
-            return "forgot-password";
+            return "forgotpassword";
         }
 
         UserEntity user = userService.findByUserEmail(form.getEmail());
         if (user == null) {
             result.rejectValue("email", null, "We could not find an account for that e-mail address.");
-            return "forgot-password";
+            return "forgotpassword";
         }
 
         PasswordResetToken token = new PasswordResetToken();
@@ -86,7 +99,7 @@ public class PasswordForgotController {
         Map<String, Object> model = new HashMap<>();
         model.put("token", token);
         model.put("user", user);
-        model.put("signature", "https://memorynotfound.com");
+        model.put("signature", "ALL \n" + "contact Hoaphamdn1997@gmail.com ");
         String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
         model.put("resetUrl", url + "/reset-password?token=" + token.getToken());
         mail.setModel(model);

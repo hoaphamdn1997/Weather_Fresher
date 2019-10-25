@@ -3,8 +3,8 @@ package com.program.weather.service;
 import com.program.weather.entity.WeatherEntity;
 
 import com.program.weather.entity.UserEntity;
-import com.program.weather.entity.repository.CurrentWeatherRepository;
-import com.program.weather.service.converter.WeatherConverter;
+import com.program.weather.service.repository.CurrentWeatherRepository;
+import com.program.weather.service.mapper.WeatherConverter;
 import com.program.weather.service.dto.CurrentWeatherDTO;
 import com.program.weather.service.dto.DetailsWeatherDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +14,29 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
+/**
+ * The type Weather service.
+ */
 @Service
 public class WeatherServiceImpl implements WeatherService {
 
+    /**
+     * The Weather repository.
+     */
     @Autowired
     CurrentWeatherRepository weatherRepository;
+
+    /**
+     * The Weather converter.
+     */
     @Autowired
     WeatherConverter weatherConverter;
+
+    /**
+     * The Rest template.
+     */
+    @Autowired
+    RestTemplate restTemplate;
 
     @Value("${weather.api.key}")
     private String appID;
@@ -79,7 +95,7 @@ public class WeatherServiceImpl implements WeatherService {
      * @param nameCity
      * @return
      */
-    private String urlGetForecast(String nameCity) {
+    private String urlApiGetForecast(String nameCity) {
 
         return weatherURL + weatherVersion + weatherForecast + "q=" + nameCity + "&APPID=" + appID + "&units=imperial";
     }
@@ -90,17 +106,20 @@ public class WeatherServiceImpl implements WeatherService {
      * @param nameCity
      * @return
      */
-    private String urlGetWeather(String nameCity) {
+    private String urlApiGetWeather(String nameCity) {
 
         return weatherURL + weatherVersion + weatherCurrent + "q=" + nameCity + "&APPID=" + appID + "&units=imperial";
     }
 
+    /**
+     * Search weather by Name City
+     *
+     * @param nameCity
+     * @return
+     */
     public WeatherEntity getWeatherByApi(String nameCity) {
-
-        String URL = urlGetWeather(nameCity);
-        RestTemplate restTemplate = new RestTemplate();
-        CurrentWeatherDTO weatherDTO = restTemplate.getForObject(URL, CurrentWeatherDTO.class);
-
+        CurrentWeatherDTO weatherDTO = restTemplate.getForObject(urlApiGetWeather(nameCity).toString(), CurrentWeatherDTO.class);
+        //convert weatherDTO to weatherEntity
         return weatherConverter.convertToEntity(weatherDTO);
     }
 
@@ -112,10 +131,7 @@ public class WeatherServiceImpl implements WeatherService {
      */
     public DetailsWeatherDTO foreCast(String nameCity) {
 
-        String URL = urlGetForecast(nameCity);
-        RestTemplate restTemplate = new RestTemplate();
-
-        return restTemplate.getForObject(URL, DetailsWeatherDTO.class);
+        return restTemplate.getForObject(urlApiGetForecast(nameCity).toString(), DetailsWeatherDTO.class);
     }
 
     /**

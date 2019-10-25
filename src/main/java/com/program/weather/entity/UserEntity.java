@@ -15,6 +15,9 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The type User entity.
+ */
 @Entity
 @Data
 @NoArgsConstructor
@@ -47,6 +50,15 @@ public class UserEntity {
     @Column(name = "create_date")
     private Timestamp createDate;
 
+    /**
+     * Instantiates a new User entity.
+     *
+     * @param userName         the user name
+     * @param email            the email
+     * @param encrytedPassword the encryted password
+     * @param firstName        the first name
+     * @param lastName         the last name
+     */
     public UserEntity(String userName, String email, String encrytedPassword, String firstName, String lastName) {
         this.userName = userName;
         this.email = email;
@@ -58,6 +70,4 @@ public class UserEntity {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<RoleEntity> roles;
-
-
 }

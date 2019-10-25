@@ -1,40 +1,56 @@
-$(function () {
-    $("#username").blur(function () {
-        $('#info-username').html('');
-    });
+(function () {
+    $.validator.addMethod('regexp', function (value, element, param) {
+            return this.optional(element) || value.match(param[0]);
+        },
+        usernamePattern);
 
-    $("#password").blur(function () {
-        $('#info-password').html('');
-    });
-
-    $("#btnLogin").click(function () {
-        var username = $("#username").val();
-        var password = $("#password").val();
-
-        $.ajax({
-            type: 'POST',
-            url: '/accounts/validate',
-            data: JSON.stringify({
-                username: username,
-                password: password,
-            }),
-            contentType: 'application/json; charset=utf-8',
-            cache: false,
-            success: function (data) {
-                $("#fromLogin").submit();
-            },
-            error: function (error) {
-                $('#info-password').html('');
-                $('#info-username').html('');
-
-                if (error.responseJSON.usernameError) {
-                    $('#info-username').html(error.responseJSON.usernameError);
+    $("#formSignup")
+        .validate(
+            {
+                rules: {
+                    username: {
+                        required: true,
+                        minlength: 8,
+                        maxlength: 32,
+                        regexp: [/^[a-zA-Z0-9]{8,32}$/, 'username']
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    encrytedPassword: {
+                        required: true,
+                        minlength: 8,
+                        maxlength: 32
+                    },
+                    firstName: {
+                        required: true
+                    },
+                    lastName: {
+                        required: true
+                    }
+                },
+                messages: {
+                    username: {
+                        required: usernameRequired,
+                        minlength: usernameMinlength,
+                        maxlength: usernameMaxlength
+                    },
+                    email: {
+                        required: emailRequired,
+                        email: emailPattern
+                    },
+                    password: {
+                        required: passwordRequired,
+                        minlength: passwordMinLength,
+                        maxlength: passwordMaxLength
+                    },
+                    firstName: {
+                        required: firstNameRequired
+                    },
+                    lastName: {
+                        required: lastNameRequired
+                    }
                 }
-
-                if (error.responseJSON.passwordError) {
-                    $('#info-password').html(error.responseJSON.passwordError);
-                }
-            }
-        });
-    });
-});
+            });
+})();

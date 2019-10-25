@@ -1,4 +1,4 @@
-package com.program.weather.service.converter;
+package com.program.weather.service.mapper;
 
 import com.program.weather.service.dto.UserDTO;
 import com.program.weather.entity.UserEntity;
@@ -7,13 +7,16 @@ import org.springframework.stereotype.Component;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * The type User converter.
+ */
 @Component
 public class UserConverter {
     /**
      * Conver UserDto --> UserEntiTy
      *
-     * @param userEntity
-     * @return UserEntity
+     * @param userEntity the user entity
+     * @return UserEntity user dto
      */
     public UserDTO convertUserToDTO(UserEntity userEntity) {
 
@@ -34,8 +37,8 @@ public class UserConverter {
     /**
      * conver UserEntity --> UserDTO
      *
-     * @param userDTO
-     * @return
+     * @param userDTO the user dto
+     * @return user entity
      */
     public UserEntity convertUserEntity(UserDTO userDTO) {
 

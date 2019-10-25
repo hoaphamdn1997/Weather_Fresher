@@ -10,13 +10,33 @@ import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+/**
+ * The interface Password matches.
+ */
 @Target({TYPE,ANNOTATION_TYPE})
 @Retention(RUNTIME)
 @Constraint(validatedBy = PasswordMatchesValidator.class)
 @Documented
 public @interface PasswordMatches {
 
+	/**
+	 * Message string.
+	 *
+	 * @return the string
+	 */
 	String message() default "Confirm Password does not match !";
-		Class<?>[] groups() default {};
-		Class<? extends Payload>[] payload() default {};
+
+	/**
+	 * Groups class [ ].
+	 *
+	 * @return the class [ ]
+	 */
+	Class<?>[] groups() default {};
+
+	/**
+	 * Payload class [ ].
+	 *
+	 * @return the class [ ]
+	 */
+	Class<? extends Payload>[] payload() default {};
 }

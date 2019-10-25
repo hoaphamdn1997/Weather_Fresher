@@ -7,9 +7,9 @@ import com.program.weather.common.utils.EncrytedPasswordUtils;
 import com.program.weather.entity.RoleEntity;
 import com.program.weather.entity.UserEntity;
 import com.program.weather.entity.WeatherEntity;
-import com.program.weather.entity.repository.CurrentWeatherRepository;
-import com.program.weather.entity.repository.RoleRepository;
-import com.program.weather.entity.repository.UserRepository;
+import com.program.weather.service.repository.CurrentWeatherRepository;
+import com.program.weather.service.repository.RoleRepository;
+import com.program.weather.service.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,20 +18,34 @@ import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
+/**
+ * The type User service.
+ */
 @Service
 public class UserServiceImpl implements UserService {
 
+    /**
+     * The User repository.
+     */
     @Autowired
     UserRepository userRepository;
 
+    /**
+     * The Role repository.
+     */
     @Autowired
     RoleRepository roleRepository;
 
+    /**
+     * The Weather service.
+     */
     @Autowired
     WeatherService weatherService;
 
+    /**
+     * The Weather repository.
+     */
     @Autowired
     CurrentWeatherRepository weatherRepository;
 
@@ -50,9 +64,9 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * Create user
+     * Create new user set ROLE_USER for user
      *
-     * @param user
+     * @param user //User Entity
      * @return Save user
      */
     @Override
@@ -72,7 +86,7 @@ public class UserServiceImpl implements UserService {
     /**
      * Delete User by Id
      *
-     * @param id
+     * @param id //id User
      */
     @Override
     public void delete(Long id) {
@@ -82,14 +96,13 @@ public class UserServiceImpl implements UserService {
 
         List<WeatherEntity> listWeatherByUser = weatherRepository.findAllByUserEntities(userEntity);
         weatherService.deleteListWeatherByUser(listWeatherByUser);
-
         userRepository.delete(userEntity);
     }
 
     /**
      * List All User
      *
-     * @return all user
+     * @return List All User
      */
     @Override
     public List<UserEntity> findAll() {
@@ -97,9 +110,10 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * update pass world
-     * @param password
-     * @param userId
+     * update password by User ID
+     *
+     * @param password //password in form reset-password
+     * @param userId   //UserId in database
      */
     @Override
     public void updatePassword(String password, Long userId) {

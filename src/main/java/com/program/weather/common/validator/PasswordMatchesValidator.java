@@ -2,11 +2,15 @@ package com.program.weather.common.validator;
 
 
 import com.program.weather.service.dto.PasswordResetDTO;
-import com.program.weather.service.dto.UserDTO;
+
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+
+/**
+ * The type Password matches validator.
+ */
 public class PasswordMatchesValidator implements ConstraintValidator<PasswordMatches, Object> {
 
     @Override

@@ -1,4 +1,4 @@
-package com.program.weather.common.Custom;
+package com.program.weather.common.custom;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -8,15 +8,17 @@ import com.program.weather.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.program.weather.entity.repository.UserRepository;
+import com.program.weather.service.repository.UserRepository;
 
 
+/**
+ * The type Custom user details service.
+ */
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
@@ -38,7 +40,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
-        //get roles for user
+        //find roles for user Set only
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         Set<RoleEntity> roles = user.getRoles();
         for (RoleEntity role : roles) {

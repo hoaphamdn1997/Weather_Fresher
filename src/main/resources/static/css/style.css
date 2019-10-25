@@ -1,8 +1,8 @@
 
 body {
 
-    /*background-image: url(https://bing.com/th?id=OHR.BubbleNebula_ROW2913743388_1920x1080.jpg&amp;rf=LaDigue_1920x1080.jpg&amp;pid=hp);*/
-    background-image: url(https://www.bing.com/th?id=OHR.AlbertaThanksgiving_ROW3027926486_1920x1080.jpg&amp;rf=LaDigue_1920x1080.jpg&amp;pid=hp);
+    background-image: url(https://www.bing.com/th?id=OHR.ChurchillPolarBear_ROW3942077807_1920x1080.jpg&amp;rf=LaDigue_1920x1080.jpg&amp;pid=hp);
+    /*background-image: url(https://www.bing.com/th?id=OHR.AlbertaThanksgiving_ROW3027926486_1920x1080.jpg&amp;rf=LaDigue_1920x1080.jpg&amp;pid=hp);*/
 }
 
 .form-control {
@@ -17,7 +17,7 @@ body {
 }
 
 .form-control, .btn {
-    border-radius: 2px;
+    border-radius: 26px;
 }
 
 .login-form {
@@ -78,7 +78,31 @@ body {
     width: 340px;
 
 }
-
+.button_1{
+    min-width: 88px;
+    border-radius: 25px;!important;
+    min-height: 40px;!important;
+    box-shadow: none !important;
+    border: transparent;
+}
+.input-text{
+    display: inline-block;
+    width: 469px;
+    vertical-align: middle;
+    min-height: 40px;
+    background: #f2f2f2;
+    box-shadow: none !important;
+    border: transparent;
+    border-radius: 26px;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    outline: 0;
+    color: #495057;
+    transition: border-color .15s ease-in-out, box-shadow .15s
+}
 .title-reset p {
     color: white;
 }
@@ -109,8 +133,9 @@ body {
 }
 
 .weather-country {
-    font-size: 17px;
+    font-size: 12px;
     font-weight: 600;
+    width: 75px;
 }
 
 .weather-time {
@@ -262,6 +287,8 @@ body {
         flex: 1 1 auto;
         padding: 1.25rem;
         font-size: 13px;
+        border-radius: 24px
+    ;
     }
 }
 
@@ -298,20 +325,21 @@ body {
         flex: 1 1 auto;
         padding: 1.25rem;
         font-size: 15px;
+        border-radius: 24px
     }
 }
 
 @media (min-width: 1025px) {
     .table {
-        max-width: 750px;
-        margin-left: 200px;
-        color: black;
+        /*max-width: 750px;*/
+        margin: auto;
+        color: white;
     }
 }
 
 @media (max-width: 320px) {
     .table {
-        color: black;
+        color: white;
     }
 }
 
@@ -354,14 +382,17 @@ body {
 }
 
 .list {
+    width: 900px;
     min-height: 500px;
     background: #1c1c1c8f;
+    border-radius: 24px;
 }
 
 .head-showmore {
     height: 30px;
     text-align: center;
     font-size: 12px;
+
 }
 
 .form-inline .form-control {
@@ -419,12 +450,40 @@ body {
     height: 415px;
     overflow: auto;
 }
-
+.adminpage{
+ min-height: 500px ;border-radius: 24px;    background: #1c1c1c8f;padding-top: 10px;
+}
 .Search {
     width: 480px;
-    height: 37px;!important;
+    height: 37px;
+!important;
     background: #f2f2f2;
     box-shadow: none !important;
     border: transparent;
     border-radius: 2px;
+}
+
+/* Styles for wrapping the search box */
+
+.main {
+    width: 50%;
+    margin: 50px auto;
+}
+
+/* Bootstrap 4 text input with search icon */
+
+.has-search .form-control {
+    padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
 }

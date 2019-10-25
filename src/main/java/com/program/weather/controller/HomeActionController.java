@@ -14,7 +14,7 @@ import com.program.weather.entity.WeatherEntity;
 import com.program.weather.entity.CreateEntityWeather.DetailsWeatherEntity;
 
 import com.program.weather.entity.UserEntity;
-import com.program.weather.entity.repository.CurrentWeatherRepository;
+import com.program.weather.service.repository.CurrentWeatherRepository;
 import com.program.weather.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +22,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
+/**
+ * The type Home action controller.
+ */
 @Controller
 @RequestMapping("/home-weather")
 public class HomeActionController {
@@ -31,18 +34,25 @@ public class HomeActionController {
     private WeatherService weatherService;
 
 
+    /**
+     * The Current weather repository.
+     */
     @Autowired
     CurrentWeatherRepository currentWeatherRepository;
 
+    /**
+     * The User service.
+     */
     @Autowired
     UserService userService;
 
     /**
-     * Search weather City
+     * Search weather City With Name city
      *
-     * @param name
-     * @param modelMap
-     * @return
+     * @param name      the name
+     * @param modelMap  the model map
+     * @param principal the principal
+     * @return pageHome string
      */
     @GetMapping("/search-city")
     public String home(@RequestParam String name, Model modelMap, Principal principal) {
@@ -86,7 +96,7 @@ public class HomeActionController {
      * 1 DAY =24H,API 3H RETURN 1TIME =>SIZE_FORECAST_WEATHER_REPEAT= 24H/3H =8
      *
      * @param name  Name City
-     * @param model
+     * @param model the model
      * @return page Detail
      */
     @GetMapping("/detailts/{name}")
@@ -130,9 +140,9 @@ public class HomeActionController {
     /**
      * Update And Insert Weather City
      *
-     * @param action
-     * @param name
-     * @param principal
+     * @param action    the action
+     * @param name      the name
+     * @param principal the principal
      * @return page Home
      */
     @GetMapping("/save-weather")
@@ -171,8 +181,8 @@ public class HomeActionController {
      * Function insert common for insert and update
      * Follow name city
      *
-     * @param name
-     * @param userEntity
+     * @param name       the name
+     * @param userEntity the user entity
      */
     public void insertWeather(String name, UserEntity userEntity) {
         WeatherEntity result = weatherService.getWeatherByApi(name);
@@ -185,8 +195,9 @@ public class HomeActionController {
      * Function update Weather
      * Follow Id weather
      *
-     * @param name
-     * @param userEntity
+     * @param name       the name
+     * @param userEntity the user entity
+     * @param id         the id
      */
     public void updateWeather(String name, UserEntity userEntity, Long id) {
         WeatherEntity result = weatherService.getWeatherByApi(name);

@@ -4,6 +4,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
+/**
+ * The type Clouds dto.
+ */
 @Data
 @NoArgsConstructor
 public class CloudsDTO {

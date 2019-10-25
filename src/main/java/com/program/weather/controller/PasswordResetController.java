@@ -2,7 +2,7 @@ package com.program.weather.controller;
 
 import com.program.weather.entity.PasswordResetToken;
 import com.program.weather.entity.UserEntity;
-import com.program.weather.entity.repository.PasswordResetTokenRepository;
+import com.program.weather.service.repository.PasswordResetTokenRepository;
 import com.program.weather.service.UserService;
 import com.program.weather.service.dto.PasswordResetDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +16,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
+/**
+ * The type Password reset controller.
+ */
 @Controller
 @RequestMapping("/reset-password")
 /**
@@ -36,11 +39,23 @@ public class PasswordResetController {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    /**
+     * Password reset password reset dto.
+     *
+     * @return the password reset dto
+     */
     @ModelAttribute("passwordResetForm")
     public PasswordResetDTO passwordReset() {
         return new PasswordResetDTO();
     }
 
+    /**
+     * Display reset password page string.
+     *
+     * @param token the token
+     * @param model the model
+     * @return the string
+     */
     @GetMapping
     public String displayResetPasswordPage(@RequestParam(required = false) String token,
                                            Model model) {
@@ -54,9 +69,17 @@ public class PasswordResetController {
             model.addAttribute("token", resetToken.getToken());
         }
 
-        return "reset-password";
+        return "resetpassword";
     }
 
+    /**
+     * Handle password reset string.
+     *
+     * @param form               the form
+     * @param result             the result
+     * @param redirectAttributes the redirect attributes
+     * @return the string
+     */
     @PostMapping
     @Transactional
     public String handlePasswordReset(@ModelAttribute("passwordResetForm") @Valid PasswordResetDTO form,

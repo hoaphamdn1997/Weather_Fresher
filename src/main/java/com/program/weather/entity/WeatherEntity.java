@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Set;
 
 
+/**
+ * The type Weather entity.
+ */
 @Entity
 @Data
 @NoArgsConstructor
@@ -53,9 +56,8 @@ public class WeatherEntity {
     private String createBy;
 
 
-    @ManyToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_weather", joinColumns = @JoinColumn(name = "weather_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<UserEntity> userEntities;
-
 
 }

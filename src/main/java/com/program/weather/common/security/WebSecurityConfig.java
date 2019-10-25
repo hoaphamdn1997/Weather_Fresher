@@ -1,6 +1,6 @@
 package com.program.weather.common.security;
 
-import com.program.weather.common.Custom.CustomFillter;
+import com.program.weather.common.custom.CustomFillter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,13 +11,16 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.program.weather.common.Custom.CustomUserDetailsService;
+import com.program.weather.common.custom.CustomUserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import java.util.Locale;
 
+/**
+ * The type Web security config.
+ */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -26,19 +29,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
-    @Bean
-    public LocaleResolver localeResolver() {
-        SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
-        sessionLocaleResolver.setDefaultLocale(Locale.US);
-        return sessionLocaleResolver;
-    }
-
+    /**
+     * Password encoder b crypt password encoder.
+     *
+     * @return the b crypt password encoder
+     */
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         return bCryptPasswordEncoder;
     }
 
+    /**
+     * Configure global.
+     *
+     * @param auth the auth
+     * @throws Exception the exception
+     */
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
@@ -59,6 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //Only Role_User and Role Admin
                 .permitAll().antMatchers("/home-weather/**", "/", "/home")
                 .hasAnyRole("USER", "ADMIN")
+                .antMatchers("/block").hasRole("GUEST")
                 //Only admin
                 .antMatchers("/home-admin/admin")
                 .hasRole("ADMIN")
@@ -68,7 +76,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //go to login page
                 .formLogin()
                 .loginPage("/login")
-                .loginProcessingUrl("/loginA")
+                .loginProcessingUrl("/loginAction")
                 //this is parameter in login page
                 .passwordParameter("encrytedPassword")
                 .usernameParameter("username")

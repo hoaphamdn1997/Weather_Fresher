@@ -1,16 +1,19 @@
-package com.program.weather.entity.repository;
+package com.program.weather.service.repository;
 
 import com.program.weather.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 
+/**
+ * The interface User repository.
+ */
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
     /**
      * Use Jpa find Username in database
      *
-     * @param userName
+     * @param userName the user name
      * @return UserName in table UserEntity
      */
     UserEntity findByUserName(String userName);
@@ -18,7 +21,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     /**
      * Use jpa find id user in database
      *
-     * @param id
+     * @param id the id
      * @return id User in table UserEntity
      */
     UserEntity findByUserId(Long id);
@@ -26,7 +29,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     /**
      * Use jpa find email in database
      *
-     * @param email
+     * @param email the email
      * @return email User in table UserEntity
      */
     UserEntity findByEmail(String email);

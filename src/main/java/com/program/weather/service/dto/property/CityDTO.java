@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.sql.Timestamp;
 
+/**
+ * The type City dto.
+ */
 @Data
 public class CityDTO {
     private Double id;

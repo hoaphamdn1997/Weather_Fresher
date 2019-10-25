@@ -3,6 +3,9 @@ package com.program.weather.service.dto.property;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * The type Main dto.
+ */
 @Data
 @NoArgsConstructor
 public class MainDTO {

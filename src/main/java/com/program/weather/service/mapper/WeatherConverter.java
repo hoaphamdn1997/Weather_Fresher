@@ -1,4 +1,4 @@
-package com.program.weather.service.converter;
+package com.program.weather.service.mapper;
 
 import com.program.weather.service.dto.CurrentWeatherDTO;
 import com.program.weather.entity.WeatherEntity;
@@ -7,13 +7,16 @@ import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
 
+/**
+ * The type Weather converter.
+ */
 @Component
 public class WeatherConverter {
     /**
      * Conver WeatherDTO --> WeatherEntity
      *
-     * @param weatherDTO
-     * @return WeatherEntity
+     * @param weatherDTO the weather dto
+     * @return WeatherEntity weather entity
      */
     public WeatherEntity convertToEntity(CurrentWeatherDTO weatherDTO) {
         ModelMapper modelMapper = new ModelMapper();
