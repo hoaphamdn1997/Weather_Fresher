@@ -9,7 +9,7 @@ import java.util.Date;
  */
 @Entity
 @Table
-public class PasswordResetToken {
+public class PasswordResetTokenEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -9,9 +9,9 @@ import java.util.stream.Collectors;
 import com.program.weather.common.utils.CommonUtil;
 import com.program.weather.common.utils.Constants;
 import com.program.weather.service.WeatherService;
+import com.program.weather.service.dto.DetailsWeather5DayDTO;
 import com.program.weather.service.dto.DetailsWeatherDTO;
 import com.program.weather.entity.WeatherEntity;
-import com.program.weather.entity.CreateEntityWeather.DetailsWeatherEntity;
 
 import com.program.weather.entity.UserEntity;
 import com.program.weather.service.repository.CurrentWeatherRepository;
@@ -101,11 +101,11 @@ public class HomeActionController {
      */
     @GetMapping("/detailts/{name}")
     public String getWeatherDetailts(@PathVariable String name, Model model) {
-        List<DetailsWeatherEntity> lstForCast = new ArrayList<DetailsWeatherEntity>();
+        List<DetailsWeather5DayDTO> lstForCast = new ArrayList<DetailsWeather5DayDTO>();
         DetailsWeatherDTO detailsWeatherDTO = weatherService.foreCast(name);
 
         for (int i = 0; i < Constants.SIZE_FORECAST_WEATHER; i += Constants.SIZE_FORECAST_WEATHER_REPEAT) {
-            lstForCast.add(new DetailsWeatherEntity(
+            lstForCast.add(new DetailsWeather5DayDTO(
                             detailsWeatherDTO.getList().get(i).getWeather().get(0).getIcon(),
                             detailsWeatherDTO.getCity().getName(),
                             detailsWeatherDTO.getList().get(i).getMain().getTemp_min(),

@@ -1,7 +1,7 @@
 package com.program.weather.controller;
 
 
-import com.program.weather.entity.PasswordResetToken;
+import com.program.weather.entity.PasswordResetTokenEntity;
 import com.program.weather.entity.UserEntity;
 import com.program.weather.service.repository.PasswordResetTokenRepository;
 import com.program.weather.service.EmailService;
@@ -61,7 +61,7 @@ public class PasswordForgotController {
     /**
      * You can submit a form post to the PasswordForgotController which’ll handle the incoming password forgot request.
      * We use standard hibernate validator annotations on the PasswordForgotDto to validate the incoming request.
-     * We create a new unique PasswordResetToken and store it in the database.
+     * We create a new unique PasswordResetTokenEntity and store it in the database.
      * We forward this token information to the user by email.
      * This email contains a special link to reset his password.
      *
@@ -85,7 +85,7 @@ public class PasswordForgotController {
             return "forgotpassword";
         }
 
-        PasswordResetToken token = new PasswordResetToken();
+        PasswordResetTokenEntity token = new PasswordResetTokenEntity();
         token.setToken(UUID.randomUUID().toString());
         token.setUser(user);
         token.setExpiryDate(30);

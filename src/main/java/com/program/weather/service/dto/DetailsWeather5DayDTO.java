@@ -1,12 +1,12 @@
-package com.program.weather.entity.CreateEntityWeather;
+package com.program.weather.service.dto;
+
+
 
 import lombok.Data;
 
 import java.time.Instant;
-
 @Data
-public class DetailsWeatherEntity {
-
+public class DetailsWeather5DayDTO {
     private Instant day;
     private String image;
     private String tempMin;
@@ -18,7 +18,7 @@ public class DetailsWeatherEntity {
     private String clouds;
     private String city;
 
-    public DetailsWeatherEntity(String image, String city, String tempMin, String tempMax, String wind, String humidity,
+    public DetailsWeather5DayDTO(String image, String city, String tempMin, String tempMax, String wind, String humidity,
                                 String pressure, String description, Instant day) {
         super();
         this.image = image;
@@ -31,5 +31,4 @@ public class DetailsWeatherEntity {
         this.description = description;
         this.day = day;
     }
-
 }

@@ -1,6 +1,6 @@
 package com.program.weather.controller;
 
-import com.program.weather.entity.PasswordResetToken;
+import com.program.weather.entity.PasswordResetTokenEntity;
 import com.program.weather.entity.UserEntity;
 import com.program.weather.service.repository.PasswordResetTokenRepository;
 import com.program.weather.service.UserService;
@@ -60,7 +60,7 @@ public class PasswordResetController {
     public String displayResetPasswordPage(@RequestParam(required = false) String token,
                                            Model model) {
 
-        PasswordResetToken resetToken = tokenRepository.findByToken(token);
+        PasswordResetTokenEntity resetToken = tokenRepository.findByToken(token);
         if (resetToken == null) {
             model.addAttribute("error", "Could not find password reset token.");
         } else if (resetToken.isExpired()) {
@@ -92,7 +92,7 @@ public class PasswordResetController {
             return "redirect:/reset-password?token=" + form.getToken();
         }
 
-        PasswordResetToken token = tokenRepository.findByToken(form.getToken());
+        PasswordResetTokenEntity token = tokenRepository.findByToken(form.getToken());
         UserEntity user = token.getUser();
         String updatedPassword = passwordEncoder.encode(form.getPassword());
         userService.updatePassword(updatedPassword, user.getUserId());

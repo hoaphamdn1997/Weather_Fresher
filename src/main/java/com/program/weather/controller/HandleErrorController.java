@@ -35,7 +35,7 @@ public class HandleErrorController implements ErrorController {
                 return "error/500";
             }
         }
-        return "error/500";
+        return "error/404";
 
     }
 
