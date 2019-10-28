@@ -108,8 +108,8 @@ public class HomeActionController {
             lstForCast.add(new DetailsWeatherEntity(
                             detailsWeatherDTO.getList().get(i).getWeather().get(0).getIcon(),
                             detailsWeatherDTO.getCity().getName(),
-                            CommonUtil.toCelsius(Double.parseDouble(detailsWeatherDTO.getList().get(i).getMain().getTemp_min())),
-                            CommonUtil.toCelsius(Double.parseDouble(detailsWeatherDTO.getList().get(i).getMain().getTemp_max())),
+                            detailsWeatherDTO.getList().get(i).getMain().getTemp_min(),
+                            detailsWeatherDTO.getList().get(i).getMain().getTemp_max(),
                             detailsWeatherDTO.getList().get(i).getWind().getSpeed(),
                             detailsWeatherDTO.getList().get(i).getMain().getHumidity(),
                             detailsWeatherDTO.getList().get(i).getMain().getPressure(),

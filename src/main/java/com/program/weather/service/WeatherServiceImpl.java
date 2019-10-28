@@ -97,7 +97,7 @@ public class WeatherServiceImpl implements WeatherService {
      */
     private String urlApiGetForecast(String nameCity) {
 
-        return weatherURL + weatherVersion + weatherForecast + "q=" + nameCity + "&APPID=" + appID + "&units=imperial";
+        return weatherURL + weatherVersion + weatherForecast + "q=" + nameCity + "&APPID=" + appID + "&units=metric";
     }
 
     /**

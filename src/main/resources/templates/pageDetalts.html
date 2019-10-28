@@ -11,11 +11,13 @@
         <div class="col-sm-12" style="color: aliceblue  ">
             <div class="tab-pane active" id="forecast-list">
 
-                <div id="forecast_list_ul">
-                    <div class="card">
+                <div id="forecast_list_ul" >
+
+
+                    <div class="card" style="background-color: #ffffff8c">
+                        <h2 style="color: darkorange      "><p th:text="'WEATHER FORECAST IN:'+' '+ ${cityName}+' ' +'City'"/>
+                        </h2>
                         <div class="card-body">
-                            <h2 style="color: darkorange      "><p th:text="'5 DAY WEATHER FORECAST :'+ ${cityName}"/>
-                            </h2>
                             <table class="table" style="color: black ">
                                 <tbody>
                                 <tr th:each="detail : ${List} ">

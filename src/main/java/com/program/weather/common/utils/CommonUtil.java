@@ -1,26 +1,13 @@
 package com.program.weather.common.utils;
 
-import java.sql.Timestamp;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 /**
  * The type Common util.
  */
 public class CommonUtil {
-
-    /**
-     * Convert F --> C
-     *
-     * @param F the f
-     * @return formatter string
-     */
-    public static String toCelsius(double F) {
-        NumberFormat formatter = new DecimalFormat("#0.00");
-        return formatter.format((F - 32) * 5 / 9);
-    }
 
     /**
      * Format TimeStamp to String yyyymmdd
@@ -43,6 +30,4 @@ public class CommonUtil {
         String formattedDate = new SimpleDateFormat("yyyyMMdd").format(ts);
         return formattedDate;
     }
-
-
 }

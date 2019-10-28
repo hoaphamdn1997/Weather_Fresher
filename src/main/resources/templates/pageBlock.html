@@ -10,7 +10,25 @@
     <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 <body>
-<th:block th:replace="common/header :: header"></th:block>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style="opacity: .8">
+    <a class="navbar-brand" style="color: white"><img src="../images/sunset.png">WEATHER.K2</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-3">
+            <li class="navbar-nav">
+                <a class="nav-link" th:if="${#request.userPrincipal != null}" th:href="@{/logout}">Logout</a>
+
+            </li>
+        </ul>
+    </div>
+</nav>
+
 <br>
 <br>
 <br>
@@ -31,7 +49,7 @@
                                             <div
                                                     class="card-body weather-container weather-item weather-main-item">
 												<span style="margin-top: 15px; width: 500px; height: 50px"
-                                                      class="text-center">Sorry you have been blocked by the admin ...</span>
+                                                      class="text-center">Sorry you have been blocked by the admin ...You can logout =)))</span>
                                             </div>
                                         </div>
                                     </div>

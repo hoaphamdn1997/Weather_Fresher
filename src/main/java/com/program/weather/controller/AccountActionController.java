@@ -183,6 +183,11 @@ public class AccountActionController {
         }
     }
 
+    @GetMapping("/**/{path:[^\\.]*}")
+    public String forward() {
+        return "forward:/block  ";
+    }
+
     /**
      * Come to pageBlock
      *
