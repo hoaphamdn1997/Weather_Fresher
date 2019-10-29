@@ -1,7 +1,7 @@
 <th:block th:fragment="header" xmlns:th="http://www.thymeleaf.org">
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="opacity: .8">
-        <a class="navbar-brand" th:href="@{/}" style="color: black"><img src="../images/sunset.png">WEATHER.K2</a>
+        <a class="navbar-brand" th:href="@{/}" style="color: black"><i class="fas fa-cloud-sun"></i>.WEATHER.K2</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse"
                 data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -12,28 +12,33 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item" th:classappend="${#httpServletRequest.getRequestURI() == '/' ? 'active':''}">
-                    <a class="nav-link" th:href="@{/}">HOME <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" th:href="@{/}"><i class="fas fa-home"></i>
+                        HOME <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item" th:if="${#request.isUserInRole('ADMIN')}"
                     th:classappend="${#httpServletRequest.getRequestURI() == '/home-admin/admin' ? 'active':''}">
-                    <a class="nav-link" th:href="@{/home-admin/admin}">MANAGEMENT</a>
+                    <a class="nav-link" th:href="@{/home-admin/admin}"><i class="fas fa-address-card"></i>
+                        MANAGEMENT</a>
                 </li>
             </ul>
 
             <ul class="navbar-nav mr-3">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                        PROFILE USER
+                        <i class="fas fa-user"></i>USER
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">USER: <span th:if="${#request.userPrincipal.name}"
-                                                                      th:utext="${#request.userPrincipal.name}"></span></a>
-                        <a class="dropdown-item" th:if="${#request.userPrincipal != null}"
-                           th:href="@{/logout}">Logout</a>
+                        <a class="dropdown-item" href="#"><b>Hello:
+                            <span th:if="${#request.userPrincipal.name}" th:utext="${#request.userPrincipal.name}"></span>
+                        <!--<span th:text="${session.userSecurity != null ? (session.userSecurity.lastName + ' ' + session.userSecurity.firstName) : ''}"></span>-->
+                        </b></a>
+                        <a class="dropdown-item"
+                           th:href="@{/update-profile}">ChangeProfile</a>
                     </div>
                 </li>
                 <li class="navbar-nav">
-                    <a class="nav-link" href="#"></a>
+                    <a class="btn btn-light" th:if="${#request.userPrincipal != null}"
+                       th:href="@{/logout}">LOGOUT</a>
                 </li>
             </ul>
         </div>

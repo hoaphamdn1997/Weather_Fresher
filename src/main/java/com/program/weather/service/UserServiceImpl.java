@@ -7,6 +7,7 @@ import com.program.weather.common.utils.EncrytedPasswordUtils;
 import com.program.weather.entity.RoleEntity;
 import com.program.weather.entity.UserEntity;
 import com.program.weather.entity.WeatherEntity;
+import com.program.weather.service.dto.UserDTO;
 import com.program.weather.service.repository.CurrentWeatherRepository;
 import com.program.weather.service.repository.RoleRepository;
 import com.program.weather.service.repository.UserRepository;
@@ -190,5 +191,15 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email);
     }
 
-
+    @Override
+    public void updateProfileUser(UserEntity userEntity, UserDTO userDTO) {
+        // Set info user modified
+        userEntity.setFirstName(userDTO.getFirstName());
+        userEntity.setLastName(userDTO.getLastName());
+        userEntity.setEmail(userDTO.getEmail());
+        userEntity.setEncrytedPassword(passwordEncoder.encode(userDTO.getEncrytedPassword()));
+        userEntity.setCreateDate(new Timestamp(System.currentTimeMillis()));
+        // Update User
+        userRepository.save(userEntity);
+    }
 }

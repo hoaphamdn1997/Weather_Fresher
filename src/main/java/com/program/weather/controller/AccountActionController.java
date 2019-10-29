@@ -9,12 +9,14 @@ import com.program.weather.service.repository.CurrentWeatherRepository;
 import com.program.weather.service.UserService;
 import com.program.weather.service.mapper.UserConverter;
 import com.program.weather.service.dto.property.WeatherSizeApiDTO;
+import com.program.weather.service.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import javax.validation.Valid;
@@ -108,7 +110,7 @@ public class AccountActionController {
      */
     @RequestMapping(value = "/login")
     public String login() {
-        return "pageLogin";
+        return "user/pageLogin";
     }
 
     /**
@@ -131,7 +133,7 @@ public class AccountActionController {
      */
     @GetMapping("/logout")
     public String logout() {
-        return "pageLogin";
+        return "user/pageLogin";
     }
 
     /**
@@ -144,7 +146,7 @@ public class AccountActionController {
     @GetMapping("/registration")
     public String registration(Model model) {
         model.addAttribute("userDTO", new UserDTO());
-        return "pageRegistration";
+        return "user/pageRegistration";
     }
 
     /**
@@ -172,14 +174,14 @@ public class AccountActionController {
         }
         //if the error sends a message validates ->pageRegistration
         if (bindingResult.hasErrors()) {
-            return "pageRegistration";
+            return "user/pageRegistration";
         } else {
             //save User
             userService.saveUser(userConverter.convertUserEntity(userDTO));
             //Add message Succsess --> Attribute
             model.addAttribute("successMessage", "Successfully ^^ ");
             //come to pagaLogin
-            return "pageLogin";
+            return "user/pageLogin";
         }
     }
 
@@ -196,6 +198,21 @@ public class AccountActionController {
      */
     @RequestMapping(value = "/block")
     public String block(Model model) {
-        return "pageBlock";
+        return "user/pageBlock";
+    }
+
+    @GetMapping("/update-profile")
+    public String updatepass(Model model, Principal principal) {
+        UserDTO userDTO = userConverter.convertUserToDTO(userService.findByUserName(principal.getName()));
+        model.addAttribute("userDTO", userDTO);
+        return "user/pageProfile";
+    }
+    @PostMapping("/update-profile")
+    public String updatepassAction(@Valid @ModelAttribute("passwordUpdateForm") UserDTO userDTO,
+                                   Principal principal){
+        UserEntity userEntity = userService.findByUserName(principal.getName());
+        //update info USER
+        userService.updateProfileUser(userEntity, userDTO);
+        return "user/pageProfile?success";
     }
 }

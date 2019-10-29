@@ -1,7 +1,8 @@
 package com.program.weather.common.custom;
 
+import com.program.weather.common.utils.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -47,22 +48,30 @@ public class CustomFillter extends GenericFilterBean {
             ServletRequest request,
             ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
+
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        UserDetails userDetails = CommonUtil.getUserDetailsSecurityContext();
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        //
-        //verify if the user is currently logged in and get a username
-        if (authentication != null && authentication.getPrincipal() != null && authentication.getPrincipal() instanceof UserDetails && authentication.getCredentials() == null) {
-            String username = ((UserDetails) authentication.getPrincipal()).getUsername();
-            //if username is empty
-            if (!username.isEmpty()) {
-                UserDetails userDetailsQuery = userDetailsService.loadUserByUsername(username);
-                UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-                //Obligatory user logout
-                if (!userDetailsQuery.getAuthorities().containsAll(userDetails.getAuthorities())) {
-                    new SecurityContextLogoutHandler().logout(req, res, authentication);
+        if (userDetails != null) {
+            try {
+                UserDetails userDetailsQuery = userDetailsService.loadUserByUsername(userDetails.getUsername());
+
+                /**
+                 * if user logged has been change authority then we will logout this account
+                 * check all roles and check size role had changed
+                 */
+                if (!userDetailsQuery.getAuthorities().containsAll(userDetails.getAuthorities())
+                        || userDetails.getAuthorities().size() != userDetailsQuery.getAuthorities().size()) {
+                    new SecurityContextLogoutHandler().logout(req, res, securityContext.getAuthentication());
                 }
+            } catch (Exception e) {
+                /**
+                 * if happening Exception, it mean not exists UserDetails from method loadUserByUsername,
+                 * it mean that user has been deleted, so we will logout that account
+                 */
+                new SecurityContextLogoutHandler().logout(req, res, securityContext.getAuthentication());
             }
         }
 
@@ -77,4 +86,8 @@ public class CustomFillter extends GenericFilterBean {
     public CustomFillter(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
+
+    /**
+     * Instantiates a new Custom fillter.
+     */
 }

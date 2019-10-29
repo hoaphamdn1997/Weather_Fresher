@@ -1,6 +1,6 @@
 package com.program.weather.controller;
 
-import com.program.weather.entity.PasswordResetTokenEntity;
+import com.program.weather.entity.PasswordResetToken;
 import com.program.weather.entity.UserEntity;
 import com.program.weather.service.repository.PasswordResetTokenRepository;
 import com.program.weather.service.UserService;
@@ -60,7 +60,7 @@ public class PasswordResetController {
     public String displayResetPasswordPage(@RequestParam(required = false) String token,
                                            Model model) {
 
-        PasswordResetTokenEntity resetToken = tokenRepository.findByToken(token);
+        PasswordResetToken resetToken = tokenRepository.findByToken(token);
         if (resetToken == null) {
             model.addAttribute("error", "Could not find password reset token.");
         } else if (resetToken.isExpired()) {
@@ -69,7 +69,7 @@ public class PasswordResetController {
             model.addAttribute("token", resetToken.getToken());
         }
 
-        return "resetpassword";
+        return "password/resetpassword";
     }
 
     /**
@@ -83,8 +83,8 @@ public class PasswordResetController {
     @PostMapping
     @Transactional
     public String handlePasswordReset(@ModelAttribute("passwordResetForm") @Valid PasswordResetDTO form,
-                                      BindingResult result,
-                                      RedirectAttributes redirectAttributes) {
+                                          BindingResult result,
+                                          RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute(BindingResult.class.getName() + ".passwordResetForm", result);
@@ -92,7 +92,7 @@ public class PasswordResetController {
             return "redirect:/reset-password?token=" + form.getToken();
         }
 
-        PasswordResetTokenEntity token = tokenRepository.findByToken(form.getToken());
+        PasswordResetToken token = tokenRepository.findByToken(form.getToken());
         UserEntity user = token.getUser();
         String updatedPassword = passwordEncoder.encode(form.getPassword());
         userService.updatePassword(updatedPassword, user.getUserId());

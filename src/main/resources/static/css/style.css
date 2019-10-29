@@ -1,9 +1,9 @@
 
 body {
-    background-image: url(https://www.bing.com/th?id=OHR.FortRockHomestead_ROW4897942024_1920x1080.jpg&amp;rf=LaDigue_1920x1080.jpg&amp;pid=hp);
+    /*background-image: url(https://www.bing.com/th?id=OHR.FortRockHomestead_ROW4897942024_1920x1080.jpg&amp;rf=LaDigue_1920x1080.jpg&amp;pid=hp);*/
     /*background-image: url(https://www.bing.com/th?id=OHR.NaranjoBulnes_ROW4819283992_1920x1080.jpg&amp;rf=LaDigue_1920x1080.jpg&amp;pid=hp);*/
     /*background-image: url(https://www.bing.com/th?id=OHR.ChurchillPolarBear_ROW3942077807_1920x1080.jpg&amp;rf=LaDigue_1920x1080.jpg&amp;pid=hp);*/
-    /*background-image: url(https://www.bing.com/th?id=OHR.AlbertaThanksgiving_ROW3027926486_1920x1080.jpg&amp;rf=LaDigue_1920x1080.jpg&amp;pid=hp);*/
+    background-image: url(https://www.bing.com/th?id=OHR.EidolonHelvum_ROW4957124495_1920x1080.jpg&amp;rf=LaDigue_1920x1080.jpg&amp;pid=hp);
 }
 
 .form-control {
@@ -80,19 +80,9 @@ body {
 
 }
 
-.button_1 {
-    min-width: 88px;
-    border-radius: 25px;
-!important;
-    min-height: 40px;
-!important;
-    box-shadow: none !important;
-    border: transparent;
-}
-
 .input-text {
     display: inline-block;
-    width: 469px;
+    width: 450px;
     vertical-align: middle;
     min-height: 40px;
     background: #f2f2f2;
@@ -106,7 +96,8 @@ body {
     line-height: 1.5;
     outline: 0;
     color: #495057;
-    transition: border-color .15s ease-in-out, box-shadow .15s
+    transition: border-color .15s ease-in-out, box-shadow .15s;
+    margin-left: 36px;
 }
 
 .title-reset p {
@@ -496,4 +487,23 @@ body {
     text-align: center;
     pointer-events: none;
     color: #aaa;
+}
+
+.validation-message {
+    color: red;
+}
+.update{
+    background-color: #ffffff24;width: 1000px;
+    float: left;
+}
+.button {
+    background-color: white; /* Green */
+    border-radius: 24px;
+    color: #1d2124;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16gpx;
+
 }

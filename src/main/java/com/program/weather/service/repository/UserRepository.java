@@ -33,4 +33,5 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
      * @return email User in table UserEntity
      */
     UserEntity findByEmail(String email);
+
 }

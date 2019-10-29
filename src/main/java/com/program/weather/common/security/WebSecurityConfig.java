@@ -1,6 +1,7 @@
 package com.program.weather.common.security;
 
 import com.program.weather.common.custom.CustomFillter;
+import com.program.weather.common.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -58,18 +59,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
+                .csrf()
+                .disable()
                 .addFilterAt(new CustomFillter(customUserDetailsService), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 //Optional login
-                .antMatchers("/login", "/logout", "/registration", "/forgot-password**", "/reset-password**")
+                .antMatchers("/login", "/logout", "/registration", "/forgot-password**", "/reset-password**").permitAll()
                 //Only Role_User and Role Admin
-                .permitAll().antMatchers("/home-weather/**", "/", "/home")
-                .hasAnyRole("USER", "ADMIN")
-                .antMatchers("/block").hasRole("GUEST")
+                .antMatchers("/home-weather/**", "/", "/home").hasAnyAuthority(Constants.USER,Constants.ADMIN)
+                .antMatchers("/block").hasAuthority(Constants.GUEST)
                 //Only admin
-                .antMatchers("/home-admin/admin")
-                .hasRole("ADMIN")
+                .antMatchers("/home-admin/admin").hasAuthority(Constants.ADMIN)
                 .antMatchers("/**").authenticated()
                 .anyRequest().authenticated()
                 .and()
@@ -90,7 +90,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login")
                 .and()
                 //if account access denied -> 403 page
-                .csrf().disable().exceptionHandling().accessDeniedPage("/403");
+                .csrf()
+                .disable().exceptionHandling().accessDeniedPage("/403");
     }
 
     @Override

@@ -121,7 +121,7 @@ public class HomeActionController {
         model.addAttribute("cityName", name);
         model.addAttribute("List", lstForCast);
         model.addAttribute("timeToday", Instant.now());
-        return "pageDetalts";
+        return "user/pageDetalts";
     }
 
     /**

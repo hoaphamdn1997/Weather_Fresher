@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,6 +20,10 @@ import java.util.List;
  */
 @Controller
 public class ClientFowardController {
+    @RequestMapping(value = "/{[path:[^\\.]*}")
+    public String redirect() {
+        return "forward:/";
+    }
 
     /**
      * Process url string.
@@ -35,7 +40,7 @@ public class ClientFowardController {
 
     /**
      * URL -->Role
-     *
+     * <p>
      * ridirect: redirects to url mapping
      * forward: Provide forward to url with them + request (including param value)
      *

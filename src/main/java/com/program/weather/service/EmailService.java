@@ -42,7 +42,7 @@ public class EmailService {
 
             Context context = new Context();
             context.setVariables(mail.getModel());
-            String html = templateEngine.process("emailtemplate", context);
+            String html = templateEngine.process("password/emailtemplate", context);
             helper.setTo(mail.getTo());
             helper.setText(html, true);
             helper.setSubject(mail.getSubject());

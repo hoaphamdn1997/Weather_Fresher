@@ -1,6 +1,7 @@
 package com.program.weather.service;
 
 import com.program.weather.entity.UserEntity;
+import com.program.weather.service.dto.UserDTO;
 
 import java.util.List;
 
@@ -76,4 +77,12 @@ public interface UserService {
      * @param userId   the user id
      */
     void updatePassword(String password, Long userId);
+
+    /**
+     * Update profile user.
+     *
+     * @param userEntity the user entity
+     * @param userDTO    the user dto
+     */
+    void updateProfileUser(UserEntity userEntity, UserDTO userDTO);
 }

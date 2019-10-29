@@ -1,7 +1,7 @@
 package com.program.weather.controller;
 
 
-import com.program.weather.entity.PasswordResetTokenEntity;
+import com.program.weather.entity.PasswordResetToken;
 import com.program.weather.entity.UserEntity;
 import com.program.weather.service.repository.PasswordResetTokenRepository;
 import com.program.weather.service.EmailService;
@@ -55,13 +55,13 @@ public class PasswordForgotController {
      */
     @GetMapping
     public String displayForgotPasswordPage() {
-        return "forgotpassword";
+        return "password/forgotpassword";
     }
 
     /**
      * You can submit a form post to the PasswordForgotController which’ll handle the incoming password forgot request.
      * We use standard hibernate validator annotations on the PasswordForgotDto to validate the incoming request.
-     * We create a new unique PasswordResetTokenEntity and store it in the database.
+     * We create a new unique PasswordResetToken and store it in the database.
      * We forward this token information to the user by email.
      * This email contains a special link to reset his password.
      *
@@ -76,16 +76,16 @@ public class PasswordForgotController {
                                             HttpServletRequest request) {
 
         if (result.hasErrors()) {
-            return "forgotpassword";
+            return "password/forgotpassword";
         }
 
         UserEntity user = userService.findByUserEmail(form.getEmail());
         if (user == null) {
             result.rejectValue("email", null, "We could not find an account for that e-mail address.");
-            return "forgotpassword";
+            return "password/forgotpassword";
         }
 
-        PasswordResetTokenEntity token = new PasswordResetTokenEntity();
+        PasswordResetToken token = new PasswordResetToken();
         token.setToken(UUID.randomUUID().toString());
         token.setUser(user);
         token.setExpiryDate(30);

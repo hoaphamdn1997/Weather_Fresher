@@ -57,7 +57,7 @@ public class AdminActionController {
         //ATTRIBUTE
         model.addAttribute("dsUser", dsUser);
         model.addAttribute("dsRole", dsRole);
-        return "pageAdmin";
+        return "admin/pageAdmin";
     }
 
 

@@ -18,6 +18,8 @@ import com.program.weather.service.repository.UserRepository;
 
 /**
  * The type Custom user details service.
+ *
+ * @author Hoapham
  */
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
