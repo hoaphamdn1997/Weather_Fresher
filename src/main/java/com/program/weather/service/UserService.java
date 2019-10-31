@@ -78,11 +78,4 @@ public interface UserService {
      */
     void updatePassword(String password, Long userId);
 
-    /**
-     * Update profile user.
-     *
-     * @param userEntity the user entity
-     * @param userDTO    the user dto
-     */
-    void updateProfileUser(UserEntity userEntity, UserDTO userDTO);
 }

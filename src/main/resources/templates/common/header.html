@@ -32,8 +32,6 @@
                             <span th:if="${#request.userPrincipal.name}" th:utext="${#request.userPrincipal.name}"></span>
                         <!--<span th:text="${session.userSecurity != null ? (session.userSecurity.lastName + ' ' + session.userSecurity.firstName) : ''}"></span>-->
                         </b></a>
-                        <a class="dropdown-item"
-                           th:href="@{/update-profile}">ChangeProfile</a>
                     </div>
                 </li>
                 <li class="navbar-nav">

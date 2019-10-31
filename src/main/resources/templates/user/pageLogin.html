@@ -17,10 +17,11 @@
 <div class="login-form">
     <form th:action="@{/loginAction}" method="POST" class="form-signin" id="formSignup">
         <h2 class="text-center">Login</h2>
-        <div align="center" th:if="${param.error}">
-            <p style="font-size: 20; color: #FF1C19;">
-                Username or password is incorrect</p>
-        </div>
+        <!--<div align="center" th:if="${param.error}">-->
+            <!--<p style="font-size: 20; color: #FF1C19;">-->
+                <!--Username or password is incorrect</p>-->
+        <!--</div>-->
+        <h5><p style="color: red;" th:text="${message}"></p></h5>
         <div align="center" th:if="${param.resetSuccess}">
             <p style="font-size: 20; color: #34ce57;">Change password success</p>
         </div>

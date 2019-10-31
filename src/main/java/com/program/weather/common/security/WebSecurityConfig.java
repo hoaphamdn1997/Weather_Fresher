@@ -2,6 +2,7 @@ package com.program.weather.common.security;
 
 import com.program.weather.common.custom.CustomFillter;
 import com.program.weather.common.utils.Constants;
+import com.program.weather.controller.CustomAuthenticationFailureHandlerController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.program.weather.common.custom.CustomUserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
@@ -30,6 +32,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
+    @Bean
+    public HttpSessionEventPublisher httpSessionEventPublisher() {
+        return new HttpSessionEventPublisher();
+    }
     /**
      * Password encoder b crypt password encoder.
      *
@@ -55,7 +61,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
 
     }
-
+    @Autowired
+    private CustomAuthenticationFailureHandlerController customAuthenticationFailureHandler;
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -66,7 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //Optional login
                 .antMatchers("/login", "/logout", "/registration", "/forgot-password**", "/reset-password**").permitAll()
                 //Only Role_User and Role Admin
-                .antMatchers("/home-weather/**", "/", "/home").hasAnyAuthority(Constants.USER,Constants.ADMIN)
+                .antMatchers("/home-weather/**", "/", "/home","/home-weather/detailts/**").hasAnyAuthority(Constants.USER,Constants.ADMIN)
                 .antMatchers("/block").hasAuthority(Constants.GUEST)
                 //Only admin
                 .antMatchers("/home-admin/admin").hasAuthority(Constants.ADMIN)
@@ -83,15 +90,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //login Done -> controller
                 .defaultSuccessUrl("/processURL")
                 //login faile -> massage error -> login page
-                .failureUrl("/login?error=error")
+//                .failureUrl("/login?error=error")
+                .failureHandler(customAuthenticationFailureHandler)
                 .and()
                 .logout()
                 //logout -> login page
-                .logoutSuccessUrl("/login")
+                .logoutSuccessUrl("/login?message=logout")
                 .and()
                 //if account access denied -> 403 page
                 .csrf()
                 .disable().exceptionHandling().accessDeniedPage("/403");
+                 http.sessionManagement().sessionFixation().newSession()
+                .maximumSessions(1).expiredUrl("/login?message=max_session").maxSessionsPreventsLogin(true);
     }
 
     @Override

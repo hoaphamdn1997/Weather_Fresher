@@ -46,6 +46,31 @@ public class AccountActionController {
     @Autowired
     private UserConverter userConverter;
 
+
+    /**
+     * "/home", "/" that is URL go to page Home
+     *
+     * @param model     the Model to progress add attribute for web
+     * @param principal when user login have princical
+     * @return pageHome string
+     */
+    @RequestMapping(value = {"/home", "/"})
+    public String hello(Model model, Principal principal) {
+
+        // After the user has logged in, the principal will have the principal
+        UserEntity userEntity = userService.findByUserName(principal.getName());
+        Long userid = userEntity.getUserId();
+        //List weather user groud by name City and Order by Date
+        List<WeatherEntity> listWeather = weatherService.findWeatherByUserAndDate(userid);
+        //List Weather user Order by Date
+        List<WeatherEntity> weatherEntities = weatherService.findAllByUserEntitiesOrderByDateDesc(userEntity);
+        //Add values -> Attribute
+        model.addAttribute("ListW", listWeather);
+        model.addAttribute("listShowMore", weatherEntities);
+
+        return "pageHome";
+    }
+
     /**
      * Check size List  --> show more
      * if size > 1 show button show more in page
@@ -80,36 +105,23 @@ public class AccountActionController {
     }
 
     /**
-     * "/home", "/" that is URL go to page Home
-     *
-     * @param model     the Model to progress add attribute for web
-     * @param principal when user login have princical
-     * @return pageHome string
-     */
-    @RequestMapping(value = {"/home", "/"})
-    public String hello(Model model, Principal principal) {
-
-        // After the user has logged in, the principal will have the principal
-        UserEntity userEntity = userService.findByUserName(principal.getName());
-        Long userid = userEntity.getUserId();
-        //List weather user groud by name City and Order by Date
-        List<WeatherEntity> listWeather = weatherService.findWeatherByUserAndDate(userid);
-        //List Weather user Order by Date
-        List<WeatherEntity> weatherEntities = weatherService.findAllByUserEntitiesOrderByDateDesc(userEntity);
-        //Add values -> Attribute
-        model.addAttribute("ListW", listWeather);
-        model.addAttribute("listShowMore", weatherEntities);
-
-        return "pageHome";
-    }
-
-    /**
      * /login-->URL page Login
      *
      * @return page login
      */
     @RequestMapping(value = "/login")
-    public String login() {
+    public String login(@RequestParam(required=false) String message, final Model model) {
+        if (message != null && !message.isEmpty()) {
+            if (message.equals("max_session")) {
+                model.addAttribute("message", "This accout has been login from another device!");
+            }
+            if (message.equals("logout")) {
+                model.addAttribute("message", "Logout!");
+            }
+            if (message.equals("error")) {
+                model.addAttribute("message", "Login Failed! Please try again");
+            }
+        }
         return "user/pageLogin";
     }
 
@@ -201,18 +213,4 @@ public class AccountActionController {
         return "user/pageBlock";
     }
 
-    @GetMapping("/update-profile")
-    public String updatepass(Model model, Principal principal) {
-        UserDTO userDTO = userConverter.convertUserToDTO(userService.findByUserName(principal.getName()));
-        model.addAttribute("userDTO", userDTO);
-        return "user/pageProfile";
-    }
-    @PostMapping("/update-profile")
-    public String updatepassAction(@Valid @ModelAttribute("passwordUpdateForm") UserDTO userDTO,
-                                   Principal principal){
-        UserEntity userEntity = userService.findByUserName(principal.getName());
-        //update info USER
-        userService.updateProfileUser(userEntity, userDTO);
-        return "user/pageProfile?success";
-    }
 }

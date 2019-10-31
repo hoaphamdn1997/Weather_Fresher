@@ -190,16 +190,4 @@ public class UserServiceImpl implements UserService {
     public UserEntity findByUserEmail(String email) {
         return userRepository.findByEmail(email);
     }
-
-    @Override
-    public void updateProfileUser(UserEntity userEntity, UserDTO userDTO) {
-        // Set info user modified
-        userEntity.setFirstName(userDTO.getFirstName());
-        userEntity.setLastName(userDTO.getLastName());
-        userEntity.setEmail(userDTO.getEmail());
-        userEntity.setEncrytedPassword(passwordEncoder.encode(userDTO.getEncrytedPassword()));
-        userEntity.setCreateDate(new Timestamp(System.currentTimeMillis()));
-        // Update User
-        userRepository.save(userEntity);
-    }
 }
