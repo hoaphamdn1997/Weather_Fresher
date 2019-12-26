@@ -110,7 +110,7 @@ public class AccountActionController {
      * @return page login
      */
     @RequestMapping(value = "/login")
-    public String login(@RequestParam(required=false) String message, final Model model) {
+    public String login(@RequestParam(required = false) String message, final Model model) {
         if (message != null && !message.isEmpty()) {
             if (message.equals("max_session")) {
                 model.addAttribute("message", "This accout has been login from another device!");

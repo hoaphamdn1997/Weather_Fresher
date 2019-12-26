@@ -23,8 +23,9 @@
           th:object="${userDTO}" method="post" class="form-horizontal">
         <h2 class="text-center">Register</h2>
         <div class="form-group">
-            <input type="text" th:field="*{userName}" placeholder="User Name"
-                   class="form-control" pattern="^[a-zA-Z0-9]{8,32}"/> <label
+            <input type="text" th:field="*{userName}" placeholder="Username"
+                   class="form-control" pattern="^[a-zA-Z0-9]{8,32}"
+                   title="Character a-z, A-Z, 0-9 and length 8 - 32 char .Examble:user1234"/> <label
                 th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"
                 class="validation-message"></label>
         </div>
@@ -57,11 +58,9 @@
             <button class="btn btn-lg btn-primary btn-block" value="Register"
                     type="submit" th:text="Register"></button>
         </div>
-        <p><a href="/" style="color: #7a7a7a;"> Go
-            To Login Page!!!</a></p>
-
     </form>
-
+    <p class="text-center small" style="color: white;">Do you want to login? <a th:href="@{/login}">login
+        here!</a></p>
 </div>
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/validate.js}"></script>

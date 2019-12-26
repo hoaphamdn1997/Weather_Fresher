@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class WindDTO {
 
-		private String speed;
+    private String speed;
 
 
 }

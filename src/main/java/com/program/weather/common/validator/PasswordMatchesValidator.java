@@ -17,6 +17,7 @@ public class PasswordMatchesValidator implements ConstraintValidator<PasswordMat
     public void initialize(PasswordMatches constraintAnnotation) {
     }
 
+
     @Override
     public boolean isValid(Object obj, ConstraintValidatorContext context) {
         PasswordResetDTO user = (PasswordResetDTO) obj;

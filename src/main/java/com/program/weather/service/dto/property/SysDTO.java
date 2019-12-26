@@ -11,11 +11,11 @@ import lombok.Setter;
 @Data
 @NoArgsConstructor
 public class SysDTO {
-	private String type;
-	private String id;
-	private String message;
-	private String country;
-	private String sunrise;
-	private String sunset;
+    private String type;
+    private String id;
+    private String message;
+    private String country;
+    private String sunrise;
+    private String sunset;
 
 }

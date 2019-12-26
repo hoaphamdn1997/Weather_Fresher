@@ -36,6 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public HttpSessionEventPublisher httpSessionEventPublisher() {
         return new HttpSessionEventPublisher();
     }
+
     /**
      * Password encoder b crypt password encoder.
      *
@@ -61,8 +62,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
 
     }
+
     @Autowired
     private CustomAuthenticationFailureHandlerController customAuthenticationFailureHandler;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -73,7 +76,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //Optional login
                 .antMatchers("/login", "/logout", "/registration", "/forgot-password**", "/reset-password**").permitAll()
                 //Only Role_User and Role Admin
-                .antMatchers("/home-weather/**", "/", "/home","/home-weather/detailts/**").hasAnyAuthority(Constants.USER,Constants.ADMIN)
+                .antMatchers("/home-weather/**", "/", "/home", "/home-weather/detailts/**").hasAnyAuthority(Constants.USER, Constants.ADMIN)
                 .antMatchers("/block").hasAuthority(Constants.GUEST)
                 //Only admin
                 .antMatchers("/home-admin/admin").hasAuthority(Constants.ADMIN)
@@ -100,7 +103,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //if account access denied -> 403 page
                 .csrf()
                 .disable().exceptionHandling().accessDeniedPage("/403");
-                 http.sessionManagement().sessionFixation().newSession()
+        http.sessionManagement().sessionFixation().newSession()
                 .maximumSessions(1).expiredUrl("/login?message=max_session").maxSessionsPreventsLogin(true);
     }
 

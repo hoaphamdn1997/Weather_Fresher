@@ -25,7 +25,7 @@ public class UserDTO {
     @NotEmpty(message = "{not.empty.msg} {user.username.empty}")
     private String userName;
 
-    @Email(regexp = "[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{1,}[.]{1}[a-zA-Z]{2,}",message = "{user.email.msg}")
+    @Email(regexp = "[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{1,}[.]{1}[a-zA-Z]{2,}", message = "{user.email.msg}")
     @NotEmpty(message = "{not.empty.msg} {user.email.empty}")
     private String email;
 

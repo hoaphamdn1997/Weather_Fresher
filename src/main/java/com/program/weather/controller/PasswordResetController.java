@@ -83,8 +83,8 @@ public class PasswordResetController {
     @PostMapping
     @Transactional
     public String handlePasswordReset(@ModelAttribute("passwordResetForm") @Valid PasswordResetDTO form,
-                                          BindingResult result,
-                                          RedirectAttributes redirectAttributes) {
+                                      BindingResult result,
+                                      RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute(BindingResult.class.getName() + ".passwordResetForm", result);

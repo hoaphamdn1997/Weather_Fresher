@@ -46,7 +46,7 @@ public interface UserService {
      *
      * @param id the id
      */
-    void editActiveUser(Long id );
+    void editActiveUser(Long id);
 
     /**
      * edit role User

@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CloudsDTO {
 
-	private String all;
+    private String all;
 
 }

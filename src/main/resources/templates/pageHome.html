@@ -16,7 +16,7 @@
                             <div class="container">
                                 <div class="search">
                                     <form class="form-inline" th:action="@{/home-weather/search-city}">
-                                        <input type="text" class="input-text  mb-2 mr-sm-2" id=""
+                                        <input autocomplete="off" type="text" class="input-text  mb-2 mr-sm-2" id=""
                                                name="name" th:value="${name}" required placeholder="Search Location...">
                                         <button type="submit" class="btn btn-light"><i class="fas fa-search"></i>
                                         </button>
@@ -124,7 +124,8 @@
                                                     <form th:action="@{/home-weather/deleteWeather}" method="get">
                                                         <input type="hidden" th:attr="value=${listW.weatherId}"
                                                                name="id"/>
-                                                        <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i>
+                                                        <button class="btn btn-danger" type="submit"><i
+                                                                class="fas fa-trash"></i>
                                                         </button>
                                                     </form>
                                                 </div>
@@ -164,7 +165,8 @@
                                                                   method="get">
                                                                 <input type="hidden" th:attr="value=${item.weatherId}"
                                                                        name="id"/>
-                                                                <button class="btn  btn-danger" type="submit"><i class="fas fa-trash"></i>
+                                                                <button class="btn  btn-danger" type="submit"><i
+                                                                        class="fas fa-trash"></i>
                                                                 </button>
                                                             </form>
                                                         </div>

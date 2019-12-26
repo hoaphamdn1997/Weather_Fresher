@@ -42,7 +42,7 @@
             <!--12345678-->
             <column name="firstname" value="admin_hoapham"/>
             <column name="lastname" value="wedweather"/>
-            <column name="user_name" value="admin"/>
+            <column name="user_name" value="admin123"/>
         </insert>
     </changeSet>
 </databaseChangeLog>

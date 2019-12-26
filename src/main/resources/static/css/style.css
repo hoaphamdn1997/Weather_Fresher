@@ -192,6 +192,7 @@ body {
     border-bottom: 1px solid rgba(0, 0, 0, .125);
     border-radius: 24px;
 }
+
 .card {
     margin-bottom: 5px;
     position: relative;
@@ -201,11 +202,13 @@ body {
     flex-direction: column;
     min-width: 0;
     word-wrap: break-word;
-    background-color:#9bacdf;
+    background-color: #9bacdf;
     background-clip: border-box;
     border: 1px solid rgba(0, 0, 0, .125);
-    border-radius: 24px;!important;
+    border-radius: 24px;
+!important;
 }
+
 @media (min-width: 768px) and (max-width: 1023px) {
     .card {
         margin-bottom: 16px;
@@ -219,7 +222,8 @@ body {
         background-color: #ffffff4a;
         background-clip: border-box;
         border: 1px solid rgba(0, 0, 0, .125);
-        border-radius: 24px;!important;
+        border-radius: 24px;
+    !important;
     }
 }
 
@@ -465,7 +469,7 @@ body {
 .adminpage {
     min-height: 500px;
     border-radius: 24px;
-    background:  #5f6eb0a1;
+    background: #5f6eb0a1;
     padding-top: 10px;
 }
 
@@ -507,10 +511,13 @@ body {
 .validation-message {
     color: red;
 }
-.update{
-    background-color: #ffffff24;width: 1000px;
+
+.update {
+    background-color: #ffffff24;
+    width: 1000px;
     float: left;
 }
+
 .button {
     background-color: white; /* Green */
     border-radius: 24px;
@@ -519,41 +526,42 @@ body {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;}
+    font-size: 16px;
+}
 
 /*/ iPads Pro(portrait) ----------- /*/
 /*@media only screen and (min-device-width: 1024px) and (max-device-width: 1366px) and (orientation: portrait) {*/
-    /*.search_form {*/
-        /*margin-top: 8px;*/
-        /*margin-left: -5px;*/
-        /*width: 215px;*/
-    /*}*/
+/*.search_form {*/
+/*margin-top: 8px;*/
+/*margin-left: -5px;*/
+/*width: 215px;*/
+/*}*/
 
-    /*.icon_rps {*/
-        /*width: 20px*/
-    /*}*/
+/*.icon_rps {*/
+/*width: 20px*/
+/*}*/
 
-    /*.city_rps {*/
-        /*width: 150px*/
-    /*}*/
+/*.city_rps {*/
+/*width: 150px*/
+/*}*/
 
-    /*.temp_rps {*/
-        /*width: 250px;*/
-    /*}*/
+/*.temp_rps {*/
+/*width: 250px;*/
+/*}*/
 
-    /*.badge {*/
-        /*padding: 4px 18px;*/
-        /*margin-bottom: 7px;*/
-        /*font-size: 15px;*/
-    /*}*/
+/*.badge {*/
+/*padding: 4px 18px;*/
+/*margin-bottom: 7px;*/
+/*font-size: 15px;*/
+/*}*/
 
-    /*.general_rps {*/
-        /*margin-left: 2px;*/
-    /*}*/
+/*.general_rps {*/
+/*margin-left: 2px;*/
+/*}*/
 
-    /*#descript_rps {*/
-        /*margin-left: 5px;*/
-    /*}*/
+/*#descript_rps {*/
+/*margin-left: 5px;*/
+/*}*/
 /*}*/
 
 /*!************************************************************************************************************************!*/
@@ -564,17 +572,17 @@ body {
 
 /*/ Computer /*/
 /*@media only screen and (min-width: 980px) {*/
-    /*a, button, input[type=submit], input[type=button], .product-img {*/
-        /*-webkit-transition: .5s;*/
-        /*-moz-transition: .5s;*/
-        /*-ms-transition: .5s;*/
-        /*-o-transition: .5s;*/
-        /*transition: .5s;*/
-    /*}*/
+/*a, button, input[type=submit], input[type=button], .product-img {*/
+/*-webkit-transition: .5s;*/
+/*-moz-transition: .5s;*/
+/*-ms-transition: .5s;*/
+/*-o-transition: .5s;*/
+/*transition: .5s;*/
+/*}*/
 
-    /*.ch-container {*/
-        /*padding: 0 20px;*/
-    /*}*/
+/*.ch-container {*/
+/*padding: 0 20px;*/
+/*}*/
 /*}*/
 
 /*/ Smartphones (portrait and landscape) ----------- /*/
@@ -631,39 +639,38 @@ body {
 /*}*/
 
 /*@media only screen and (min-device-width: 414px) and (max-device-height: 736px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2) {*/
-    /*search_form {*/
-        /*margin-top: 8px;*/
-        /*margin-left: -5px;*/
-        /*width: 265px;*/
-    /*}*/
+/*search_form {*/
+/*margin-top: 8px;*/
+/*margin-left: -5px;*/
+/*width: 265px;*/
+/*}*/
 
+/*.icon_rps {*/
+/*padding: 0px 0px 0px 10px;*/
+/*}*/
 
-    /*.icon_rps {*/
-        /*padding: 0px 0px 0px 10px;*/
-    /*}*/
+/*.city_rps {*/
+/*width: 127px*/
+/*}*/
 
-    /*.city_rps {*/
-        /*width: 127px*/
-    /*}*/
+/*.temp_rps {*/
+/*width: 112px;*/
+/*}*/
 
-    /*.temp_rps {*/
-        /*width: 112px;*/
-    /*}*/
+/*.badge {*/
+/*padding: 4px 18px;*/
+/*margin-bottom: 7px;*/
+/*font-size: 15px;*/
+/*}*/
 
-    /*.badge {*/
-        /*padding: 4px 18px;*/
-        /*margin-bottom: 7px;*/
-        /*font-size: 15px;*/
-    /*}*/
+/*.general_rps {*/
+/*margin-top: 8px;*/
+/*margin-left: -80px;*/
+/*}*/
 
-    /*.general_rps {*/
-        /*margin-top: 8px;*/
-        /*margin-left: -80px;*/
-    /*}*/
-
-    /*#descript_rps {*/
-        /*margin-left: 5px;*/
-    /*}*/
+/*#descript_rps {*/
+/*margin-left: 5px;*/
+/*}*/
 /*}*/
 
 /* iPhone X ----------- /

@@ -29,8 +29,9 @@
                     </a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="#"><b>Hello:
-                            <span th:if="${#request.userPrincipal.name}" th:utext="${#request.userPrincipal.name}"></span>
-                        <!--<span th:text="${session.userSecurity != null ? (session.userSecurity.lastName + ' ' + session.userSecurity.firstName) : ''}"></span>-->
+                            <span th:if="${#request.userPrincipal.name}"
+                                  th:utext="${#request.userPrincipal.name}"></span>
+                            <!--<span th:text="${session.userSecurity != null ? (session.userSecurity.lastName + ' ' + session.userSecurity.firstName) : ''}"></span>-->
                         </b></a>
                     </div>
                 </li>

@@ -11,7 +11,7 @@
         <createTable tableName="user_weather">
             <column name="user_id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
-        </column>
+            </column>
             <column name="weather_id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>

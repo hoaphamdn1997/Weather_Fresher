@@ -24,9 +24,9 @@
         <addForeignKeyConstraint baseTableName="user_role"
                                  baseColumnNames="role_id" constraintName="role_fk_user_role"
                                  referencedTableName="role" referencedColumnNames="role_id"/>
-<insert tableName="user_role">
-    <column name="user_id" value="1"></column>
-    <column name="role_id" value="1"/>
-</insert>
+        <insert tableName="user_role">
+            <column name="user_id" value="1"></column>
+            <column name="role_id" value="1"/>
+        </insert>
     </changeSet>
 </databaseChangeLog>

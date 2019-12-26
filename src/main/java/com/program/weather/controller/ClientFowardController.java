@@ -20,6 +20,11 @@ import java.util.List;
  */
 @Controller
 public class ClientFowardController {
+    /**
+     * Redirect string.
+     *
+     * @return the string
+     */
     @RequestMapping(value = "/{[path:[^\\.]*}")
     public String redirect() {
         return "forward:/";
@@ -73,6 +78,7 @@ public class ClientFowardController {
 
     /**
      * get list Author
+     * abs
      *
      * @param authentication
      * @return

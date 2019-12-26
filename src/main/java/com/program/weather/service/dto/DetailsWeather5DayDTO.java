@@ -1,10 +1,10 @@
 package com.program.weather.service.dto;
 
 
-
 import lombok.Data;
 
 import java.time.Instant;
+
 @Data
 public class DetailsWeather5DayDTO {
     private Instant day;
@@ -19,7 +19,7 @@ public class DetailsWeather5DayDTO {
     private String city;
 
     public DetailsWeather5DayDTO(String image, String city, String tempMin, String tempMax, String wind, String humidity,
-                                String pressure, String description, Instant day) {
+                                 String pressure, String description, Instant day) {
         super();
         this.image = image;
         this.city = city;
